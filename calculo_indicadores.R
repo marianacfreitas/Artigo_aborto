@@ -2,7 +2,7 @@ library(readr)
 library(writexl)
 library(dplyr)
 
-planilha_indicadores_aborto <- read_csv("C:/Users/maria/Downloads/planilha_indicadores_aborto.csv")
+planilha_indicadores_aborto <- read_csv("databases/planilha_indicadores_aborto.csv")
 
 df <- planilha_indicadores_aborto |>
   group_by(ano) |>
