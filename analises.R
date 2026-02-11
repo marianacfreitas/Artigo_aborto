@@ -387,7 +387,7 @@ gt_tbl_razao
 # salvando como imagem (PNG)
 gtsave(
   gt_tbl_razao,
-  filename = "tabelas/tabela_mk_razao_aborto_por_100_nascidos_vivos.png"
+  filename = "tabelas/tabela_mk_razao_aborto_por_100_nascidos_vivos.png", vwidth = 1050
 )
 
 gtsave(
