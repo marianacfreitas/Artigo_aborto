@@ -1,0 +1,29 @@
+"local";"valor_2015_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS";"valor_2015_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar";"valor_2015_Valor médio da razão de abortos inseguros por 100 nascidos vivos no SUS";"valor_2015_Valor médio da razão de abortos inseguros por 100 nascidos vivos na saúde suplementar";"valor_2024_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS";"valor_2024_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar";"valor_2024_Valor médio da razão de abortos inseguros por 100 nascidos vivos no SUS";"valor_2024_Valor médio da razão de abortos inseguros por 100 nascidos vivos na saúde suplementar";"Mann_Kendall_z_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS";"Mann_Kendall_z_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar";"Mann_Kendall_z_Valor médio da razão de abortos inseguros por 100 nascidos vivos no SUS";"Mann_Kendall_z_Valor médio da razão de abortos inseguros por 100 nascidos vivos na saúde suplementar";"Mann_Kendall_p_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS";"Mann_Kendall_p_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar";"Mann_Kendall_p_Valor médio da razão de abortos inseguros por 100 nascidos vivos no SUS";"Mann_Kendall_p_Valor médio da razão de abortos inseguros por 100 nascidos vivos na saúde suplementar"
+"Brasil";9,8;5,4;20,7;11,3;6,4;5,1;17,2;13,1;-3,578;-0,988;-3,426;0,999;0,00035;0,32324;0,00061;0,31798
+"Acre";19,9;1,5;31,6;2,3;14;1,4;30,4;2,9;-1,789;-0,18;-1,073;0,449;0,07364;0,85689;0,28313;0,65342
+"Alagoas";13,5;2,5;26,8;5;7;4;15,4;8,7;-3,502;0,988;-3,323;1,167;0,00046;0,32324;0,00089;0,24303
+"Amapá";27;3,4;42,9;5,4;13,1;1,6;27,8;3,3;-3,578;-2,425;-2,963;-2,245;0,00035;0,01532;0,00304;0,02476
+"Amazonas";10,4;2,3;16,3;3,6;9,2;1,4;19,2;2,9;-1,968;-1,527;-1,073;-1,073;0,0491;0,12685;0,28313;0,28313
+"Bahia";12,7;3,9;28,9;8,8;8,3;2,5;23,6;6,9;-3,935;-1,459;-2,862;-0,541;8e-05;0,14468;0,00421;0,58851
+"Ceará";12,9;3,8;27,8;8,2;7,9;3,8;21,5;9,9;-3,399;0,721;-3,502;1,252;0,00068;0,4707;0,00046;0,2105
+"Distrito Federal";0,4;8,6;0,9;16,8;5,5;5,6;16,2;14,9;1,347;-1,073;1,789;-0,179;0,17797;0,28313;0,07364;0,85803
+"Espírito Santo";8,9;7,7;18,9;16;6,4;5,3;15,6;12,2;-3,787;-2,065;-3,246;-1,886;0,00015;0,03888;0,00117;0,05931
+"Goiás";6,6;4,6;14,2;9,7;4,8;5,4;12,1;13,3;-2,807;1,262;-2,245;1,431;0,00501;0,20683;0,02476;0,15241
+"Maranhão";10,8;2,3;20,1;4,4;10,2;3;24,6;7,1;-0,179;2,326;0,808;2,862;0,85803;0,02004;0,41896;0,00421
+"Mato Grosso";7,3;2,4;13,6;4,5;6,1;6,8;12,8;14,1;0,365;2,784;0,902;2,784;0,71538;0,00537;0,36723;0,00537
+"Mato Grosso do Sul";7,9;5,1;14,9;9,5;5,3;7,1;12,1;15,7;-3,502;1,789;-2,784;2,683;0,00046;0,07364;0,00537;0,00729
+"Minas Gerais";9,8;6;23,3;14;5,4;6,2;15,4;16,8;-3,682;-0,547;-3,399;-0,09;0,00023;0,5844;0,00068;0,92844
+"Paraná";6;5,7;12,9;12,1;3,9;5,8;10,3;14,7;-2,705;0,634;-2,188;2,147;0,00683;0,52624;0,02868;0,03182
+"Paraíba";13,5;2,6;28,3;5,5;7,7;5;19,5;12,5;-2,604;1,347;-2,326;1,527;0,00921;0,17797;0,02004;0,12685
+"Pará";11;2,7;20,1;5,1;8,1;2;18,9;4,6;-3,246;-0,552;-0,629;0;0,00117;0,58125;0,5296;1
+"Pernambuco";13,2;2,9;27,1;5,9;8,3;2,4;22,2;6,2;-3,22;-0,902;-3,399;0;0,00128;0,36723;0,00068;1
+"Piauí";10,1;2,8;21;6;7,8;3,3;20;8,5;-2,425;0,449;-1,968;1,073;0,01532;0,65342;0,0491;0,28313
+"Rio Grande do Norte";13;6,2;28,1;13,4;6,5;4,9;18,6;13,6;-2,705;0;-2,504;1,073;0,00683;1;0,01227;0,28313
+"Rio Grande do Sul";6,4;2,7;14,2;5,8;4,7;3,1;13,1;8,2;-3,323;2,525;-1,443;2,963;0,00089;0,01158;0,14911;0,00304
+"Rio de Janeiro";10,2;6,1;22,8;13,2;6,5;5,7;20;16,7;-3,682;-1,623;-0,988;0;0,00023;0,10459;0,32324;1
+"Rondônia";13,1;6,5;25,6;12,7;8,2;3,7;20,3;8,9;-3,246;-1,789;-2,862;-1,252;0,00117;0,07364;0,00421;0,2105
+"Roraima";25,5;2;39,2;3;6,3;1,4;11,9;2,6;-2,963;-0,537;-3,041;-0,358;0,00304;0,59151;0,00236;0,72051
+"Santa Catarina";6,6;6,6;14,6;14,4;5,5;6,6;13,9;15,9;-2,525;1,024;-1,789;1,61;0,01158;0,30571;0,07364;0,1074
+"Sergipe";18,2;2,5;37,6;5,3;8;3,1;21;7,9;-3,862;0,537;-3,578;0,716;0,00011;0,59151;0,00035;0,47427
+"São Paulo";8;8,7;17,6;18,4;5,2;7,7;15;20,8;-3,757;-2,963;-3,502;-0,269;0,00017;0,00304;0,00046;0,78762
+"Tocantins";16,9;1,2;31,3;2,3;7,2;4,1;15,9;9,2;-3,399;1,984;-2,862;2,862;0,00068;0,04729;0,00421;0,00421
