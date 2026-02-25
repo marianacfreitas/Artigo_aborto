@@ -184,6 +184,104 @@ ggsave(
   dpi = 600
 )
 
+
+
+
+# ------------- Séries temporais: Algumas UFs - Plots ---------------
+
+ufs_analisadas_taxa <- c("Acre", "Distrito Federal", "Maranhão", "Mato Grosso")
+ufs_analisadas_razao <- c("Acre", "Amazonas", "Distrito Federal", "Maranhão", "Mato Grosso",
+                          "Pará", "Rio Grande do Sul", "Rio de Janeiro",
+                          "Santa Catarina")
+
+# Série temporal para a para a taxa de aborto
+
+for(i in ufs_analisadas_taxa){
+  
+  df_uf_1000_mulheres <- df_uf |> filter(uf == i) |>
+    select(ano, `Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS`, `Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar`) |>
+    pivot_longer(
+      names_to = "Atendimento",
+      values_to = "Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil",
+      cols = c(`Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS`, `Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar`)
+    ) |>
+    mutate(
+      Atendimento = case_when(
+        Atendimento == "Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS" ~ "SUS",
+        Atendimento == "Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar" ~ "Saúde suplementar"
+      )
+    )
+  
+  
+  serie_temporal_uf_plot_1000_mulheres <- ggplot(data = df_uf_1000_mulheres, mapping = aes(x = ano, y = `Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil`, color = Atendimento)) +
+    geom_line(linewidth = 1) +
+    geom_point(aes(shape = Atendimento)) +
+    scale_x_continuous(breaks = unique(df_uf_1000_mulheres$ano), guide = guide_axis(angle = 45)) +
+    theme_bw(base_size = 15) +
+    labs(
+      title = paste0(i, ": Série temporal do valor médio da taxa de abortos \n inseguros por mil mulheres em idade fértil"),
+      x = "Ano",
+      y = "Valor médio da taxa de abortos inseguros",
+      color = "Atendimento",
+      shape = "Atendimento",
+    ) +
+    geom_text(label = df_uf_1000_mulheres$`Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil`, nudge_y = 0.3, show.legend = FALSE) +
+    theme(legend.position = "bottom") +
+    scale_color_manual(values = c("Salmon", "DodgerBlue"))
+
+  ggsave(
+    paste0("figuras/", i, "_taxa_aborto_por_1000_mulheres.png"), serie_temporal_uf_plot_1000_mulheres,
+    width = 7.5, height = 6, units = "in", 
+    dpi = 600
+  )
+  
+}
+
+
+## Série temporal para a razão de aborto
+
+for(i in ufs_analisadas_razao){
+  
+  df_uf_100_nv <- df_uf |> filter(uf == i) |>
+    select(ano, `Valor médio da razão de abortos inseguros por 100 nascidos vivos no SUS`, `Valor médio da razão de abortos inseguros por 100 nascidos vivos na saúde suplementar`) |>
+    pivot_longer(
+      names_to = "Atendimento",
+      values_to = "Valor médio da razão de abortos inseguros por cem nascidos vivos",
+      cols = c(`Valor médio da razão de abortos inseguros por 100 nascidos vivos no SUS`, `Valor médio da razão de abortos inseguros por 100 nascidos vivos na saúde suplementar`)
+    ) |>
+    mutate(
+      Atendimento = case_when(
+        Atendimento == "Valor médio da razão de abortos inseguros por 100 nascidos vivos no SUS" ~ "SUS",
+        Atendimento == "Valor médio da razão de abortos inseguros por 100 nascidos vivos na saúde suplementar" ~ "Saúde suplementar"
+      )
+    )
+  
+  
+  serie_temporal_uf_plot_100_nv <- ggplot(data = df_uf_100_nv, mapping = aes(x = ano, y = `Valor médio da razão de abortos inseguros por cem nascidos vivos`, color = Atendimento)) +
+    geom_line(linewidth = 1) +
+    geom_point(aes(shape = Atendimento)) +
+    scale_x_continuous(breaks = unique(df_uf_100_nv$ano), guide = guide_axis(angle = 45)) +
+    theme_bw(base_size = 14) +
+    labs(
+      title = paste0(i, ": Série temporal do valor médio da razão de abortos \n inseguros por 100 nascidos vivos"),
+      x = "Ano",
+      y = "Valor médio da razão de abortos inseguros",
+      color = "Atendimento",
+      shape = "Atendimento",
+    ) +
+    geom_text(label = df_uf_100_nv$`Valor médio da razão de abortos inseguros por cem nascidos vivos`, nudge_y = 0.7, show.legend = FALSE) +
+    theme(legend.position = "bottom") +
+    scale_color_manual(values = c("Salmon", "DodgerBlue"))
+  
+  ggsave(
+    paste0("figuras/", i, "_razao_aborto_por_100_nascidos_vivos.png"), serie_temporal_uf_plot_100_nv,
+    width = 7.5, height = 6, units = "in", 
+    dpi = 600
+  )
+  
+}
+
+
 # ----------- Teste de tendência: Mann-Kendall ----------
 
 # Mann-Kendall
@@ -265,6 +363,9 @@ write_csv(
   "databases/mann_kendall_taxa_por_1000_mulheres.csv"
 )
 
+write_xlsx(tabela_tendencia_taxa,
+           "databases/mann_kendall_taxa_por_1000_mulheres.xlsx")
+
 # Ajustar layout
 gt_tbl_taxa <- gt(tabela_tendencia_taxa) |>
   tab_header(
@@ -341,6 +442,11 @@ tabela_tendencia_razao <- tibble(
 write_csv(
   tabela_tendencia_razao,
   "databases/mann_kendall_razao_por_100_nascidos_vivos.csv"
+)
+
+write_xlsx(
+  tabela_tendencia_razao,
+  "databases/mann_kendall_razao_por_100_nascidos_vivos.xlsx"
 )
 
 # Ajustar layout
