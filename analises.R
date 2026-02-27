@@ -10,7 +10,10 @@ library(geobr)
 library(janitor)
 
 # Planiha com informações por município
-planilha_indicadores_aborto <- read_csv("databases/planilha_indicadores_aborto.csv")
+planilha_indicadores_aborto <- read_csv("databases/planilha_indicadores_aborto.csv") |>
+  mutate(across(contains("ans"),
+                ~ if_else(ano < 2017, NA, .)))
+
 df_aux_municipios <- read_csv("databases_auxiliares/df_aux_municipios.csv")
 
 # Indicadores para todo o país
@@ -24,7 +27,7 @@ df_brasil <- planilha_indicadores_aborto |>
     sus_tx_abortos_mil_mulheres_valor_medio =  round((((sum(abortos_sus_menor_30 ) * 0.9) + (sum(abortos_sus_30_a_39 ) * 0.85) + (sum(abortos_sus_40_a_49 ) * 0.75)) * 4) / sum(pop_fem_sus_10_49 ) * 1000, 1) ,
     #sus_tx_abortos_mil_mulheres_lim_sup =  round((((sum(abortos_sus_menor_30 ) * 0.9) + (sum(abortos_sus_30_a_39 ) * 0.85) + (sum(abortos_sus_40_a_49 ) * 0.75)) * 5) / sum(pop_fem_sus_10_49 ) * 1000, 1) ,
     #ans_tx_abortos_mil_mulheres_lim_inf =  round((((sum(abortos_ans_menor_30 ) * 0.9) + (sum(abortos_ans_30_a_39 ) * 0.85) + (sum(abortos_ans_40_a_49 ) * 0.75)) * 4) / sum(pop_fem_ans_10_49 ) * 1000, 1) ,
-    ans_tx_abortos_mil_mulheres_valor_medio =  round((((sum(abortos_ans_menor_30 ) * 0.9) + (sum(abortos_ans_30_a_39 ) * 0.85) + (sum(abortos_ans_40_a_49 ) * 0.75)) * 5) / sum(pop_fem_ans_10_49 ) * 1000, 1) ,
+    ans_tx_abortos_mil_mulheres_valor_medio =  round((((sum(abortos_ans_menor_30, na.rm = T) * 0.9) + (sum(abortos_ans_30_a_39 , na.rm = T) * 0.85) + (sum(abortos_ans_40_a_49 , na.rm = T) * 0.75)) * 5) / sum(pop_fem_ans_10_49 , na.rm = T) * 1000, 1) ,
     #ans_tx_abortos_mil_mulheres_lim_sup =  round((((sum(abortos_ans_menor_30 ) * 0.9) + (sum(abortos_ans_30_a_39 ) * 0.85) + (sum(abortos_ans_40_a_49 ) * 0.75)) * 6) / sum(pop_fem_ans_10_49 ) * 1000, 1) ,
     #geral_tx_abortos_cem_nascidos_vivos_lim_inf =  round(((((sum(abortos_sus_menor_30 ) * 0.9) + (sum(abortos_sus_30_a_39 ) * 0.85) + (sum(abortos_sus_40_a_49 ) * 0.75)) * 3) + (((sum(abortos_ans_menor_30 ) * 0.9) + (sum(abortos_ans_30_a_39 ) * 0.85) + (sum(abortos_ans_40_a_49 ) * 0.75)) * 4)) / sum(total_de_nascidos_vivos_10_a_49 ) * 100, 1) ,
     #geral_tx_abortos_cem_nascidos_vivos_valor_medio =  round(((((sum(abortos_sus_menor_30 ) * 0.9) + (sum(abortos_sus_30_a_39 ) * 0.85) + (sum(abortos_sus_40_a_49 ) * 0.75)) * 4) + (((sum(abortos_ans_menor_30 ) * 0.9) + (sum(abortos_ans_30_a_39 ) * 0.85) + (sum(abortos_ans_40_a_49 ) * 0.75)) * 5)) / sum(total_de_nascidos_vivos_10_a_49 ) * 100, 1) ,
@@ -33,7 +36,7 @@ df_brasil <- planilha_indicadores_aborto |>
     sus_tx_abortos_cem_nascidos_vivos_valor_medio =  round((((sum(abortos_sus_menor_30 ) * 0.9) + (sum(abortos_sus_30_a_39 ) * 0.85) + (sum(abortos_sus_40_a_49 ) * 0.75)) * 4) / sum(total_de_nascidos_vivos_10_a_49_sus ) * 100, 1) ,
     #sus_tx_abortos_cem_nascidos_vivos_lim_sup =  round((((sum(abortos_sus_menor_30 ) * 0.9) + (sum(abortos_sus_30_a_39 ) * 0.85) + (sum(abortos_sus_40_a_49 ) * 0.75)) * 5) / sum(total_de_nascidos_vivos_10_a_49_sus ) * 100, 1) ,
     #ans_tx_abortos_cem_nascidos_vivos_lim_inf =  round((((sum(abortos_ans_menor_30 ) * 0.9) + (sum(abortos_ans_30_a_39 ) * 0.85) + (sum(abortos_ans_40_a_49 ) * 0.75)) * 4) / sum(total_de_nascidos_vivos_10_a_49_ans ) * 100, 1) ,
-    ans_tx_abortos_cem_nascidos_vivos_valor_medio =  round((((sum(abortos_ans_menor_30 ) * 0.9) + (sum(abortos_ans_30_a_39 ) * 0.85) + (sum(abortos_ans_40_a_49 ) * 0.75)) * 5) / sum(total_de_nascidos_vivos_10_a_49_ans ) * 100, 1) ,
+    ans_tx_abortos_cem_nascidos_vivos_valor_medio =  round((((sum(abortos_ans_menor_30 , na.rm = T) * 0.9) + (sum(abortos_ans_30_a_39 , na.rm = T) * 0.85) + (sum(abortos_ans_40_a_49 , na.rm = T) * 0.75)) * 5) / sum(total_de_nascidos_vivos_10_a_49_ans , na.rm = T) * 100, 1) ,
     #ans_tx_abortos_cem_nascidos_vivos_lim_sup =  round((((sum(abortos_ans_menor_30 ) * 0.9) + (sum(abortos_ans_30_a_39 ) * 0.85) + (sum(abortos_ans_40_a_49 ) * 0.75)) * 6) / sum(total_de_nascidos_vivos_10_a_49_ans ) * 100, 1)
   ) |>
   rename(
@@ -69,13 +72,13 @@ df_uf <- planilha_indicadores_aborto |>
     sus_tx_abortos_mil_mulheres_valor_medio =  round((((sum(abortos_sus_menor_30 ) * 0.9) + (sum(abortos_sus_30_a_39 ) * 0.85) + (sum(abortos_sus_40_a_49 ) * 0.75)) * 4) / sum(pop_fem_sus_10_49 ) * 1000, 1) ,
     #sus_tx_abortos_mil_mulheres_lim_sup =  round((((sum(abortos_sus_menor_30 ) * 0.9) + (sum(abortos_sus_30_a_39 ) * 0.85) + (sum(abortos_sus_40_a_49 ) * 0.75)) * 5) / sum(pop_fem_sus_10_49 ) * 1000, 1) ,
     #ans_tx_abortos_mil_mulheres_lim_inf =  round((((sum(abortos_ans_menor_30 ) * 0.9) + (sum(abortos_ans_30_a_39 ) * 0.85) + (sum(abortos_ans_40_a_49 ) * 0.75)) * 4) / sum(pop_fem_ans_10_49 ) * 1000, 1) ,
-    ans_tx_abortos_mil_mulheres_valor_medio =  round((((sum(abortos_ans_menor_30 ) * 0.9) + (sum(abortos_ans_30_a_39 ) * 0.85) + (sum(abortos_ans_40_a_49 ) * 0.75)) * 5) / sum(pop_fem_ans_10_49 ) * 1000, 1) ,
+    ans_tx_abortos_mil_mulheres_valor_medio =  round((((sum(abortos_ans_menor_30 , na.rm = T) * 0.9) + (sum(abortos_ans_30_a_39 , na.rm = T) * 0.85) + (sum(abortos_ans_40_a_49 , na.rm = T) * 0.75)) * 5) / sum(pop_fem_ans_10_49 , na.rm = T) * 1000, 1) ,
     #ans_tx_abortos_mil_mulheres_lim_sup =  round((((sum(abortos_ans_menor_30 ) * 0.9) + (sum(abortos_ans_30_a_39 ) * 0.85) + (sum(abortos_ans_40_a_49 ) * 0.75)) * 6) / sum(pop_fem_ans_10_49 ) * 1000, 1) ,
     #geral_tx_abortos_cem_nascidos_vivos_lim_inf =  round(((((sum(abortos_sus_menor_30 ) * 0.9) + (sum(abortos_sus_30_a_39 ) * 0.85) + (sum(abortos_sus_40_a_49 ) * 0.75)) * 3) + (((sum(abortos_ans_menor_30 ) * 0.9) + (sum(abortos_ans_30_a_39 ) * 0.85) + (sum(abortos_ans_40_a_49 ) * 0.75)) * 4)) / sum(total_de_nascidos_vivos_10_a_49 ) * 100, 1) ,
     #geral_tx_abortos_cem_nascidos_vivos_valor_medio =  round(((((sum(abortos_sus_menor_30 ) * 0.9) + (sum(abortos_sus_30_a_39 ) * 0.85) + (sum(abortos_sus_40_a_49 ) * 0.75)) * 4) + (((sum(abortos_ans_menor_30 ) * 0.9) + (sum(abortos_ans_30_a_39 ) * 0.85) + (sum(abortos_ans_40_a_49 ) * 0.75)) * 5)) / sum(total_de_nascidos_vivos_10_a_49 ) * 100, 1) ,
     #geral_tx_abortos_cem_nascidos_vivos_lim_sup =  round(((((sum(abortos_sus_menor_30 ) * 0.9) + (sum(abortos_sus_30_a_39 ) * 0.85) + (sum(abortos_sus_40_a_49 ) * 0.75)) * 5) + (((sum(abortos_ans_menor_30 ) * 0.9) + (sum(abortos_ans_30_a_39 ) * 0.85) + (sum(abortos_ans_40_a_49 ) * 0.75)) * 6)) / sum(total_de_nascidos_vivos_10_a_49 ) * 100, 1) ,
     #sus_tx_abortos_cem_nascidos_vivos_lim_inf =  round((((sum(abortos_sus_menor_30 ) * 0.9) + (sum(abortos_sus_30_a_39 ) * 0.85) + (sum(abortos_sus_40_a_49 ) * 0.75)) * 3) / sum(total_de_nascidos_vivos_10_a_49_sus ) * 100, 1) ,
-    sus_tx_abortos_cem_nascidos_vivos_valor_medio =  round((((sum(abortos_sus_menor_30 ) * 0.9) + (sum(abortos_sus_30_a_39 ) * 0.85) + (sum(abortos_sus_40_a_49 ) * 0.75)) * 4) / sum(total_de_nascidos_vivos_10_a_49_sus ) * 100, 1) ,
+    sus_tx_abortos_cem_nascidos_vivos_valor_medio =  round((((sum(abortos_sus_menor_30 , na.rm = T) * 0.9) + (sum(abortos_sus_30_a_39 , na.rm = T) * 0.85) + (sum(abortos_sus_40_a_49 , na.rm = T) * 0.75)) * 4) / sum(total_de_nascidos_vivos_10_a_49_sus , na.rm = T) * 100, 1) ,
     #sus_tx_abortos_cem_nascidos_vivos_lim_sup =  round((((sum(abortos_sus_menor_30 ) * 0.9) + (sum(abortos_sus_30_a_39 ) * 0.85) + (sum(abortos_sus_40_a_49 ) * 0.75)) * 5) / sum(total_de_nascidos_vivos_10_a_49_sus ) * 100, 1) ,
     #ans_tx_abortos_cem_nascidos_vivos_lim_inf =  round((((sum(abortos_ans_menor_30 ) * 0.9) + (sum(abortos_ans_30_a_39 ) * 0.85) + (sum(abortos_ans_40_a_49 ) * 0.75)) * 4) / sum(total_de_nascidos_vivos_10_a_49_ans ) * 100, 1) ,
     ans_tx_abortos_cem_nascidos_vivos_valor_medio =  round((((sum(abortos_ans_menor_30 ) * 0.9) + (sum(abortos_ans_30_a_39 ) * 0.85) + (sum(abortos_ans_40_a_49 ) * 0.75)) * 5) / sum(total_de_nascidos_vivos_10_a_49_ans ) * 100, 1) ,
@@ -289,19 +292,23 @@ df_brasil$uf <- "Brasil"
 df_tendencia <- rbind(
   df_brasil, df_uf)
 
-variaveis <- c(
+variaveis_sus <- c(
   "Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS",              
+  "Valor médio da razão de abortos inseguros por 100 nascidos vivos no SUS"
+  )
+
+variaveis_ans <- c(
   "Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar",
-  "Valor médio da razão de abortos inseguros por 100 nascidos vivos no SUS",                       
   "Valor médio da razão de abortos inseguros por 100 nascidos vivos na saúde suplementar"
 )
 
-results_table_completa <- data.frame()
+
+results_table_completa_sus <- data.frame()
 
 for (i in 1:length(unique(df_tendencia$uf))) {
   localidade <- unique(df_tendencia$uf)[i]
   
-  mann_kendall_results <- lapply(df_tendencia |> filter(uf == localidade) |> dplyr::select(all_of(variaveis)), function(x) {
+  mann_kendall_results <- lapply(df_tendencia |> filter(uf == localidade) |> dplyr::select(all_of(variaveis_sus)), function(x) {
     mann_kendall_test <- mk.test(x)
     return(c(uf = localidade, p_value = mann_kendall_test$p.value, z_value = mann_kendall_test$statistic))
   })
@@ -311,32 +318,68 @@ for (i in 1:length(unique(df_tendencia$uf))) {
   results_table <- data.frame(
     local = as.vector(unlist(lapply(mann_kendall_results, `[[`, "uf"))),
     Variavel = names(mann_kendall_results), 
-    valor_2015 = lapply(variaveis, function(variavel) df_tendencia |> filter(uf == localidade, ano == 2015) |> pull(variavel)) |> as.numeric(),
-    valor_2024 = lapply(variaveis, function(variavel) df_tendencia |> filter(uf == localidade, ano == 2024) |> pull(variavel)) |> as.numeric(),
+    valor_inicio = lapply(variaveis_sus, function(variavel) df_tendencia |> filter(uf == localidade, ano == 2015) |> pull(variavel)) |> as.numeric(),
+    valor_2024 = lapply(variaveis_sus, function(variavel) df_tendencia |> filter(uf == localidade, ano == 2024) |> pull(variavel)) |> as.numeric(),
     Mann_Kendall_z = round(as.numeric(unlist(lapply(mann_kendall_results, `[[`, "z_value.z"))), 3),
     Mann_Kendall_p = p_value
   )
   
-  results_table_completa <- bind_rows(results_table_completa, results_table)
+  results_table_completa_sus <- bind_rows(results_table_completa_sus, results_table)
 }
 
-results_table_completa_organizada <- results_table_completa |>
+results_table_completa_organizada_sus <- results_table_completa_sus |>
   pivot_wider(
     names_from = Variavel,
     values_from = c(
-      valor_2015, 
+      valor_inicio, 
       valor_2024, Mann_Kendall_z, Mann_Kendall_p
     )
   ) 
 
+
+results_table_completa_ans <- data.frame()
+
+for (i in 1:length(unique(df_tendencia$uf))) {
+  localidade <- unique(df_tendencia$uf)[i]
+  
+  mann_kendall_results <- lapply(df_tendencia |> filter(ano >= 2017) |> filter(uf == localidade) |> dplyr::select(all_of(variaveis_ans)), function(x) {
+    mann_kendall_test <- mk.test(x)
+    return(c(uf = localidade, p_value = mann_kendall_test$p.value, z_value = mann_kendall_test$statistic))
+  })
+  
+  p_value <- round(as.numeric(unlist(lapply(mann_kendall_results, `[[`, "p_value"))), 5)
+  
+  results_table <- data.frame(
+    local = as.vector(unlist(lapply(mann_kendall_results, `[[`, "uf"))),
+    Variavel = names(mann_kendall_results), 
+    valor_inicio = lapply(variaveis_ans, function(variavel) df_tendencia |> filter(uf == localidade, ano == 2017) |> pull(variavel)) |> as.numeric(),
+    valor_2024 = lapply(variaveis_ans, function(variavel) df_tendencia |> filter(uf == localidade, ano == 2024) |> pull(variavel)) |> as.numeric(),
+    Mann_Kendall_z = round(as.numeric(unlist(lapply(mann_kendall_results, `[[`, "z_value.z"))), 3),
+    Mann_Kendall_p = p_value
+  )
+  
+  results_table_completa_ans <- bind_rows(results_table_completa_ans, results_table)
+}
+
+results_table_completa_organizada_ans <- results_table_completa_ans |>
+  pivot_wider(
+    names_from = Variavel,
+    values_from = c(
+      valor_inicio, 
+      valor_2024, Mann_Kendall_z, Mann_Kendall_p
+    )
+  ) 
+
+results_table_completa_organizada <- full_join(results_table_completa_organizada_sus, results_table_completa_organizada_ans, by = "local")
+
  results_table_completa_organizada <- results_table_completa_organizada |>
    mutate(`Mann_Kendall_p_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS` = 
-            ifelse(`Mann_Kendall_p_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS` < 0.001,
+            ifelse(as.numeric(`Mann_Kendall_p_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS`) < 0.001,
                    "< 0.001",
                    as.character(round(`Mann_Kendall_p_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS`,3))),
           
           `Mann_Kendall_p_Valor médio da razão de abortos inseguros por 100 nascidos vivos no SUS` = 
-            ifelse(`Mann_Kendall_p_Valor médio da razão de abortos inseguros por 100 nascidos vivos no SUS` < 0.001,
+            ifelse(as.numeric(`Mann_Kendall_p_Valor médio da razão de abortos inseguros por 100 nascidos vivos no SUS`) < 0.001,
                    "< 0.001",
                    as.character(round(`Mann_Kendall_p_Valor médio da razão de abortos inseguros por 100 nascidos vivos no SUS`,3))),
           
@@ -347,14 +390,14 @@ results_table_completa_organizada
 tabela_tendencia_taxa <- tibble(
   localidade = results_table_completa_organizada$local,
   
-  valor_2015_taxa_por_1000_mulheres_sus = results_table_completa_organizada$`valor_2015_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS`,
-  valor_2015_taxa_por_1000_mulheres_saude_suplementar = results_table_completa_organizada$`valor_2015_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar`,
+  valor_inicio_taxa_por_1000_mulheres_sus = results_table_completa_organizada$`valor_inicio_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS`,
   valor_2024_taxa_por_1000_mulheres_sus = results_table_completa_organizada$`valor_2024_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS`,
-  valor_2024_taxa_por_1000_mulheres_saude_suplementar = results_table_completa_organizada$`valor_2024_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar`,
-  
   mann_kendal_z_taxa_por_1000_mulheres_sus = results_table_completa_organizada$`Mann_Kendall_z_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS`,
-  mann_kendal_z_taxa_por_1000_mulheres_saude_suplementar = results_table_completa_organizada$`Mann_Kendall_z_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar`,
   mann_kendal_p_taxa_por_1000_mulheres_sus = results_table_completa_organizada$`Mann_Kendall_p_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS`,
+  
+  valor_inicio_taxa_por_1000_mulheres_saude_suplementar = results_table_completa_organizada$`valor_inicio_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar`,
+  valor_2024_taxa_por_1000_mulheres_saude_suplementar = results_table_completa_organizada$`valor_2024_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar`,
+  mann_kendal_z_taxa_por_1000_mulheres_saude_suplementar = results_table_completa_organizada$`Mann_Kendall_z_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar`,
   mann_kendal_p_taxa_por_1000_mulheres_saude_suplementar = results_table_completa_organizada$`Mann_Kendall_p_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar`,
 )
 
@@ -370,28 +413,28 @@ write_xlsx(tabela_tendencia_taxa,
 gt_tbl_taxa <- gt(tabela_tendencia_taxa) |>
   tab_header(
     title = "Análise de tendência para a taxa de abortos inseguros por 1000 mulheres em idade fértil",
-    subtitle = "Teste de tendência de Mann–Kendall, para Brasil e UFs (2015–2024)"
+    subtitle = "Teste de tendência de Mann–Kendall, para Brasil e UFs"
   ) |>
   tab_spanner(
     label = "SUS",
     columns = c(
-      valor_2015_taxa_por_1000_mulheres_sus, valor_2024_taxa_por_1000_mulheres_sus,
+      valor_inicio_taxa_por_1000_mulheres_sus, valor_2024_taxa_por_1000_mulheres_sus,
       mann_kendal_z_taxa_por_1000_mulheres_sus, mann_kendal_p_taxa_por_1000_mulheres_sus)
   ) |>
   tab_spanner(
     label = "Saúde suplementar",
     columns = c(
-      valor_2015_taxa_por_1000_mulheres_saude_suplementar, valor_2024_taxa_por_1000_mulheres_saude_suplementar,
+      valor_inicio_taxa_por_1000_mulheres_saude_suplementar, valor_2024_taxa_por_1000_mulheres_saude_suplementar,
       mann_kendal_z_taxa_por_1000_mulheres_saude_suplementar, mann_kendal_p_taxa_por_1000_mulheres_saude_suplementar
     )
   ) |>
   cols_label(
     localidade = "Local",
-    valor_2015_taxa_por_1000_mulheres_sus = "Taxa em 2015",
+    valor_inicio_taxa_por_1000_mulheres_sus = "Taxa em 2015",
     valor_2024_taxa_por_1000_mulheres_sus = "Taxa em 2024",
     mann_kendal_z_taxa_por_1000_mulheres_sus     = "Mann–Kendall",
     mann_kendal_p_taxa_por_1000_mulheres_sus      = "P-valor",
-    valor_2015_taxa_por_1000_mulheres_saude_suplementar = "Taxa em 2015",
+    valor_inicio_taxa_por_1000_mulheres_saude_suplementar = "Taxa em 2017",
     valor_2024_taxa_por_1000_mulheres_saude_suplementar = "Taxa em 2024",
     mann_kendal_z_taxa_por_1000_mulheres_saude_suplementar     = "Mann–Kendall",
     mann_kendal_p_taxa_por_1000_mulheres_saude_suplementar      = "P-valor"
@@ -428,14 +471,14 @@ gtsave(
 tabela_tendencia_razao <- tibble(
   localidade = results_table_completa_organizada$local,
   
-  valor_2015_taxa_por_100_nascidos_vivos_sus = results_table_completa_organizada$`valor_2015_Valor médio da razão de abortos inseguros por 100 nascidos vivos no SUS`,
-  valor_2015_taxa_por_100_nascidos_vivos_saude_suplementar = results_table_completa_organizada$`valor_2015_Valor médio da razão de abortos inseguros por 100 nascidos vivos na saúde suplementar`,
+  valor_inicio_taxa_por_100_nascidos_vivos_sus = results_table_completa_organizada$`valor_inicio_Valor médio da razão de abortos inseguros por 100 nascidos vivos no SUS`,
   valor_2024_taxa_por_100_nascidos_vivos_sus = results_table_completa_organizada$`valor_2024_Valor médio da razão de abortos inseguros por 100 nascidos vivos no SUS`,
-  valor_2024_taxa_por_100_nascidos_vivos_saude_suplementar = results_table_completa_organizada$`valor_2024_Valor médio da razão de abortos inseguros por 100 nascidos vivos na saúde suplementar`,
-  
   mann_kendal_z_taxa_por_100_nascidos_vivos_sus = results_table_completa_organizada$`Mann_Kendall_z_Valor médio da razão de abortos inseguros por 100 nascidos vivos no SUS`,
-  mann_kendal_z_taxa_por_100_nascidos_vivos_saude_suplementar = results_table_completa_organizada$`Mann_Kendall_z_Valor médio da razão de abortos inseguros por 100 nascidos vivos na saúde suplementar`,
   mann_kendal_p_taxa_por_100_nascidos_vivos_sus = results_table_completa_organizada$`Mann_Kendall_p_Valor médio da razão de abortos inseguros por 100 nascidos vivos no SUS`,
+  
+  valor_inicio_taxa_por_100_nascidos_vivos_saude_suplementar = results_table_completa_organizada$`valor_inicio_Valor médio da razão de abortos inseguros por 100 nascidos vivos na saúde suplementar`,
+  valor_2024_taxa_por_100_nascidos_vivos_saude_suplementar = results_table_completa_organizada$`valor_2024_Valor médio da razão de abortos inseguros por 100 nascidos vivos na saúde suplementar`,
+  mann_kendal_z_taxa_por_100_nascidos_vivos_saude_suplementar = results_table_completa_organizada$`Mann_Kendall_z_Valor médio da razão de abortos inseguros por 100 nascidos vivos na saúde suplementar`,
   mann_kendal_p_taxa_por_100_nascidos_vivos_saude_suplementar = results_table_completa_organizada$`Mann_Kendall_p_Valor médio da razão de abortos inseguros por 100 nascidos vivos na saúde suplementar`,
 )
 
@@ -453,28 +496,28 @@ write_xlsx(
 gt_tbl_razao <- gt(tabela_tendencia_razao) |>
   tab_header(
     title = "Análise de tendência para a razão de abortos inseguros por 100 nascidos vivos",
-    subtitle = "Teste de tendência de Mann–Kendall, para Brasil e UFs (2015–2024)"
+    subtitle = "Teste de tendência de Mann–Kendall, para Brasil e UFs"
   ) |>
   tab_spanner(
     label = "SUS",
     columns = c(
-      valor_2015_taxa_por_100_nascidos_vivos_sus, valor_2024_taxa_por_100_nascidos_vivos_sus,
+      valor_inicio_taxa_por_100_nascidos_vivos_sus, valor_2024_taxa_por_100_nascidos_vivos_sus,
       mann_kendal_z_taxa_por_100_nascidos_vivos_sus, mann_kendal_p_taxa_por_100_nascidos_vivos_sus)
   ) |>
   tab_spanner(
     label = "Saúde suplementar",
     columns = c(
-      valor_2015_taxa_por_100_nascidos_vivos_saude_suplementar, valor_2024_taxa_por_100_nascidos_vivos_saude_suplementar,
+      valor_inicio_taxa_por_100_nascidos_vivos_saude_suplementar, valor_2024_taxa_por_100_nascidos_vivos_saude_suplementar,
       mann_kendal_z_taxa_por_100_nascidos_vivos_saude_suplementar, mann_kendal_p_taxa_por_100_nascidos_vivos_saude_suplementar
     )
   ) |>
   cols_label(
     localidade = "Local",
-    valor_2015_taxa_por_100_nascidos_vivos_sus = "Razão em 2015",
+    valor_inicio_taxa_por_100_nascidos_vivos_sus = "Razão em 2015",
     valor_2024_taxa_por_100_nascidos_vivos_sus = "Razão em 2024",
     mann_kendal_z_taxa_por_100_nascidos_vivos_sus     = "Mann–Kendall",
     mann_kendal_p_taxa_por_100_nascidos_vivos_sus      = "P-valor",
-    valor_2015_taxa_por_100_nascidos_vivos_saude_suplementar = "Razão em 2015",
+    valor_inicio_taxa_por_100_nascidos_vivos_saude_suplementar = "Razão em 2017",
     valor_2024_taxa_por_100_nascidos_vivos_saude_suplementar = "Razão em 2024",
     mann_kendal_z_taxa_por_100_nascidos_vivos_saude_suplementar     = "Mann–Kendall",
     mann_kendal_p_taxa_por_100_nascidos_vivos_saude_suplementar      = "P-valor"
@@ -559,11 +602,16 @@ df_ufs_sf <- read_state(year = 2020, showProgress = FALSE)
 
 df_municipio_2024 <- df_municipio |> filter(ano == 2024)
 df_municipio_2015 <- df_municipio |> filter(ano == 2015)
+df_municipio_2017 <- df_municipio |> filter(ano == 2017)
+
 
 df_mapa_2024 <- left_join(df_municipio_2024, df_muni_sf_2024) |>
   st_as_sf()
 
 df_mapa_2015 <- left_join(df_municipio_2015, df_muni_sf_2024) |>
+  st_as_sf()
+
+df_mapa_2017 <- left_join(df_municipio_2017, df_muni_sf_2024) |>
   st_as_sf()
 
 mapa_2024_tx_sus <- ggplot() +
@@ -616,15 +664,15 @@ mapa_2015_tx_sus
 
 ggsave("figuras/mapa_taxa_por_1000mif_municipios_sus_2015.png", mapa_2015_tx_sus, width = 12, height = 8)
 
-mapa_2015_tx_ans <- ggplot() +
-  geom_sf(data = df_mapa_2015, aes(fill = `Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar`), color = NA) +
-  labs(title = "Mapa da taxa de abortos inseguros por 1000 mulheres em idade fértil \n na saúde suplementar dos municípios no ano de 2015") +
+mapa_2017_tx_ans <- ggplot() +
+  geom_sf(data = df_mapa_2017, aes(fill = `Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar`), color = NA) +
+  labs(title = "Mapa da taxa de abortos inseguros por 1000 mulheres em idade fértil \n na saúde suplementar dos municípios no ano de 2017") +
   scale_fill_viridis_c(option = "viridis", direction = -1, name = "Taxa", limits = c(0, 70)) +
   geom_sf(data = df_ufs_sf, fill = NA, linewidth = 0.05, color = "#505050") +
   theme_bw()
-mapa_2015_tx_ans
+mapa_2017_tx_ans
 
-ggsave("figuras/mapa_taxa_por_1000mif_municipios_saude_suplementar_2015.png", mapa_2015_tx_ans, width = 12, height = 8)
+ggsave("figuras/mapa_taxa_por_1000mif_municipios_saude_suplementar_2017.png", mapa_2017_tx_ans, width = 12, height = 8)
 
 mapa_2015_razao_sus <- ggplot() +
   geom_sf(data = df_mapa_2015, aes(fill = `Valor médio da razão de abortos inseguros por 100 nascidos vivos no SUS`), color = NA) +
@@ -636,13 +684,13 @@ mapa_2015_razao_sus
 
 ggsave("figuras/mapa_razao_por_100nv_municipios_sus_2015.png", mapa_2015_razao_sus, width = 12, height = 8)
 
-mapa_2015_razao_ans <- ggplot() +
-  geom_sf(data = df_mapa_2015, aes(fill = `Valor médio da razão de abortos inseguros por 100 nascidos vivos na saúde suplementar`), color = NA) +
-  labs(title = "Mapa da razão de abortos inseguros por 100 nascidos vivos \n na saúde suplementar dos municípios no ano de 2015") +
+mapa_2017_razao_ans <- ggplot() +
+  geom_sf(data = df_mapa_2017, aes(fill = `Valor médio da razão de abortos inseguros por 100 nascidos vivos na saúde suplementar`), color = NA) +
+  labs(title = "Mapa da razão de abortos inseguros por 100 nascidos vivos \n na saúde suplementar dos municípios no ano de 2017") +
   scale_fill_viridis_c(option = "viridis", direction = -1, name = "Razão", limits = c(0, 200)) +
   geom_sf(data = df_ufs_sf, fill = NA, linewidth = 0.05, color = "#505050") +
   theme_bw()
-mapa_2015_razao_ans
+mapa_2017_razao_ans
 
-ggsave("figuras/mapa_razao_por_100nv_municipios_saude_suplementar_2015.png", mapa_2015_razao_ans, width = 12, height = 8)
+ggsave("figuras/mapa_razao_por_100nv_municipios_saude_suplementar_2017.png", mapa_2017_razao_ans, width = 12, height = 8)
 
