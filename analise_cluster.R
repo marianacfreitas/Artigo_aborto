@@ -602,6 +602,142 @@ df_avaliacao <- rbind(ans_inicio_avaliacao, ans_final_avaliacao,
 
 write_xlsx(df_avaliacao, "databases/metricas_avaliacao_clusters.xlsx")
 
+## --------- Comparação dos clusters com apenas um dos indicadores para a análise ---------
+library(mclust)    
+library(aricode)
+
+df_ans_inicio_rz <- df_ans_inicio |> select(c(ans_tx_abortos_cem_nascidos_vivos_valor_medio))
+df_ans_final_rz <- df_ans_final |> select(c(ans_tx_abortos_cem_nascidos_vivos_valor_medio))
+df_sus_inicio_rz <- df_sus_inicio |> select(c(sus_tx_abortos_cem_nascidos_vivos_valor_medio))
+df_sus_final_rz <- df_sus_final |> select(c(sus_tx_abortos_cem_nascidos_vivos_valor_medio))
+
+df_ans_inicio_tx <- df_ans_inicio |> select(c(ans_tx_abortos_mil_mulheres_valor_medio))
+df_ans_final_tx <- df_ans_final |> select(c(ans_tx_abortos_mil_mulheres_valor_medio))
+df_sus_inicio_tx <- df_sus_inicio |> select(c(sus_tx_abortos_mil_mulheres_valor_medio))
+df_sus_final_tx <- df_sus_final |> select(c(sus_tx_abortos_mil_mulheres_valor_medio))
+
+df_ans_inicio_rz_dist <- dist(df_ans_inicio_rz, method = "euclidean")
+df_ans_final_rz_dist <- dist(df_ans_final_rz, method = "euclidean")
+df_sus_inicio_rz_dist <- dist(df_sus_inicio_rz, method = "euclidean")
+df_sus_final_rz_dist <- dist(df_sus_final_rz, method = "euclidean")
+
+df_ans_inicio_tx_dist <- dist(df_ans_inicio_tx, method = "euclidean")
+df_ans_final_tx_dist <- dist(df_ans_final_tx, method = "euclidean")
+df_sus_inicio_tx_dist <- dist(df_sus_inicio_tx, method = "euclidean")
+df_sus_final_tx_dist <- dist(df_sus_final_tx, method = "euclidean")
+
+# Análise de cluster para ANS de 2017 a 2019 - K-means com k=5
+set.seed(2402)
+df_ans_inicio_kmeans5_rz <- kmeans(df_ans_inicio_rz, 5)
+round(df_ans_inicio_kmeans5_rz$centers, 3)
+table(df_ans_inicio_kmeans5_rz$cluster)
+
+set.seed(2402)
+df_ans_inicio_kmeans5_tx <- kmeans(df_ans_inicio_tx, 5)
+round(df_ans_inicio_kmeans5_tx$centers, 3)
+table(df_ans_inicio_kmeans5_tx$cluster)
+
+## ---- Comparação das análises: ANS de 2017 a 2019
+
+# Número de municípios em grupos diferentes
+table(df_ans_inicio_kmeans5$cluster)
+table(df_ans_inicio_kmeans5_rz$cluster)
+table(df_ans_inicio_kmeans5_tx$cluster)
+# análise conjunta vs apenas com a razão
+cj_rz_ans_inicio <- mclust::adjustedRandIndex(df_ans_inicio_kmeans5$cluster, df_ans_inicio_kmeans5_rz$cluster) # 0.9823526
+# análise conjunta vs apenas com a taxa
+cj_tx_ans_inicio <- mclust::adjustedRandIndex(df_ans_inicio_kmeans5$cluster, df_ans_inicio_kmeans5_tx$cluster) # 0.8904534
+# análise apenas com a taxa vs apenas com a razão
+tx_rz_ans_inicio <- mclust::adjustedRandIndex(df_ans_inicio_kmeans5_tx$cluster, df_ans_inicio_kmeans5_rz$cluster) # 0.8820779
+
+# Análise de cluster para ANS de 2022 a 2024 - Ward com k=4
+ans_final_ward_rz <- hclust(df_ans_final_rz_dist, method = "ward.D2")
+ans_final_ward4_class_rz <- cutree(ans_final_ward_rz, k = 4)
+table(ans_final_ward4_class_rz)
+
+ans_final_ward_tx <- hclust(df_ans_final_tx_dist, method = "ward.D2")
+ans_final_ward4_class_tx <- cutree(ans_final_ward_tx, k = 4)
+table(ans_final_ward4_class_tx)
+
+## ---- Comparação das análises: ANS de 2022 a 2024
+# Número de municípios em grupos diferentes
+table(ans_final_ward4_class)
+table(ans_final_ward4_class_rz)
+table(ans_final_ward4_class_tx)
+# análise conjunta vs apenas com a razão
+cj_rz_ans_final <- mclust::adjustedRandIndex(ans_final_ward4_class, ans_final_ward4_class_rz) # 0.8054838
+# análise conjunta vs apenas com a taxa
+cj_tx_ans_final <- mclust::adjustedRandIndex(ans_final_ward4_class, ans_final_ward4_class_tx) # 0.450833
+# análise apenas com a taxa vs apenas com a razão
+tx_rz_ans_final <- mclust::adjustedRandIndex(ans_final_ward4_class_tx, ans_final_ward4_class_rz) # 0.452628
+
+# Análise de cluster para SUS de 2015 a 2017 - K-means com k=4
+set.seed(2402)
+df_sus_inicio_kmeans4_rz <- kmeans(df_sus_inicio_rz, 4)
+round(df_sus_inicio_kmeans4_rz$centers, 3)
+table(df_sus_inicio_kmeans4_rz$cluster)
+
+set.seed(2402)
+df_sus_inicio_kmeans4_tx <- kmeans(df_sus_inicio_tx, 4)
+round(df_sus_inicio_kmeans4_tx$centers, 3)
+table(df_sus_inicio_kmeans4_tx$cluster)
+
+## ---- Comparação das análises: SUS de 2015 a 2017
+# Número de municípios em grupos diferentes
+table(df_sus_inicio_kmeans4$cluster)
+table(df_sus_inicio_kmeans4_rz$cluster)
+table(df_sus_inicio_kmeans4_tx$cluster)
+# análise conjunta vs apenas com a razão
+cj_rz_sus_inicio <- mclust::adjustedRandIndex(df_sus_inicio_kmeans4$cluster, df_sus_inicio_kmeans4_rz$cluster) # 0.9270969
+# análise conjunta vs apenas com a taxa
+cj_tx_sus_inicio <- mclust::adjustedRandIndex(df_sus_inicio_kmeans4$cluster, df_sus_inicio_kmeans4_tx$cluster) # 0.638541
+# análise apenas com a taxa vs apenas com a razão
+tx_rz_sus_inicio <- mclust::adjustedRandIndex(df_sus_inicio_kmeans4_tx$cluster, df_sus_inicio_kmeans4_rz$cluster) # 0.5892951
+
+# Análise de cluster para SUS de 2022 a 2024 - K-means com k=5
+set.seed(2402)
+df_sus_final_kmeans5_rz <- kmeans(df_sus_final_rz, 5)
+round(df_sus_final_kmeans5_rz$centers, 3)
+table(df_sus_final_kmeans5_rz$cluster)
+
+set.seed(2402)
+df_sus_final_kmeans5_tx <- kmeans(df_sus_final_tx, 5)
+round(df_sus_final_kmeans5_tx$centers, 3)
+table(df_sus_final_kmeans5_tx$cluster)
+
+## ---- Comparação das análises: SUS de 2022 a 2024
+# Número de municípios em grupos diferentes
+table(df_sus_final_kmeans5$cluster)
+table(df_sus_final_kmeans5_rz$cluster)
+table(df_sus_final_kmeans5_tx$cluster)
+# análise conjunta vs apenas com a razão
+cj_rz_sus_final <- mclust::adjustedRandIndex(df_sus_final_kmeans5$cluster, df_sus_final_kmeans5_rz$cluster) # 0.8966685
+# análise conjunta vs apenas com a taxa
+cj_tx_sus_final <- mclust::adjustedRandIndex(df_sus_final_kmeans5$cluster, df_sus_final_kmeans5_tx$cluster) # 0.5930783
+# análise apenas com a taxa vs apenas com a razão
+tx_rz_sus_final <- mclust::adjustedRandIndex(df_sus_final_kmeans5_tx$cluster, df_sus_final_kmeans5_rz$cluster) # 0.5342077
+
+#-- Conclusões da comparação entre análises de cluster com os indicadores juntos e isolados: --
+# Adjusted Rand Index (ARI): compara as duas análises olhando pares de observações, 1.0 indica concordância perfeita
+# ANS 2017 a 2019: ARI para os três pares muito altos, clusters os três clusters são bem parecidos.
+# ANS 2022 a 2024: ARI entre a análise conjunta e apenas a razão é bem alta, quando comparamos com a análise apenas com a taxa ARI fica baixo.
+# SUS 2015 a 2017: ARI entre a análise conjunta e apenas a razão é bem alta, quando comparamos com a análise apenas com a taxa ARI fica baixo.
+# SUS 2022 a 2024: ARI entre a análise conjunta e apenas a razão é bem alta, quando comparamos com a análise apenas com a taxa ARI fica baixo.
+
+# Salvando resultados
+`ARI para análise conjunta e análise apenas com razão por 100 NV` <- c(cj_rz_ans_inicio, cj_rz_ans_final, cj_rz_sus_inicio, cj_rz_sus_final)
+`ARI para análise conjunta e análise apenas com taxa por 1000 MIF` <- c(cj_tx_ans_inicio, cj_tx_ans_final, cj_tx_sus_inicio, cj_tx_sus_final)
+`ARI para análise apenas com razão por 100 NV e análise apenas com taxa por 1000 MIF` <- c(tx_rz_ans_inicio, tx_rz_ans_final, tx_rz_sus_inicio, tx_rz_sus_final)
+`Análise` <- c("ANS, 2017 a 2019", "ANS, 2022 a 2024", "SUS, 2015 a 2017", "SUS, 2022 a 2024")
+
+df_comparacao_clusters <- data.frame(`Análise`, 
+                                    `ARI para análise conjunta e análise apenas com razão por 100 NV`,
+                                    `ARI para análise conjunta e análise apenas com taxa por 1000 MIF`,
+                                    `ARI para análise apenas com razão por 100 NV e análise apenas com taxa por 1000 MIF`)
+
+write_xlsx(df_comparacao_clusters, "databases/ari_comparacao_clusters.xlsx")
+
+
 # Comparando os grupos  ---------------
 #Criando as funções que serão utilizadas para a construção das tabelas e boxplots
 
