@@ -811,13 +811,13 @@ write_xlsx(df_avaliacao, "databases/metricas_avaliacao_clusters.xlsx")
 
 # Escolha final: melhor método
 df_ans_inicio$cluster_ans_inicio1 <- as.factor(ans_inicio_ward2_class)
-df_ans_final$cluster_ans_final1 <- as.factor(ans_final_ward3_class)
+df_ans_final$cluster_ans_final1 <- as.factor(ans_final_ward2_class)
 df_sus_inicio$cluster_sus_inicio1 <- as.factor(df_sus_inicio_kmeans2$cluster)
 df_sus_final$cluster_sus_final1 <- as.factor(sus_final_ward2_class)
 
 # Escolha final: segundo melhor método
 df_ans_inicio$cluster_ans_inicio2 <- as.factor(df_ans_inicio_kmeans2$cluster)
-df_ans_final$cluster_ans_final2 <- as.factor(df_ans_final_kmeans4$cluster)
+df_ans_final$cluster_ans_final2 <- as.factor(df_ans_final_kmeans2$cluster)
 df_sus_inicio$cluster_sus_inicio2 <- as.factor(df_sus_inicio_kmeans3$cluster)
 df_sus_final$cluster_sus_final2 <- as.factor(df_sus_final_kmeans3$cluster)
 
