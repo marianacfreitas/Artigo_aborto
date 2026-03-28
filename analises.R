@@ -64,11 +64,10 @@ df_brasil_1000_mulheres <- df_brasil |>
   ) |>
   mutate(
     Atendimento = case_when(
-      Atendimento == "Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS" ~ "SUS",
-      Atendimento == "Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar" ~ "Saúde suplementar"
+      Atendimento == "Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS" ~ "Brazilian Unified Health System (SUS)",
+      Atendimento == "Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar" ~ "Private healthcare \n and insurance"
     )
   )
-  
   
 serie_temporal_br_plot_1000_mulheres <- ggplot(data = df_brasil_1000_mulheres, mapping = aes(x = ano, y = `Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil`, color = Atendimento)) +
   geom_line(linewidth = 1) +
@@ -76,11 +75,11 @@ serie_temporal_br_plot_1000_mulheres <- ggplot(data = df_brasil_1000_mulheres, m
   scale_x_continuous(breaks = unique(df_brasil_1000_mulheres$ano), guide = guide_axis(angle = 45)) +
   theme_bw(base_size = 15) +
   labs(
-    title = "Série temporal do valor médio da taxa de abortos \n inseguros por mil mulheres em idade fértil",
-    x = "Ano",
-    y = "Valor médio da taxa de abortos inseguros",
-    color = "Atendimento",
-    shape = "Atendimento",
+    title = " ",
+    x = "Year",
+    y = "Unsafe abortios rate per \n 1000 women in reproductive age",
+    color = "Category",
+    shape = "Category",
   ) +
   geom_text(label = df_brasil_1000_mulheres$`Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil`, nudge_y = 0.3, show.legend = FALSE) +
   theme(legend.position = "bottom") +
@@ -132,9 +131,6 @@ ggsave(
 #   width = 7.5, height = 6, units = "in", 
 #   dpi = 600
 # )
-
-
-
 
 # ------------- Séries temporais: Algumas UFs - Plots ---------------
 
@@ -382,146 +378,6 @@ write_csv(
 write_xlsx(tabela_tendencia_taxa,
            "databases/mann_kendall_taxa_por_1000_mulheres.xlsx")
 
-# Ajustar layout
-gt_tbl_taxa <- gt(tabela_tendencia_taxa) |>
-  tab_header(
-    title = "Análise de tendência para a taxa de abortos inseguros por 1000 mulheres em idade fértil",
-    subtitle = "Teste de tendência de Mann–Kendall, para Brasil e UFs"
-  ) |>
-  tab_spanner(
-    label = "SUS",
-    columns = c(
-      valor_inicio_taxa_por_1000_mulheres_sus, valor_2024_taxa_por_1000_mulheres_sus,
-      mann_kendal_z_taxa_por_1000_mulheres_sus, mann_kendal_p_taxa_por_1000_mulheres_sus)
-  ) |>
-  tab_spanner(
-    label = "Saúde suplementar",
-    columns = c(
-      valor_inicio_taxa_por_1000_mulheres_saude_suplementar, valor_2024_taxa_por_1000_mulheres_saude_suplementar,
-      mann_kendal_z_taxa_por_1000_mulheres_saude_suplementar, mann_kendal_p_taxa_por_1000_mulheres_saude_suplementar
-    )
-  ) |>
-  cols_label(
-    localidade = "Local",
-    valor_inicio_taxa_por_1000_mulheres_sus = "Taxa em 2017",
-    valor_2024_taxa_por_1000_mulheres_sus = "Taxa em 2024",
-    mann_kendal_z_taxa_por_1000_mulheres_sus     = "Mann–Kendall",
-    mann_kendal_p_taxa_por_1000_mulheres_sus      = "P-valor",
-    valor_inicio_taxa_por_1000_mulheres_saude_suplementar = "Taxa em 2017",
-    valor_2024_taxa_por_1000_mulheres_saude_suplementar = "Taxa em 2024",
-    mann_kendal_z_taxa_por_1000_mulheres_saude_suplementar     = "Mann–Kendall",
-    mann_kendal_p_taxa_por_1000_mulheres_saude_suplementar      = "P-valor"
-  ) |>
-  fmt_number(
-    columns = starts_with("valor"),
-    decimals = 1
-  ) |>
-  fmt_number(
-    columns = starts_with("mann"),
-    decimals = 3
-  )
-
-gt_tbl_taxa
-
-# salvando como imagem (PNG)
-gtsave(
-  gt_tbl_taxa,
-  filename = "tabelas/tabela_mk_taxa_aborto_por_1000_mulheres.png"
-)
-
-gtsave(
-  gt_tbl_taxa,
-  filename = "tabelas/tabela_mk_taxa_aborto_por_1000_mulheres.html"
-)
-
-gtsave(
-  gt_tbl_taxa,
-  filename = "tabelas/tabela_mk_taxa_aborto_por_1000_mulheres.tex"
-)
-
-
-
-# tabela_tendencia_razao <- tibble(
-#   localidade = results_table_completa_organizada$local,
-#   
-#   valor_inicio_taxa_por_100_nascidos_vivos_sus = results_table_completa_organizada$`valor_inicio_Valor médio da razão de abortos inseguros por 100 nascidos vivos no SUS`,
-#   valor_2024_taxa_por_100_nascidos_vivos_sus = results_table_completa_organizada$`valor_2024_Valor médio da razão de abortos inseguros por 100 nascidos vivos no SUS`,
-#   mann_kendal_z_taxa_por_100_nascidos_vivos_sus = results_table_completa_organizada$`Mann_Kendall_z_Valor médio da razão de abortos inseguros por 100 nascidos vivos no SUS`,
-#   mann_kendal_p_taxa_por_100_nascidos_vivos_sus = results_table_completa_organizada$`Mann_Kendall_p_Valor médio da razão de abortos inseguros por 100 nascidos vivos no SUS`,
-#   
-#   valor_inicio_taxa_por_100_nascidos_vivos_saude_suplementar = results_table_completa_organizada$`valor_inicio_Valor médio da razão de abortos inseguros por 100 nascidos vivos na saúde suplementar`,
-#   valor_2024_taxa_por_100_nascidos_vivos_saude_suplementar = results_table_completa_organizada$`valor_2024_Valor médio da razão de abortos inseguros por 100 nascidos vivos na saúde suplementar`,
-#   mann_kendal_z_taxa_por_100_nascidos_vivos_saude_suplementar = results_table_completa_organizada$`Mann_Kendall_z_Valor médio da razão de abortos inseguros por 100 nascidos vivos na saúde suplementar`,
-#   mann_kendal_p_taxa_por_100_nascidos_vivos_saude_suplementar = results_table_completa_organizada$`Mann_Kendall_p_Valor médio da razão de abortos inseguros por 100 nascidos vivos na saúde suplementar`,
-# )
-# 
-# write_csv(
-#   tabela_tendencia_razao,
-#   "databases/mann_kendall_razao_por_100_nascidos_vivos.csv"
-# )
-# 
-# write_xlsx(
-#   tabela_tendencia_razao,
-#   "databases/mann_kendall_razao_por_100_nascidos_vivos.xlsx"
-# )
-
-# Ajustar layout
-# gt_tbl_razao <- gt(tabela_tendencia_razao) |>
-#   tab_header(
-#     title = "Análise de tendência para a razão de abortos inseguros por 100 nascidos vivos",
-#     subtitle = "Teste de tendência de Mann–Kendall, para Brasil e UFs"
-#   ) |>
-#   tab_spanner(
-#     label = "SUS",
-#     columns = c(
-#       valor_inicio_taxa_por_100_nascidos_vivos_sus, valor_2024_taxa_por_100_nascidos_vivos_sus,
-#       mann_kendal_z_taxa_por_100_nascidos_vivos_sus, mann_kendal_p_taxa_por_100_nascidos_vivos_sus)
-#   ) |>
-#   tab_spanner(
-#     label = "Saúde suplementar",
-#     columns = c(
-#       valor_inicio_taxa_por_100_nascidos_vivos_saude_suplementar, valor_2024_taxa_por_100_nascidos_vivos_saude_suplementar,
-#       mann_kendal_z_taxa_por_100_nascidos_vivos_saude_suplementar, mann_kendal_p_taxa_por_100_nascidos_vivos_saude_suplementar
-#     )
-#   ) |>
-#   cols_label(
-#     localidade = "Local",
-#     valor_inicio_taxa_por_100_nascidos_vivos_sus = "Razão em 2017",
-#     valor_2024_taxa_por_100_nascidos_vivos_sus = "Razão em 2024",
-#     mann_kendal_z_taxa_por_100_nascidos_vivos_sus     = "Mann–Kendall",
-#     mann_kendal_p_taxa_por_100_nascidos_vivos_sus      = "P-valor",
-#     valor_inicio_taxa_por_100_nascidos_vivos_saude_suplementar = "Razão em 2017",
-#     valor_2024_taxa_por_100_nascidos_vivos_saude_suplementar = "Razão em 2024",
-#     mann_kendal_z_taxa_por_100_nascidos_vivos_saude_suplementar     = "Mann–Kendall",
-#     mann_kendal_p_taxa_por_100_nascidos_vivos_saude_suplementar      = "P-valor"
-#   ) |>
-#   fmt_number(
-#     columns = starts_with("valor"),
-#     decimals = 1
-#   ) |>
-#   fmt_number(
-#     columns = starts_with("mann"),
-#     decimals = 3
-#   )
-# 
-# gt_tbl_razao
-# 
-# # salvando como imagem (PNG)
-# gtsave(
-#   gt_tbl_razao,
-#   filename = "tabelas/tabela_mk_razao_aborto_por_100_nascidos_vivos.png", vwidth = 1050
-# )
-# 
-# gtsave(
-#   gt_tbl_razao,
-#   filename = "tabelas/tabela_mk_razao_aborto_por_100_nascidos_vivos.html"
-# )
-# 
-# gtsave(
-#   gt_tbl_razao,
-#   filename = "tabelas/tabela_mk_razao_aborto_por_100_nascidos_vivos.tex"
-# )
-
 # -------------- Análise Espacial por Município -----------
 
 df_municipio <- planilha_indicadores_aborto |>
@@ -562,8 +418,8 @@ df_mapa_2017 <- left_join(df_municipio_2017, df_muni_sf_2024) |>
 
 mapa_2024_tx_sus <- ggplot() +
   geom_sf(data = df_mapa_2024, aes(fill = `Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS`), color = NA) +
-  labs(title = "Mapa da taxa de abortos inseguros por 1000 mulheres em idade fértil \n no SUS dos municípios no ano de 2024") +
-  scale_fill_viridis_c(option = "viridis", direction = -1, name = "Taxa", limits = c(0, 70)) +
+  labs(title = " ") +
+  scale_fill_viridis_c(option = "viridis", direction = -1, name = "Rate", limits = c(0, 70)) +
   geom_sf(data = df_ufs_sf, fill = NA, linewidth = 0.05, color = "#505050") +
   theme_bw()
 mapa_2024_tx_sus
@@ -572,8 +428,8 @@ ggsave("figuras/mapa_taxa_por_1000mif_municipios_sus_2024.png", mapa_2024_tx_sus
 
 mapa_2024_tx_ans <- ggplot() +
   geom_sf(data = df_mapa_2024, aes(fill = `Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar`), color = NA) +
-  labs(title = "Mapa da taxa de abortos inseguros por 1000 mulheres em idade fértil \n na saúde suplementar dos municípios no ano de 2024") +
-  scale_fill_viridis_c(option = "viridis", direction = -1, name = "Taxa", limits = c(0, 70)) +
+  labs(title = " ") +
+  scale_fill_viridis_c(option = "viridis", direction = -1, name = "Rate", limits = c(0, 70)) +
   geom_sf(data = df_ufs_sf, fill = NA, linewidth = 0.05, color = "#505050") +
   theme_bw()
 mapa_2024_tx_ans
@@ -602,8 +458,8 @@ ggsave("figuras/mapa_taxa_por_1000mif_municipios_saude_suplementar_2024.png", ma
 
 mapa_2017_tx_sus <- ggplot() +
   geom_sf(data = df_mapa_2017, aes(fill = `Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS`), color = NA) +
-  labs(title = "Mapa da taxa de abortos inseguros por 1000 mulheres em idade fértil \n no SUS dos municípios no ano de 2017") +
-  scale_fill_viridis_c(option = "viridis", direction = -1, name = "Taxa", limits = c(0, 70)) +
+  labs(title = " ") +
+  scale_fill_viridis_c(option = "viridis", direction = -1, name = "Rate", limits = c(0, 70)) +
   geom_sf(data = df_ufs_sf, fill = NA, linewidth = 0.05, color = "#505050") +
   theme_bw()
 mapa_2017_tx_sus
@@ -612,8 +468,8 @@ ggsave("figuras/mapa_taxa_por_1000mif_municipios_sus_2017.png", mapa_2017_tx_sus
 
 mapa_2017_tx_ans <- ggplot() +
   geom_sf(data = df_mapa_2017, aes(fill = `Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar`), color = NA) +
-  labs(title = "Mapa da taxa de abortos inseguros por 1000 mulheres em idade fértil \n na saúde suplementar dos municípios no ano de 2017") +
-  scale_fill_viridis_c(option = "viridis", direction = -1, name = "Taxa", limits = c(0, 70)) +
+  labs(title = " ") +
+  scale_fill_viridis_c(option = "viridis", direction = -1, name = "Rate", limits = c(0, 70)) +
   geom_sf(data = df_ufs_sf, fill = NA, linewidth = 0.05, color = "#505050") +
   theme_bw()
 mapa_2017_tx_ans

@@ -18,10 +18,15 @@ library(patchwork)
 planilha_indicadores_aborto <- read_csv("databases/planilha_indicadores_aborto.csv") |>
   filter(ano >= 2017)
 
+# Planiha com informações por município sem o município 270150
+planilha_indicadores_aborto_sem_mun <- read_csv("databases/planilha_indicadores_aborto.csv") |>
+  filter(ano >= 2017) |>
+  filter(codmunres != 270150)
+
 df_aux_municipios <- read_csv("databases_auxiliares/df_aux_municipios.csv")
 
 # Indicadores da ANS de 2017 a 2019 (agrupados)
-df_ans_inicio <- planilha_indicadores_aborto |>
+df_ans_inicio <- planilha_indicadores_aborto_sem_mun |>
   filter(ano >= 2017 & ano <= 2019) |>
   group_by(codmunres) |>
   summarise(
@@ -43,7 +48,7 @@ df_sus_inicio <- planilha_indicadores_aborto |>
   # )
 
 # Indicadores da ANS de 2022 a 2024 (agrupados)
-df_ans_final <- planilha_indicadores_aborto |>
+df_ans_final <- planilha_indicadores_aborto_sem_mun |>
   filter(ano >= 2022 & ano <= 2024) |>
   group_by(codmunres) |>
   summarise(
@@ -809,18 +814,66 @@ write_xlsx(df_avaliacao, "databases/metricas_avaliacao_clusters.xlsx")
 
 ##-- Escolha dos melhores clusters
 
-# Escolha final: melhor método
-df_ans_inicio$cluster_ans_inicio1 <- as.factor(ans_inicio_ward2_class)
-df_ans_final$cluster_ans_final1 <- as.factor(ans_final_ward2_class)
-df_sus_inicio$cluster_sus_inicio1 <- as.factor(df_sus_inicio_kmeans2$cluster)
-df_sus_final$cluster_sus_final1 <- as.factor(sus_final_ward2_class)
+# Métodos escolhidos ao final
+# SUS 2017-2019: Kmeans3
+# SUS 2022-2024: Kmeans3
+# ANS 2017-2019: Kmeans3
+# ANS 2022-1014: Kmeans3
 
-# Escolha final: segundo melhor método
-df_ans_inicio$cluster_ans_inicio2 <- as.factor(df_ans_inicio_kmeans2$cluster)
-df_ans_final$cluster_ans_final2 <- as.factor(df_ans_final_kmeans2$cluster)
-df_sus_inicio$cluster_sus_inicio2 <- as.factor(df_sus_inicio_kmeans3$cluster)
-df_sus_final$cluster_sus_final2 <- as.factor(df_sus_final_kmeans3$cluster)
+df_ans_inicio$cluster_kmeans3 <- as.factor(df_ans_inicio_kmeans3$cluster)
+df_ans_final$cluster_kmeans3 <- as.factor(df_ans_final_kmeans3$cluster)
+df_sus_inicio$cluster_kmeans3 <- as.factor(df_sus_inicio_kmeans3$cluster)
+df_sus_final$cluster_kmeans3 <- as.factor(df_sus_final_kmeans3$cluster)
 
+# Tranformando os nomes dos clusters
+df_ans_inicio <- df_ans_inicio |>
+  mutate(
+    cluster_kmeans3 = case_when(
+      cluster_kmeans3 == 2 ~ "1: lowest unsafe abortion rates",
+      cluster_kmeans3 == 3 ~ "2: intermediary unsafe abortion rates",
+      cluster_kmeans3 == 1 ~ "3: highest unsafe abortion rates"
+    )
+  ) |>
+  mutate(
+    cluster_kmeans3_num = substr(cluster_kmeans3, 1, 1)
+  )
+
+df_ans_final <- df_ans_final |>
+  mutate(
+    cluster_kmeans3 = case_when(
+      cluster_kmeans3 == 1 ~ "1: lowest unsafe abortion rates",
+      cluster_kmeans3 == 2 ~ "2: intermediary unsafe abortion rates",
+      cluster_kmeans3 == 3 ~ "3: highest unsafe abortion rates"
+    )
+  ) |>
+  mutate(
+    cluster_kmeans3_num = substr(cluster_kmeans3, 1, 1)
+  )
+
+
+df_sus_inicio <- df_sus_inicio |>
+  mutate(
+    cluster_kmeans3 = case_when(
+      cluster_kmeans3 == 1 ~ "1: lowest unsafe abortion rates",
+      cluster_kmeans3 == 2 ~ "2: intermediary unsafe abortion rates",
+      cluster_kmeans3 == 3 ~ "3: highest unsafe abortion rates"
+    )
+  ) |>
+  mutate(
+    cluster_kmeans3_num = substr(cluster_kmeans3, 1, 1)
+  )
+
+df_sus_final <- df_sus_final |>
+  mutate(
+    cluster_kmeans3 = case_when(
+      cluster_kmeans3 == 2 ~ "1: lowest unsafe abortion rates",
+      cluster_kmeans3 == 1 ~ "2: intermediary unsafe abortion rates",
+      cluster_kmeans3 == 3 ~ "3: highest unsafe abortion rates"
+    )
+  ) |>
+  mutate(
+    cluster_kmeans3_num = substr(cluster_kmeans3, 1, 1)
+  )
 
 
 # ----- Criando as funções que serão utilizadas para a construção das tabelas e boxplots ------
@@ -835,16 +888,16 @@ cria_tabelas <- function(variaveis, df, var_grupos, atendimento, salvar_excel = 
     
     # Criamos o data frame
     df_resumo <- data.frame(
-      variavel = variavel, # Coluna para identificar no Excel
-      grupo = grupos,
+      Variable = variavel, # Coluna para identificar no Excel
+      Cluster = grupos,
       n = unlist(lapply(grupos, function(g) nrow(df[df[[var_grupos]] == g, ]))),
-      minimo = round(unlist(lapply(grupos, function(g) min(df[df[[var_grupos]] == g, ][[variavel]], na.rm = TRUE))), 2),
-      primeiro_qt = round(unlist(lapply(grupos, function(g) quantile(df[df[[var_grupos]] == g, ][[variavel]], 0.25, na.rm = TRUE))), 2),
-      media = round(unlist(lapply(grupos, function(g) mean(df[df[[var_grupos]] == g, ][[variavel]], na.rm = TRUE))), 2),
-      mediana = round(unlist(lapply(grupos, function(g) median(df[df[[var_grupos]] == g, ][[variavel]], na.rm = TRUE))), 2),
-      dp = round(unlist(lapply(grupos, function(g) sd(df[df[[var_grupos]] == g, ][[variavel]], na.rm = TRUE))), 2),
-      terceiro_qt = round(unlist(lapply(grupos, function(g) quantile(df[df[[var_grupos]] == g, ][[variavel]], 0.75, na.rm = TRUE))), 2),
-      maximo = round(unlist(lapply(grupos, function(g) max(df[df[[var_grupos]] == g, ][[variavel]], na.rm = TRUE))), 2)
+      Min = round(unlist(lapply(grupos, function(g) min(df[df[[var_grupos]] == g, ][[variavel]], na.rm = TRUE))), 2),
+      `1Q` = round(unlist(lapply(grupos, function(g) quantile(df[df[[var_grupos]] == g, ][[variavel]], 0.25, na.rm = TRUE))), 2),
+      Mean = round(unlist(lapply(grupos, function(g) mean(df[df[[var_grupos]] == g, ][[variavel]], na.rm = TRUE))), 2),
+      Median = round(unlist(lapply(grupos, function(g) median(df[df[[var_grupos]] == g, ][[variavel]], na.rm = TRUE))), 2),
+      SD = round(unlist(lapply(grupos, function(g) sd(df[df[[var_grupos]] == g, ][[variavel]], na.rm = TRUE))), 2),
+      `3Q` = round(unlist(lapply(grupos, function(g) quantile(df[df[[var_grupos]] == g, ][[variavel]], 0.75, na.rm = TRUE))), 2),
+      Max = round(unlist(lapply(grupos, function(g) max(df[df[[var_grupos]] == g, ][[variavel]], na.rm = TRUE))), 2)
     )
     
     # Armazenamos na lista
@@ -854,7 +907,7 @@ cria_tabelas <- function(variaveis, df, var_grupos, atendimento, salvar_excel = 
     tabela_kable <- kable(
       df_resumo[, -1], # Removemos a coluna "variavel" apenas no print
       align = "cccccccc",
-      col.names = c("Grupo (cluster)", "n", "Mín.", "1º Quartil", "Média", "Mediana", "D.P.", "3º Quartil", "Máx."),
+      col.names = c("Cluster", "n", "Min.", "1Q", "Mean", "Median", "S.D.", "3Q", "Max."),
       caption = ifelse(variavel == variaveis[1], 
                        paste0(glue("Medidas resumo para os grupos de municípios ({atendimento}). <br><br>"), variavel), 
                        variavel)
@@ -883,13 +936,12 @@ cria_boxplots <- function(variaveis, df, var_grupos, labels_y, titulo_geral, nom
     boxplots <- ggplot(df) +
       geom_boxplot(aes(x = as.factor(.data[[var_grupos]]), y = .data[[variavel]]), 
                    fill = "lightblue", outlier.alpha = 0.5) +
-      labs(y = label_atual, x = "Grupo", title = titulo_geral) + 
+      labs(y = label_atual, x = "Group", title = titulo_geral) + 
       theme_classic() + 
       theme(
-        axis.text.x = element_text(size = 12),
-        axis.title.y = element_text(size = 11),
-        plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm")
-        )
+        legend.position = "right",
+        legend.direction = "vertical"
+      )
   
   # Combinando os gráficos com patchwork
   # wrap_plots transforma a lista em um layout; ncol define as colunas
@@ -906,169 +958,64 @@ cria_boxplots <- function(variaveis, df, var_grupos, labels_y, titulo_geral, nom
   return(invisible(grafico_final))
 }
 
-cria_tabelas_testes <- function(variaveis, df, var_grupos, atendimento, salvar_excel = FALSE, nome_arquivo = "testes_post_hoc.xlsx") {
-  
-  lista_para_excel <- list()
-  
-  for (variavel in variaveis) {
-    
-    formula <- as.formula(glue("{variavel} ~ {var_grupos}"))
-    
-    # Executa os testes
-    resultados_dunn <- dunn_test(data = df, formula = formula, p.adjust.method = "bonferroni")
-    efeito_d <- cohens_d(data = df, formula = formula)
-    
-    # Unimos os resultados do Dunn e Cohen em um único dataframe plano
-    df_excel <- resultados_dunn %>%
-      left_join(efeito_d %>% select(group1, group2, effsize), by = c("group1", "group2")) %>%
-      mutate(variavel = variavel) %>%
-      select(variavel, group1, group2, statistic, p.adj, p.adj.signif, effsize)
-    
-    lista_para_excel[[variavel]] <- df_excel
-    
-    monta_linhas <- function(num_grupo) {
-      # Filtra os índices para o grupo específico
-      idx <- which(resultados_dunn$group1 == unique(resultados_dunn$group1)[num_grupo])
-      
-      # Formatação do p-valor com asterisco
-      p_formatado <- ifelse(resultados_dunn$p.adj[idx] < 0.05,
-                            ifelse(round(resultados_dunn$p.adj[idx], 3) == 0, "< 0.001*", 
-                                   paste0(round(resultados_dunn$p.adj[idx], 3), "*")),
-                            round(resultados_dunn$p.adj[idx], 3))
-      
-      paste0(
-        -1 * round(resultados_dunn$statistic[idx], 3), " (Z)<br>",
-        p_formatado, " (p)<br>",
-        round(efeito_d$effsize[idx], 3), " (d)"
-      )
-    }
-    
-    # Montagem da matriz triangular para o kable
-    df_teste_kable <- data.frame(
-      grupo1 = monta_linhas(1),
-      grupo2 = c("", monta_linhas(2)), 
-      grupo3 = c("", "", monta_linhas(3)),
-      row.names = unique(resultados_dunn$group2)
-    )
-    
-    tabela <- kable(
-      df_teste_kable,
-      escape = FALSE,
-      align = "ccc",
-      caption = HTML(ifelse(variavel == variaveis[1],
-                            paste0(glue("Resultados dos testes de Dunn e D de Cohen ({atendimento}). <br><br>"), variavel), 
-                            variavel))
-    )
-    
-    print(tabela)
-  }
-  
-  # Salvamento no Excel
-  if (salvar_excel) {
-    df_final_excel <- bind_rows(lista_para_excel)
-    write_xlsx(df_final_excel, nome_arquivo)
-    message(paste("Arquivo de testes salvo:", nome_arquivo))
-  }
-  
-  return(invisible(lista_para_excel))
-}
-
 ## -- Análises para os melhores métodos de cada categoria de atendimento + período
 
 # Visualizar e salvar tabelas
-df_resumo_clusters_ans_inicio1 <- cria_tabelas(variaveis = c("ans_tx_abortos_mil_mulheres_valor_medio"),
+df_resumo_clusters_ans_inicio <- cria_tabelas(variaveis = c("ans_tx_abortos_mil_mulheres_valor_medio"),
                          df = df_ans_inicio, 
-                         var_grupos = "cluster_ans_inicio1", 
-                         atendimento = "saúde suplementar 2017 a 2019",
+                         var_grupos = "cluster_kmeans3", 
+                         atendimento = " ",
                          salvar_excel = TRUE, 
-                         nome_arquivo = "databases/tabela_resumo_clusters_ans_inicio1.xlsx")
+                         nome_arquivo = "databases/tabela_resumo_clusters_ans_inicio_kmeans3.xlsx")
 
-df_resumo_clusters_ans_final1 <- cria_tabelas(variaveis = c("ans_tx_abortos_mil_mulheres_valor_medio"),
+df_resumo_clusters_ans_final <- cria_tabelas(variaveis = c("ans_tx_abortos_mil_mulheres_valor_medio"),
                                               df = df_ans_final, 
-                                              var_grupos = "cluster_ans_final1", 
-                                              atendimento = "saúde suplementar 2022 a 2024",
+                                              var_grupos = "cluster_kmeans3", 
+                                              atendimento = " ",
                                               salvar_excel = TRUE, 
-                                              nome_arquivo = "databases/tabela_resumo_clusters_ans_final1.xlsx")
+                                              nome_arquivo = "databases/tabela_resumo_clusters_ans_final_kmeans3.xlsx")
 
 
-df_resumo_clusters_sus_inicio1 <- cria_tabelas(variaveis = c("sus_tx_abortos_mil_mulheres_valor_medio"),
+df_resumo_clusters_sus_inicio <- cria_tabelas(variaveis = c("sus_tx_abortos_mil_mulheres_valor_medio"),
                                               df = df_sus_inicio, 
-                                              var_grupos = "cluster_sus_inicio1", 
-                                              atendimento = "SUS 2017 a 2019",
+                                              var_grupos = "cluster_kmeans3", 
+                                              atendimento = " ",
                                               salvar_excel = TRUE, 
-                                              nome_arquivo = "databases/tabela_resumo_clusters_sus_inicio1.xlsx")
+                                              nome_arquivo = "databases/tabela_resumo_clusters_sus_inicio_kmeans3.xlsx")
 
-df_resumo_clusters_sus_final1 <- cria_tabelas(variaveis = c("sus_tx_abortos_mil_mulheres_valor_medio"),
+df_resumo_clusters_sus_final <- cria_tabelas(variaveis = c("sus_tx_abortos_mil_mulheres_valor_medio"),
                                               df = df_sus_final, 
-                                              var_grupos = "cluster_sus_final1", 
-                                              atendimento = "SUS 2022 a 2024",
+                                              var_grupos = "cluster_kmeans3", 
+                                              atendimento = " ",
                                               salvar_excel = TRUE, 
-                                              nome_arquivo = "databases/tabela_resumo_clusters_sus_final1.xlsx")
+                                              nome_arquivo = "databases/tabela_resumo_clusters_sus_final_kmeans3.xlsx")
 
 
 cria_boxplots(variaveis = c("ans_tx_abortos_mil_mulheres_valor_medio"),
-              df = df_ans_inicio, var_grupos = "cluster_ans_inicio1",
-              labels_y = c("Taxa de abortos inseguros por 1000 \n mulheres em idade fértil"),
-              titulo_geral = "Indicador de aborto inseguro da saúde \n suplementar por grupo entre os anos \n de 2017 a 2019",
-              nome_arquivo = "figuras/clustering/boxplot_clusters_ans_inicio1.png")
+              df = df_ans_inicio, var_grupos = "cluster_kmeans3_num",
+              labels_y = c("Unsafe abortion rate per \n 1000 women in reproductive age"),
+              titulo_geral = " ",
+              nome_arquivo = "figuras/clustering/boxplot_clusters_ans_inicio_kmeans3.png")
 
 cria_boxplots(variaveis = c("ans_tx_abortos_mil_mulheres_valor_medio"),
-              df = df_ans_final, var_grupos = "cluster_ans_final1",
-              labels_y = c("Taxa de abortos inseguros por 1000 \n mulheres em idade fértil"),
-              titulo_geral = "Indicador de aborto inseguro da saúde \n suplementar por grupo entre os anos \n de 2022 a 2024",
-              nome_arquivo = "figuras/clustering/boxplot_clusters_ans_final1.png")
+              df = df_ans_final, var_grupos = "cluster_kmeans3_num",
+              labels_y = c("Unsafe abortion rate per \n 1000 women in reproductive age"),
+              titulo_geral = " ",
+              nome_arquivo = "figuras/clustering/boxplot_clusters_ans_final_kmeans3.png")
 
 
 cria_boxplots(variaveis = c("sus_tx_abortos_mil_mulheres_valor_medio"),
-              df = df_sus_inicio, var_grupos = "cluster_sus_inicio1",
-              labels_y = c("Taxa de abortos inseguros por 1000 \n mulheres em idade fértil"),
-              titulo_geral = "Indicador de aborto inseguro do SUS \n por grupo entre os anos de 2017 a 2019",
-              nome_arquivo = "figuras/clustering/boxplot_clusters_sus_inicio1.png")
+              df = df_sus_inicio, var_grupos = "cluster_kmeans3_num",
+              labels_y = c("Unsafe abortion rate per \n 1000 women in reproductive age"),
+              titulo_geral = " ",
+              nome_arquivo = "figuras/clustering/boxplot_clusters_sus_inicio_kmeans3.png")
 
 
 cria_boxplots(variaveis = c("sus_tx_abortos_mil_mulheres_valor_medio"),
-              df = df_sus_final, var_grupos = "cluster_sus_final1",
-              labels_y = c("Taxa de abortos inseguros por 1000 \n mulheres em idade fértil"),
-              titulo_geral = "Indicadores de aborto inseguro do SUS \n por grupo entre os anos de 2022 a 2024",
-              nome_arquivo = "figuras/clustering/boxplot_clusters_sus_final1.png")
-
-tabela_testes_ans_inicio1 <- cria_tabelas_testes(
-  variaveis = c("ans_tx_abortos_mil_mulheres_valor_medio"),
-  df = df_ans_inicio, 
-  var_grupos = "cluster_ans_inicio1", 
-  atendimento = "saúde suplementar 2017 a 2019",
-  salvar_excel = TRUE,
-  nome_arquivo = "databases/tabela_testes_clusters_ans_inicio1.xlsx"
-)
-
-tabela_testes_ans_final1 <- cria_tabelas_testes(
-  variaveis = c("ans_tx_abortos_mil_mulheres_valor_medio"),
-  df = df_ans_final, 
-  var_grupos = "cluster_ans_final1", 
-  atendimento = "SUS 2022 a 2024",
-  salvar_excel = TRUE,
-  nome_arquivo = "databases/tabela_testes_clusters_ans_final1.xlsx"
-)
-
-tabela_testes_sus_inicio1 <- cria_tabelas_testes(
-  variaveis = c("sus_tx_abortos_mil_mulheres_valor_medio"),
-  df = df_sus_inicio, 
-  var_grupos = "cluster_sus_inicio1", 
-  atendimento = "SUS 2017 a 2019",
-  salvar_excel = TRUE,
-  nome_arquivo = "databases/tabela_testes_clusters_sus_inicio1.xlsx"
-)
-
-
-tabela_testes_sus_final1 <- cria_tabelas_testes(
-  variaveis = c("sus_tx_abortos_mil_mulheres_valor_medio"),
-  df = df_sus_final, 
-  var_grupos = "cluster_sus_final1", 
-  atendimento = "SUS 2022 a 2024",
-  salvar_excel = TRUE,
-  nome_arquivo = "databases/tabela_testes_clusters_sus_final1.xlsx"
-)
-
+              df = df_sus_final, var_grupos = "cluster_kmeans3_num",
+              labels_y = c("Unsafe abortion rate per \n 1000 women in reproductive age"),
+              titulo_geral = " ",
+              nome_arquivo = "figuras/clustering/boxplot_clusters_sus_final_kmeans3.png")
 
 # Mapas do Brasil dos clusters --------------------------------------------
 ## Baixando os dados de geometria
@@ -1085,13 +1032,19 @@ df_mapa_ans_inicio <- left_join(df_ans_inicio, df_muni_sf) |>
 
 ## Criando os mapas
 mp1 <- ggplot() +
-  geom_sf(data = df_mapa_ans_inicio, aes(fill = cluster_ans_inicio1), color = NA) +
-  labs(title = "Mapa do Brasil com os grupos de municípios agrupados pelos indicadores de aborto inseguro  \n na saúde suplementar dos anos de 2017 a 2019") +
-  scale_fill_viridis_d(name = "Grupo", end = 0.8, alpha = 0.6) +
+  geom_sf(data = df_mapa_ans_inicio, aes(fill = cluster_kmeans3), color = NA) +
+  labs(title = " ") +
+  scale_fill_viridis_d(name = "Groups", end = 0.8, alpha = 0.6) +
   geom_sf(data = df_ufs_sf, fill = NA, linewidth = 0.08, color = "black") +
-  theme_bw()
+  theme_bw() +
+  theme(
+    legend.position = "bottom",
+    legend.direction = "horizontal",
+    legend.title = element_text(size = 10),
+    legend.text = element_text(size = 9)
+  )
 mp1
-ggsave("figuras/clustering/mapa_cluster_ans_inicio1.png", mp1,  width = 10, height = 6)
+ggsave("figuras/clustering/mapa_cluster_ans_inicio_kmeans3.png", mp1,  width = 10, height = 6)
 
 
 ## Juntando os dois dataframes
@@ -1100,13 +1053,19 @@ df_mapa_ans_final <- left_join(df_ans_final, df_muni_sf) |>
 
 ## Criando os mapas
 mp2 <- ggplot() +
-  geom_sf(data = df_mapa_ans_final, aes(fill = cluster_ans_final1), color = NA) +
-  labs(title = "Mapa do Brasil com os grupos de municípios agrupados pelos indicadores de aborto inseguro  \n na saúde suplementar dos anos de 2022 a 2024") +
-  scale_fill_viridis_d(name = "Grupo", end = 0.8, alpha = 0.6) +
+  geom_sf(data = df_mapa_ans_final, aes(fill = cluster_kmeans3), color = NA) +
+  labs(title = " ") +
+  scale_fill_viridis_d(name = "Groups", end = 0.8, alpha = 0.6) +
   geom_sf(data = df_ufs_sf, fill = NA, linewidth = 0.08, color = "black") +
-  theme_bw()
+  theme_bw() +
+  theme(
+    legend.position = "bottom",
+    legend.direction = "horizontal",
+    legend.title = element_text(size = 10),
+    legend.text = element_text(size = 9)
+  )
 mp2
-ggsave("figuras/clustering/mapa_cluster_ans_final1.png", mp2,  width = 10, height = 6)
+ggsave("figuras/clustering/mapa_cluster_ans_final_kmeans3.png", mp2,  width = 10, height = 6)
 
 
 ## Juntando os dois dataframes
@@ -1115,13 +1074,19 @@ df_mapa_sus_inicio <- left_join(df_sus_inicio, df_muni_sf) |>
 
 ## Criando os mapas
 mp3 <- ggplot() +
-  geom_sf(data = df_mapa_sus_inicio, aes(fill = cluster_sus_inicio1), color = NA) +
-  labs(title = "Mapa do Brasil com os grupos de municípios agrupados pelos indicadores de aborto inseguro  \n no SUS dos anos de 2017 a 2019") +
-  scale_fill_viridis_d(name = "Grupo", end = 0.8, alpha = 0.6) +
+  geom_sf(data = df_mapa_sus_inicio, aes(fill = cluster_kmeans3), color = NA) +
+  labs(title = " ") +
+  scale_fill_viridis_d(name = "Groups", end = 0.8, alpha = 0.6) +
   geom_sf(data = df_ufs_sf, fill = NA, linewidth = 0.08, color = "black") +
-  theme_bw()
+  theme_bw() +
+  theme(
+    legend.position = "bottom",
+    legend.direction = "horizontal",
+    legend.title = element_text(size = 10),
+    legend.text = element_text(size = 9)
+  )
 mp3
-ggsave("figuras/clustering/mapa_cluster_sus_inicio1.png", mp3,  width = 10, height = 6)
+ggsave("figuras/clustering/mapa_cluster_sus_inicio_kmeans3.png", mp3,  width = 10, height = 6)
 
 
 ## Juntando os dois dataframes
@@ -1130,289 +1095,16 @@ df_mapa_sus_final <- left_join(df_sus_final, df_muni_sf) |>
 
 ## Criando os mapas
 mp4 <- ggplot() +
-  geom_sf(data = df_mapa_sus_final, aes(fill = cluster_sus_final1), color = NA) +
-  labs(title = "Mapa do Brasil com os grupos de municípios agrupados pelos indicadores de aborto inseguro  \n no SUS dos anos de 2022 a 2024") +
-  scale_fill_viridis_d(name = "Grupo", end = 0.8, alpha = 0.6) +
+  geom_sf(data = df_mapa_sus_final, aes(fill = cluster_kmeans3), color = NA) +
+  labs(title = " ") +
+  scale_fill_viridis_d(name = "Groups", end = 0.8, alpha = 0.6) +
   geom_sf(data = df_ufs_sf, fill = NA, linewidth = 0.08, color = "black") +
-  theme_bw()
+  theme_bw() +
+  theme(
+    legend.position = "bottom",
+    legend.direction = "horizontal",
+    legend.title = element_text(size = 10),
+    legend.text = element_text(size = 9)
+  )
 mp4
-ggsave("figuras/clustering/mapa_cluster_sus_final1.png", mp4,  width = 10, height = 6)
-
-
-## -- Análises para os segundos melhores métodos de cada categoria de atendimento + período
-
-# Visualizar e salvar tabelas
-df_resumo_clusters_ans_inicio2 <- cria_tabelas(variaveis = c("ans_tx_abortos_mil_mulheres_valor_medio"),
-                                               df = df_ans_inicio, 
-                                               var_grupos = "cluster_ans_inicio2", 
-                                               atendimento = "saúde suplementar 2017 a 2019",
-                                               salvar_excel = TRUE, 
-                                               nome_arquivo = "databases/tabela_resumo_clusters_ans_inicio2.xlsx")
-
-df_resumo_clusters_ans_final2 <- cria_tabelas(variaveis = c("ans_tx_abortos_mil_mulheres_valor_medio"),
-                                              df = df_ans_final, 
-                                              var_grupos = "cluster_ans_final2", 
-                                              atendimento = "saúde suplementar 2022 a 2024",
-                                              salvar_excel = TRUE, 
-                                              nome_arquivo = "databases/tabela_resumo_clusters_ans_final2.xlsx")
-
-
-df_resumo_clusters_sus_inicio2 <- cria_tabelas(variaveis = c("sus_tx_abortos_mil_mulheres_valor_medio"),
-                                               df = df_sus_inicio, 
-                                               var_grupos = "cluster_sus_inicio2", 
-                                               atendimento = "SUS 2017 a 2019",
-                                               salvar_excel = TRUE, 
-                                               nome_arquivo = "databases/tabela_resumo_clusters_sus_inicio2.xlsx")
-
-df_resumo_clusters_sus_final2 <- cria_tabelas(variaveis = c("sus_tx_abortos_mil_mulheres_valor_medio"),
-                                              df = df_sus_final, 
-                                              var_grupos = "cluster_sus_final2", 
-                                              atendimento = "SUS 2022 a 2024",
-                                              salvar_excel = TRUE, 
-                                              nome_arquivo = "databases/tabela_resumo_clusters_sus_final2.xlsx")
-
-
-cria_boxplots(variaveis = c("ans_tx_abortos_mil_mulheres_valor_medio"),
-              df = df_ans_inicio, var_grupos = "cluster_ans_inicio2",
-              labels_y = c("Taxa de abortos inseguros por 1000 \n mulheres em idade fértil"),
-              titulo_geral = "Indicador de aborto inseguro da saúde \n suplementar por grupo entre os anos de \n 2017 a 2019",
-              nome_arquivo = "figuras/clustering/boxplot_clusters_ans_inicio2.png")
-
-cria_boxplots(variaveis = c("ans_tx_abortos_mil_mulheres_valor_medio"),
-              df = df_ans_final, var_grupos = "cluster_ans_final2",
-              labels_y = c("Taxa de abortos inseguros por 1000 \n mulheres em idade fértil"),
-              titulo_geral = "Indicador de aborto inseguro da saúde \n suplementar por grupo entre os anos de \n  2022 a 2024",
-              nome_arquivo = "figuras/clustering/boxplot_clusters_ans_final2.png")
-
-
-cria_boxplots(variaveis = c("sus_tx_abortos_mil_mulheres_valor_medio"),
-              df = df_sus_inicio, var_grupos = "cluster_sus_inicio2",
-              labels_y = c("Taxa de abortos inseguros por 1000 \n mulheres em idade fértil"),
-              titulo_geral = "Indicador de aborto inseguro do SUS \n por grupo entre os anos de 2017 a 2019",
-              nome_arquivo = "figuras/clustering/boxplot_clusters_sus_inicio2.png")
-
-
-cria_boxplots(variaveis = c("sus_tx_abortos_mil_mulheres_valor_medio"),
-              df = df_sus_final, var_grupos = "cluster_sus_final2",
-              labels_y = c("Taxa de abortos inseguros por 1000 \n mulheres em idade fértil"),
-              titulo_geral = "Indicador de aborto inseguro do SUS \n por grupo entre os anos de 2022 a 2024",
-              nome_arquivo = "figuras/clustering/boxplot_clusters_sus_final2.png")
-
-tabela_testes_ans_inicio2 <- cria_tabelas_testes(
-  variaveis = c("ans_tx_abortos_mil_mulheres_valor_medio"),
-  df = df_ans_inicio, 
-  var_grupos = "cluster_ans_inicio2", 
-  atendimento = "saúde suplementar 2017 a 2019",
-  salvar_excel = TRUE,
-  nome_arquivo = "databases/tabela_testes_clusters_ans_inicio2.xlsx"
-)
-
-tabela_testes_ans_final1 <- cria_tabelas_testes(
-  variaveis = c("ans_tx_abortos_mil_mulheres_valor_medio"),
-  df = df_ans_final, 
-  var_grupos = "cluster_ans_final2", 
-  atendimento = "SUS 2022 a 2024",
-  salvar_excel = TRUE,
-  nome_arquivo = "databases/tabela_testes_clusters_ans_final2.xlsx"
-)
-
-tabela_testes_sus_inicio1 <- cria_tabelas_testes(
-  variaveis = c("sus_tx_abortos_mil_mulheres_valor_medio"),
-  df = df_sus_inicio, 
-  var_grupos = "cluster_sus_inicio2", 
-  atendimento = "SUS 2017 a 2019",
-  salvar_excel = TRUE,
-  nome_arquivo = "databases/tabela_testes_clusters_sus_inicio2.xlsx"
-)
-
-
-tabela_testes_sus_final1 <- cria_tabelas_testes(
-  variaveis = c("sus_tx_abortos_mil_mulheres_valor_medio"),
-  df = df_sus_final, 
-  var_grupos = "cluster_sus_final2", 
-  atendimento = "SUS 2022 a 2024",
-  salvar_excel = TRUE,
-  nome_arquivo = "databases/tabela_testes_clusters_sus_final2.xlsx"
-)
-
-
-# Mapas do Brasil dos clusters --------------------------------------------
-
-## Criando os mapas
-mp5 <- ggplot() +
-  geom_sf(data = df_mapa_ans_inicio, aes(fill = cluster_ans_inicio2), color = NA) +
-  labs(title = "Mapa do Brasil com os grupos de municípios agrupados pelos indicadores de aborto inseguro  \n na saúde suplementar dos anos de 2017 a 2019") +
-  scale_fill_viridis_d(name = "Grupo", end = 0.8, alpha = 0.6) +
-  geom_sf(data = df_ufs_sf, fill = NA, linewidth = 0.08, color = "black") +
-  theme_bw()
-mp5
-ggsave("figuras/clustering/mapa_cluster_ans_inicio2.png", mp5,  width = 10, height = 6)
-
-## Criando os mapas
-mp6 <- ggplot() +
-  geom_sf(data = df_mapa_ans_final, aes(fill = cluster_ans_final2), color = NA) +
-  labs(title = "Mapa do Brasil com os grupos de municípios agrupados pelos indicadores de aborto inseguro  \n na saúde suplementar dos anos de 2022 a 2024") +
-  scale_fill_viridis_d(name = "Grupo", end = 0.8, alpha = 0.6) +
-  geom_sf(data = df_ufs_sf, fill = NA, linewidth = 0.08, color = "black") +
-  theme_bw()
-mp6
-ggsave("figuras/clustering/mapa_cluster_ans_final2.png", mp6,  width = 10, height = 6)
-
-## Criando os mapas
-mp7 <- ggplot() +
-  geom_sf(data = df_mapa_sus_inicio, aes(fill = cluster_sus_inicio2), color = NA) +
-  labs(title = "Mapa do Brasil com os grupos de municípios agrupados pelos indicadores de aborto inseguro  \n no SUS dos anos de 2017 a 2019") +
-  scale_fill_viridis_d(name = "Grupo", end = 0.8, alpha = 0.6) +
-  geom_sf(data = df_ufs_sf, fill = NA, linewidth = 0.08, color = "black") +
-  theme_bw()
-mp7
-ggsave("figuras/clustering/mapa_cluster_sus_inicio2.png", mp7,  width = 10, height = 6)
-
-
-## Criando os mapas
-mp8 <- ggplot() +
-  geom_sf(data = df_mapa_sus_final, aes(fill = cluster_sus_final2), color = NA) +
-  labs(title = "Mapa do Brasil com os grupos de municípios agrupados pelos indicadores de aborto inseguro  \n no SUS dos anos de 2022 a 2024") +
-  scale_fill_viridis_d(name = "Grupo", end = 0.8, alpha = 0.6) +
-  geom_sf(data = df_ufs_sf, fill = NA, linewidth = 0.08, color = "black") +
-  theme_bw()
-mp8
-ggsave("figuras/clustering/mapa_cluster_sus_final2.png", mp8,  width = 10, height = 6)
-
-
-
-## --------- Comparação dos clusters com apenas um dos indicadores para a análise ---------
-# library(mclust)    
-# library(aricode)
-# 
-# df_ans_inicio_rz <- df_ans_inicio |> select(c(ans_tx_abortos_cem_nascidos_vivos_valor_medio))
-# df_ans_final_rz <- df_ans_final |> select(c(ans_tx_abortos_cem_nascidos_vivos_valor_medio))
-# df_sus_inicio_rz <- df_sus_inicio |> select(c(sus_tx_abortos_cem_nascidos_vivos_valor_medio))
-# df_sus_final_rz <- df_sus_final |> select(c(sus_tx_abortos_cem_nascidos_vivos_valor_medio))
-# 
-# df_ans_inicio_tx <- df_ans_inicio |> select(c(ans_tx_abortos_mil_mulheres_valor_medio))
-# df_ans_final_tx <- df_ans_final |> select(c(ans_tx_abortos_mil_mulheres_valor_medio))
-# df_sus_inicio_tx <- df_sus_inicio |> select(c(sus_tx_abortos_mil_mulheres_valor_medio))
-# df_sus_final_tx <- df_sus_final |> select(c(sus_tx_abortos_mil_mulheres_valor_medio))
-# 
-# df_ans_inicio_rz_dist <- dist(df_ans_inicio_rz, method = "euclidean")
-# df_ans_final_rz_dist <- dist(df_ans_final_rz, method = "euclidean")
-# df_sus_inicio_rz_dist <- dist(df_sus_inicio_rz, method = "euclidean")
-# df_sus_final_rz_dist <- dist(df_sus_final_rz, method = "euclidean")
-# 
-# df_ans_inicio_tx_dist <- dist(df_ans_inicio_tx, method = "euclidean")
-# df_ans_final_tx_dist <- dist(df_ans_final_tx, method = "euclidean")
-# df_sus_inicio_tx_dist <- dist(df_sus_inicio_tx, method = "euclidean")
-# df_sus_final_tx_dist <- dist(df_sus_final_tx, method = "euclidean")
-# 
-# # Análise de cluster para ANS de 2017 a 2019 - K-means com k=5
-# set.seed(2402)
-# df_ans_inicio_kmeans5_rz <- kmeans(df_ans_inicio_rz, 5)
-# round(df_ans_inicio_kmeans5_rz$centers, 3)
-# table(df_ans_inicio_kmeans5_rz$cluster)
-# 
-# set.seed(2402)
-# df_ans_inicio_kmeans5_tx <- kmeans(df_ans_inicio_tx, 5)
-# round(df_ans_inicio_kmeans5_tx$centers, 3)
-# table(df_ans_inicio_kmeans5_tx$cluster)
-# 
-# ## ---- Comparação das análises: ANS de 2017 a 2019
-# 
-# # Número de municípios em grupos diferentes
-# table(df_ans_inicio_kmeans5$cluster)
-# table(df_ans_inicio_kmeans5_rz$cluster)
-# table(df_ans_inicio_kmeans5_tx$cluster)
-# # análise conjunta vs apenas com a razão
-# cj_rz_ans_inicio <- mclust::adjustedRandIndex(df_ans_inicio_kmeans5$cluster, df_ans_inicio_kmeans5_rz$cluster) # 0.9823526
-# # análise conjunta vs apenas com a taxa
-# cj_tx_ans_inicio <- mclust::adjustedRandIndex(df_ans_inicio_kmeans5$cluster, df_ans_inicio_kmeans5_tx$cluster) # 0.8904534
-# # análise apenas com a taxa vs apenas com a razão
-# tx_rz_ans_inicio <- mclust::adjustedRandIndex(df_ans_inicio_kmeans5_tx$cluster, df_ans_inicio_kmeans5_rz$cluster) # 0.8820779
-# 
-# # Análise de cluster para ANS de 2022 a 2024 - Ward com k=4
-# ans_final_ward_rz <- hclust(df_ans_final_rz_dist, method = "ward.D2")
-# ans_final_ward4_class_rz <- cutree(ans_final_ward_rz, k = 4)
-# table(ans_final_ward4_class_rz)
-# 
-# ans_final_ward_tx <- hclust(df_ans_final_tx_dist, method = "ward.D2")
-# ans_final_ward4_class_tx <- cutree(ans_final_ward_tx, k = 4)
-# table(ans_final_ward4_class_tx)
-# 
-# ## ---- Comparação das análises: ANS de 2022 a 2024
-# # Número de municípios em grupos diferentes
-# table(ans_final_ward4_class)
-# table(ans_final_ward4_class_rz)
-# table(ans_final_ward4_class_tx)
-# # análise conjunta vs apenas com a razão
-# cj_rz_ans_final <- mclust::adjustedRandIndex(ans_final_ward4_class, ans_final_ward4_class_rz) # 0.8054838
-# # análise conjunta vs apenas com a taxa
-# cj_tx_ans_final <- mclust::adjustedRandIndex(ans_final_ward4_class, ans_final_ward4_class_tx) # 0.450833
-# # análise apenas com a taxa vs apenas com a razão
-# tx_rz_ans_final <- mclust::adjustedRandIndex(ans_final_ward4_class_tx, ans_final_ward4_class_rz) # 0.452628
-# 
-# # Análise de cluster para SUS de 2015 a 2017 - K-means com k=4
-# set.seed(2402)
-# df_sus_inicio_kmeans4_rz <- kmeans(df_sus_inicio_rz, 4)
-# round(df_sus_inicio_kmeans4_rz$centers, 3)
-# table(df_sus_inicio_kmeans4_rz$cluster)
-# 
-# set.seed(2402)
-# df_sus_inicio_kmeans4_tx <- kmeans(df_sus_inicio_tx, 4)
-# round(df_sus_inicio_kmeans4_tx$centers, 3)
-# table(df_sus_inicio_kmeans4_tx$cluster)
-# 
-# ## ---- Comparação das análises: SUS de 2015 a 2017
-# # Número de municípios em grupos diferentes
-# table(df_sus_inicio_kmeans4$cluster)
-# table(df_sus_inicio_kmeans4_rz$cluster)
-# table(df_sus_inicio_kmeans4_tx$cluster)
-# # análise conjunta vs apenas com a razão
-# cj_rz_sus_inicio <- mclust::adjustedRandIndex(df_sus_inicio_kmeans4$cluster, df_sus_inicio_kmeans4_rz$cluster) # 0.9270969
-# # análise conjunta vs apenas com a taxa
-# cj_tx_sus_inicio <- mclust::adjustedRandIndex(df_sus_inicio_kmeans4$cluster, df_sus_inicio_kmeans4_tx$cluster) # 0.638541
-# # análise apenas com a taxa vs apenas com a razão
-# tx_rz_sus_inicio <- mclust::adjustedRandIndex(df_sus_inicio_kmeans4_tx$cluster, df_sus_inicio_kmeans4_rz$cluster) # 0.5892951
-# 
-# # Análise de cluster para SUS de 2022 a 2024 - K-means com k=5
-# set.seed(2402)
-# df_sus_final_kmeans5_rz <- kmeans(df_sus_final_rz, 5)
-# round(df_sus_final_kmeans5_rz$centers, 3)
-# table(df_sus_final_kmeans5_rz$cluster)
-# 
-# set.seed(2402)
-# df_sus_final_kmeans5_tx <- kmeans(df_sus_final_tx, 5)
-# round(df_sus_final_kmeans5_tx$centers, 3)
-# table(df_sus_final_kmeans5_tx$cluster)
-# 
-# ## ---- Comparação das análises: SUS de 2022 a 2024
-# # Número de municípios em grupos diferentes
-# table(df_sus_final_kmeans5$cluster)
-# table(df_sus_final_kmeans5_rz$cluster)
-# table(df_sus_final_kmeans5_tx$cluster)
-# # análise conjunta vs apenas com a razão
-# cj_rz_sus_final <- mclust::adjustedRandIndex(df_sus_final_kmeans5$cluster, df_sus_final_kmeans5_rz$cluster) # 0.8966685
-# # análise conjunta vs apenas com a taxa
-# cj_tx_sus_final <- mclust::adjustedRandIndex(df_sus_final_kmeans5$cluster, df_sus_final_kmeans5_tx$cluster) # 0.5930783
-# # análise apenas com a taxa vs apenas com a razão
-# tx_rz_sus_final <- mclust::adjustedRandIndex(df_sus_final_kmeans5_tx$cluster, df_sus_final_kmeans5_rz$cluster) # 0.5342077
-# 
-# #-- Conclusões da comparação entre análises de cluster com os indicadores juntos e isolados: --
-# # Adjusted Rand Index (ARI): compara as duas análises olhando pares de observações, 1.0 indica concordância perfeita
-# # ANS 2017 a 2019: ARI para os três pares muito altos, clusters os três clusters são bem parecidos.
-# # ANS 2022 a 2024: ARI entre a análise conjunta e apenas a razão é bem alta, quando comparamos com a análise apenas com a taxa ARI fica baixo.
-# # SUS 2015 a 2017: ARI entre a análise conjunta e apenas a razão é bem alta, quando comparamos com a análise apenas com a taxa ARI fica baixo.
-# # SUS 2022 a 2024: ARI entre a análise conjunta e apenas a razão é bem alta, quando comparamos com a análise apenas com a taxa ARI fica baixo.
-# 
-# # Salvando resultados
-# `ARI para análise conjunta e análise apenas com razão por 100 NV` <- c(cj_rz_ans_inicio, cj_rz_ans_final, cj_rz_sus_inicio, cj_rz_sus_final)
-# `ARI para análise conjunta e análise apenas com taxa por 1000 MIF` <- c(cj_tx_ans_inicio, cj_tx_ans_final, cj_tx_sus_inicio, cj_tx_sus_final)
-# `ARI para análise apenas com razão por 100 NV e análise apenas com taxa por 1000 MIF` <- c(tx_rz_ans_inicio, tx_rz_ans_final, tx_rz_sus_inicio, tx_rz_sus_final)
-# `Análise` <- c("ANS, 2017 a 2019", "ANS, 2022 a 2024", "SUS, 2015 a 2017", "SUS, 2022 a 2024")
-# 
-# df_comparacao_clusters <- data.frame(`Análise`, 
-#                                     `ARI para análise conjunta e análise apenas com razão por 100 NV`,
-#                                     `ARI para análise conjunta e análise apenas com taxa por 1000 MIF`,
-#                                     `ARI para análise apenas com razão por 100 NV e análise apenas com taxa por 1000 MIF`)
-# 
-# write_xlsx(df_comparacao_clusters, "databases/ari_comparacao_clusters.xlsx")
-
+ggsave("figuras/clustering/mapa_cluster_sus_final_kmeans3.png", mp4,  width = 10, height = 6)
