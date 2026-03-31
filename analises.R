@@ -271,10 +271,10 @@ for (i in 1:length(unique(df_tendencia$uf))) {
   results_table <- data.frame(
     local = as.vector(unlist(lapply(mann_kendall_results, `[[`, "uf"))),
     Variavel = names(mann_kendall_results), 
-    valor_inicio = lapply(variaveis_sus, function(variavel) df_tendencia |> filter(uf == localidade, ano == 2017) |> pull(variavel)) |> as.numeric(),
+    valor_2017 = lapply(variaveis_sus, function(variavel) df_tendencia |> filter(uf == localidade, ano == 2017) |> pull(variavel)) |> as.numeric(),
     valor_2024 = lapply(variaveis_sus, function(variavel) df_tendencia |> filter(uf == localidade, ano == 2024) |> pull(variavel)) |> as.numeric(),
     Mann_Kendall_z = round(as.numeric(unlist(lapply(mann_kendall_results, `[[`, "z_value"))), 3),
-    Mann_Kendall_p = p_value
+    Mann_Kendall_p = round(as.numeric(p_value), 4)
   )
   
   results_table_completa_sus <- bind_rows(results_table_completa_sus, results_table)
@@ -284,7 +284,7 @@ results_table_completa_organizada_sus <- results_table_completa_sus |>
   pivot_wider(
     names_from = Variavel,
     values_from = c(
-      valor_inicio, 
+      valor_2017, 
       valor_2024, Mann_Kendall_z, Mann_Kendall_p
     )
   ) 
@@ -316,10 +316,10 @@ for (i in 1:length(unique(df_tendencia$uf))) {
   results_table <- data.frame(
     local = as.vector(unlist(lapply(mann_kendall_results, `[[`, "uf"))),
     Variavel = names(mann_kendall_results), 
-    valor_inicio = lapply(variaveis_ans, function(variavel) df_tendencia |> filter(uf == localidade, ano == 2017) |> pull(variavel)) |> as.numeric(),
+    valor_2017 = lapply(variaveis_ans, function(variavel) df_tendencia |> filter(uf == localidade, ano == 2017) |> pull(variavel)) |> as.numeric(),
     valor_2024 = lapply(variaveis_ans, function(variavel) df_tendencia |> filter(uf == localidade, ano == 2024) |> pull(variavel)) |> as.numeric(),
     Mann_Kendall_z = round(as.numeric(unlist(lapply(mann_kendall_results, `[[`, "z_value"))), 3),
-    Mann_Kendall_p = p_value
+    Mann_Kendall_p = round(as.numeric(p_value), 4)
   )
   
   results_table_completa_ans <- bind_rows(results_table_completa_ans, results_table)
@@ -329,7 +329,7 @@ results_table_completa_organizada_ans <- results_table_completa_ans |>
   pivot_wider(
     names_from = Variavel,
     values_from = c(
-      valor_inicio, 
+      valor_2017, 
       valor_2024, Mann_Kendall_z, Mann_Kendall_p
     )
   ) 
@@ -338,14 +338,14 @@ results_table_completa_organizada <- full_join(results_table_completa_organizada
 
  results_table_completa_organizada <- results_table_completa_organizada |>
    mutate(`Mann_Kendall_p_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS` = 
-            ifelse(as.numeric(`Mann_Kendall_p_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS`) < 0.001,
-                   "< 0.001",
-                   as.character(round(`Mann_Kendall_p_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS`,3))),
+            ifelse(as.numeric(`Mann_Kendall_p_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS`) < 0.0001,
+                   "< 0.0001",
+                   as.character(round(`Mann_Kendall_p_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS`, 4))),
           
           `Mann_Kendall_p_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar` = 
-            ifelse(as.numeric(`Mann_Kendall_p_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar`) < 0.001,
-                   "< 0.001",
-                   as.character(round(`Mann_Kendall_p_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar`,3)))#,
+            ifelse(as.numeric(`Mann_Kendall_p_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar`) < 0.0001,
+                   "< 0.0001",
+                   as.character(round(`Mann_Kendall_p_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar`, 4)))#,
           
           # `Mann_Kendall_p_Valor médio da razão de abortos inseguros por 100 nascidos vivos no SUS` = 
           #   ifelse(as.numeric(`Mann_Kendall_p_Valor médio da razão de abortos inseguros por 100 nascidos vivos no SUS`) < 0.001,
@@ -359,12 +359,12 @@ results_table_completa_organizada
 tabela_tendencia_taxa <- tibble(
   localidade = results_table_completa_organizada$local,
   
-  valor_inicio_taxa_por_1000_mulheres_sus = results_table_completa_organizada$`valor_inicio_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS`,
+  valor_2017_taxa_por_1000_mulheres_sus = results_table_completa_organizada$`valor_2017_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS`,
   valor_2024_taxa_por_1000_mulheres_sus = results_table_completa_organizada$`valor_2024_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS`,
   mann_kendal_z_taxa_por_1000_mulheres_sus = results_table_completa_organizada$`Mann_Kendall_z_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS`,
   mann_kendal_p_taxa_por_1000_mulheres_sus = results_table_completa_organizada$`Mann_Kendall_p_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS`,
   
-  valor_inicio_taxa_por_1000_mulheres_saude_suplementar = results_table_completa_organizada$`valor_inicio_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar`,
+  valor_2017_taxa_por_1000_mulheres_saude_suplementar = results_table_completa_organizada$`valor_2017_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar`,
   valor_2024_taxa_por_1000_mulheres_saude_suplementar = results_table_completa_organizada$`valor_2024_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar`,
   mann_kendal_z_taxa_por_1000_mulheres_saude_suplementar = results_table_completa_organizada$`Mann_Kendall_z_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar`,
   mann_kendal_p_taxa_por_1000_mulheres_saude_suplementar = results_table_completa_organizada$`Mann_Kendall_p_Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar`,
