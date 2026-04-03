@@ -835,7 +835,11 @@ df_ans_inicio <- df_ans_inicio |>
     )
   ) |>
   mutate(
-    cluster_kmeans3_num = substr(cluster_kmeans3, 1, 1)
+    cluster_kmeans3_num = case_when(
+      cluster_kmeans3 == "1: lowest unsafe abortion rates" ~ "Lowest rates",
+      cluster_kmeans3 == "2: intermediary unsafe abortion rates" ~ "Intermediary rates",
+      cluster_kmeans3 == "3: highest unsafe abortion rates" ~ "Highest rates"
+    )
   )
 
 df_ans_final <- df_ans_final |>
@@ -847,8 +851,12 @@ df_ans_final <- df_ans_final |>
     )
   ) |>
   mutate(
-    cluster_kmeans3_num = substr(cluster_kmeans3, 1, 1)
-  )
+    cluster_kmeans3_num = case_when(
+      cluster_kmeans3 == "1: lowest unsafe abortion rates" ~ "Lowest rates",
+      cluster_kmeans3 == "2: intermediary unsafe abortion rates" ~ "Intermediary rates",
+      cluster_kmeans3 == "3: highest unsafe abortion rates" ~ "Highest rates"
+    )  
+    )
 
 
 df_sus_inicio <- df_sus_inicio |>
@@ -860,7 +868,11 @@ df_sus_inicio <- df_sus_inicio |>
     )
   ) |>
   mutate(
-    cluster_kmeans3_num = substr(cluster_kmeans3, 1, 1)
+    cluster_kmeans3_num = case_when(
+      cluster_kmeans3 == "1: lowest unsafe abortion rates" ~ "Lowest rates",
+      cluster_kmeans3 == "2: intermediary unsafe abortion rates" ~ "Intermediary rates",
+      cluster_kmeans3 == "3: highest unsafe abortion rates" ~ "Highest rates"
+    )
   )
 
 df_sus_final <- df_sus_final |>
@@ -872,7 +884,11 @@ df_sus_final <- df_sus_final |>
     )
   ) |>
   mutate(
-    cluster_kmeans3_num = substr(cluster_kmeans3, 1, 1)
+    cluster_kmeans3_num = case_when(
+      cluster_kmeans3 == "1: lowest unsafe abortion rates" ~ "Lowest rates",
+      cluster_kmeans3 == "2: intermediary unsafe abortion rates" ~ "Intermediary rates",
+      cluster_kmeans3 == "3: highest unsafe abortion rates" ~ "Highest rates"
+    )
   )
 
 
