@@ -358,7 +358,7 @@ table(df_sus_final_kmedoids6$cluster)
 ## Ajustando métodos hierárquicos -----------------------------------------
 ### Método de Ward
 ans_inicio_ward <- hclust(df_ans_inicio_dist, method = "ward.D2")
-plot(as.dendrogram(ans_inicio_ward), main = "Dendrograma do método de Ward (ANS 2017 a 2019)", ylab = "Altura")
+#plot(as.dendrogram(ans_inicio_ward), main = "Dendrograma do método de Ward (ANS 2017 a 2019)", ylab = "Altura")
 ans_inicio_ward2_class <- cutree(ans_inicio_ward, k = 2)
 ans_inicio_ward3_class <- cutree(ans_inicio_ward, k = 3)
 ans_inicio_ward4_class <- cutree(ans_inicio_ward, k = 4)
@@ -366,7 +366,7 @@ ans_inicio_ward5_class <- cutree(ans_inicio_ward, k = 5)
 ans_inicio_ward6_class <- cutree(ans_inicio_ward, k = 6)
 
 ans_final_ward <- hclust(df_ans_final_dist, method = "ward.D2")
-plot(as.dendrogram(ans_final_ward), main = "Dendrograma do método de Ward (ANS 2022 a 2024)", ylab = "Altura")
+#plot(as.dendrogram(ans_final_ward), main = "Dendrograma do método de Ward (ANS 2022 a 2024)", ylab = "Altura")
 ans_final_ward2_class <- cutree(ans_final_ward, k = 2)
 ans_final_ward3_class <- cutree(ans_final_ward, k = 3)
 ans_final_ward4_class <- cutree(ans_final_ward, k = 4)
@@ -375,7 +375,7 @@ ans_final_ward6_class <- cutree(ans_final_ward, k = 6)
 
 
 sus_inicio_ward <- hclust(df_sus_inicio_dist, method = "ward.D2")
-plot(as.dendrogram(sus_inicio_ward), main = "Dendrograma do método de Ward (SUS 2017 a 2019)", ylab = "Altura")
+#plot(as.dendrogram(sus_inicio_ward), main = "Dendrograma do método de Ward (SUS 2017 a 2019)", ylab = "Altura")
 sus_inicio_ward2_class <- cutree(sus_inicio_ward, k = 2)
 sus_inicio_ward3_class <- cutree(sus_inicio_ward, k = 3)
 sus_inicio_ward4_class <- cutree(sus_inicio_ward, k = 4)
@@ -383,7 +383,7 @@ sus_inicio_ward5_class <- cutree(sus_inicio_ward, k = 5)
 sus_inicio_ward6_class <- cutree(sus_inicio_ward, k = 6)
 
 sus_final_ward <- hclust(df_sus_final_dist, method = "ward.D2")
-plot(as.dendrogram(sus_final_ward), main = "Dendrograma do método de Ward (SUS 2022 a 2024)", ylab = "Altura")
+#plot(as.dendrogram(sus_final_ward), main = "Dendrograma do método de Ward (SUS 2022 a 2024)", ylab = "Altura")
 sus_final_ward2_class <- cutree(sus_final_ward, k = 2)
 sus_final_ward3_class <- cutree(sus_final_ward, k = 3)
 sus_final_ward4_class <- cutree(sus_final_ward, k = 4)
@@ -392,7 +392,7 @@ sus_final_ward6_class <- cutree(sus_final_ward, k = 6)
 
 ### Single linkage
 ans_inicio_single <- hclust(df_ans_inicio_dist, method = "single")
-plot(as.dendrogram(ans_inicio_single), main = "Dendrograma do método de single linkage (ANS 2017 a 2019)", ylab = "Altura")
+#plot(as.dendrogram(ans_inicio_single), main = "Dendrograma do método de single linkage (ANS 2017 a 2019)", ylab = "Altura")
 ans_inicio_single2_class <- cutree(ans_inicio_single, k = 2)
 ans_inicio_single3_class <- cutree(ans_inicio_single, k = 3)
 ans_inicio_single4_class <- cutree(ans_inicio_single, k = 4)
@@ -400,7 +400,7 @@ ans_inicio_single5_class <- cutree(ans_inicio_single, k = 5)
 ans_inicio_single6_class <- cutree(ans_inicio_single, k = 6)
 
 ans_final_single <- hclust(df_ans_final_dist, method = "single")
-plot(as.dendrogram(ans_final_single), main = "Dendrograma do método de single linkage (ANS 2022 a 2024)", ylab = "Altura")
+#plot(as.dendrogram(ans_final_single), main = "Dendrograma do método de single linkage (ANS 2022 a 2024)", ylab = "Altura")
 ans_final_single2_class <- cutree(ans_final_single, k = 2)
 ans_final_single3_class <- cutree(ans_final_single, k = 3)
 ans_final_single4_class <- cutree(ans_final_single, k = 4)
@@ -408,7 +408,7 @@ ans_final_single5_class <- cutree(ans_final_single, k = 5)
 ans_final_single6_class <- cutree(ans_final_single, k = 6)
 
 sus_inicio_single <- hclust(df_sus_inicio_dist, method = "single")
-plot(as.dendrogram(sus_inicio_single), main = "Dendrograma do método de single linkage (SUS 2017 a 2019)", ylab = "Altura")
+#plot(as.dendrogram(sus_inicio_single), main = "Dendrograma do método de single linkage (SUS 2017 a 2019)", ylab = "Altura")
 sus_inicio_single2_class <- cutree(sus_inicio_single, k = 2)
 sus_inicio_single3_class <- cutree(sus_inicio_single, k = 3)
 sus_inicio_single4_class <- cutree(sus_inicio_single, k = 4)
@@ -416,7 +416,7 @@ sus_inicio_single5_class <- cutree(sus_inicio_single, k = 5)
 sus_inicio_single6_class <- cutree(sus_inicio_single, k = 6)
 
 sus_final_single <- hclust(df_sus_final_dist, method = "single")
-plot(as.dendrogram(sus_final_single), main = "Dendrograma do método de single linkage (SUS 2022 a 2024)", ylab = "Altura")
+#plot(as.dendrogram(sus_final_single), main = "Dendrograma do método de single linkage (SUS 2022 a 2024)", ylab = "Altura")
 sus_final_single2_class <- cutree(sus_final_single, k = 2)
 sus_final_single3_class <- cutree(sus_final_single, k = 3)
 sus_final_single4_class <- cutree(sus_final_single, k = 4)
@@ -425,7 +425,7 @@ sus_final_single6_class <- cutree(sus_final_single, k = 6)
 
 ### Complete linkage
 ans_inicio_complete <- hclust(df_ans_inicio_dist, method = "complete")
-plot(as.dendrogram(ans_inicio_complete), main = "Dendrograma do método de complete linkage (ANS 2017 a 2019)", ylab = "Altura")
+#plot(as.dendrogram(ans_inicio_complete), main = "Dendrograma do método de complete linkage (ANS 2017 a 2019)", ylab = "Altura")
 ans_inicio_complete2_class <- cutree(ans_inicio_complete, k = 2)
 ans_inicio_complete3_class <- cutree(ans_inicio_complete, k = 3)
 ans_inicio_complete4_class <- cutree(ans_inicio_complete, k = 4)
@@ -433,7 +433,7 @@ ans_inicio_complete5_class <- cutree(ans_inicio_complete, k = 5)
 ans_inicio_complete6_class <- cutree(ans_inicio_complete, k = 6)
 
 ans_final_complete <- hclust(df_ans_final_dist, method = "complete")
-plot(as.dendrogram(ans_final_complete), main = "Dendrograma do método de complete linkage (ANS 2022 a 2024)", ylab = "Altura")
+#plot(as.dendrogram(ans_final_complete), main = "Dendrograma do método de complete linkage (ANS 2022 a 2024)", ylab = "Altura")
 ans_final_complete2_class <- cutree(ans_final_complete, k = 2)
 ans_final_complete3_class <- cutree(ans_final_complete, k = 3)
 ans_final_complete4_class <- cutree(ans_final_complete, k = 4)
@@ -441,7 +441,7 @@ ans_final_complete5_class <- cutree(ans_final_complete, k = 5)
 ans_final_complete6_class <- cutree(ans_final_complete, k = 6)
 
 sus_inicio_complete <- hclust(df_sus_inicio_dist, method = "complete")
-plot(as.dendrogram(sus_inicio_complete), main = "Dendrograma do método de complete linkage (SUS 2017 a 2019)", ylab = "Altura")
+#plot(as.dendrogram(sus_inicio_complete), main = "Dendrograma do método de complete linkage (SUS 2017 a 2019)", ylab = "Altura")
 sus_inicio_complete2_class <- cutree(sus_inicio_complete, k = 2)
 sus_inicio_complete3_class <- cutree(sus_inicio_complete, k = 3)
 sus_inicio_complete4_class <- cutree(sus_inicio_complete, k = 4)
@@ -449,7 +449,7 @@ sus_inicio_complete5_class <- cutree(sus_inicio_complete, k = 5)
 sus_inicio_complete6_class <- cutree(sus_inicio_complete, k = 6)
 
 sus_final_complete <- hclust(df_sus_final_dist, method = "complete")
-plot(as.dendrogram(sus_final_complete), main = "Dendrograma do método de complete linkage (SUS 2022 a 2024)", ylab = "Altura")
+#plot(as.dendrogram(sus_final_complete), main = "Dendrograma do método de complete linkage (SUS 2022 a 2024)", ylab = "Altura")
 sus_final_complete2_class <- cutree(sus_final_complete, k = 2)
 sus_final_complete3_class <- cutree(sus_final_complete, k = 3)
 sus_final_complete4_class <- cutree(sus_final_complete, k = 4)
@@ -460,7 +460,7 @@ sus_final_complete6_class <- cutree(sus_final_complete, k = 6)
 
 ### Average linkage
 ans_inicio_average <- hclust(df_ans_inicio_dist, method = "average")
-plot(as.dendrogram(ans_inicio_average), main = "Dendrograma do método de average linkage (ANS 2017 a 2019)", ylab = "Altura")
+#plot(as.dendrogram(ans_inicio_average), main = "Dendrograma do método de average linkage (ANS 2017 a 2019)", ylab = "Altura")
 ans_inicio_average2_class <- cutree(ans_inicio_average, k = 2)
 ans_inicio_average3_class <- cutree(ans_inicio_average, k = 3)
 ans_inicio_average4_class <- cutree(ans_inicio_average, k = 4)
@@ -468,7 +468,7 @@ ans_inicio_average5_class <- cutree(ans_inicio_average, k = 5)
 ans_inicio_average6_class <- cutree(ans_inicio_average, k = 6)
 
 ans_final_average <- hclust(df_ans_final_dist, method = "average")
-plot(as.dendrogram(ans_final_average), main = "Dendrograma do método de average linkage (ANS 2022 a 2024)", ylab = "Altura")
+#plot(as.dendrogram(ans_final_average), main = "Dendrograma do método de average linkage (ANS 2022 a 2024)", ylab = "Altura")
 ans_final_average2_class <- cutree(ans_final_average, k = 2)
 ans_final_average3_class <- cutree(ans_final_average, k = 3)
 ans_final_average4_class <- cutree(ans_final_average, k = 4)
@@ -476,7 +476,7 @@ ans_final_average5_class <- cutree(ans_final_average, k = 5)
 ans_final_average6_class <- cutree(ans_final_average, k = 6)
 
 sus_inicio_average <- hclust(df_sus_inicio_dist, method = "average")
-plot(as.dendrogram(sus_inicio_average), main = "Dendrograma do método de average linkage (SUS 2017 a 2019)", ylab = "Altura")
+#plot(as.dendrogram(sus_inicio_average), main = "Dendrograma do método de average linkage (SUS 2017 a 2019)", ylab = "Altura")
 sus_inicio_average2_class <- cutree(sus_inicio_average, k = 2)
 sus_inicio_average3_class <- cutree(sus_inicio_average, k = 3)
 sus_inicio_average4_class <- cutree(sus_inicio_average, k = 4)
@@ -484,7 +484,7 @@ sus_inicio_average5_class <- cutree(sus_inicio_average, k = 5)
 sus_inicio_average6_class <- cutree(sus_inicio_average, k = 6)
 
 sus_final_average <- hclust(df_sus_final_dist, method = "average")
-plot(as.dendrogram(sus_final_average), main = "Dendrograma do método de average linkage (SUS 2022 a 2024)", ylab = "Altura")
+#plot(as.dendrogram(sus_final_average), main = "Dendrograma do método de average linkage (SUS 2022 a 2024)", ylab = "Altura")
 sus_final_average2_class <- cutree(sus_final_average, k = 2)
 sus_final_average3_class <- cutree(sus_final_average, k = 3)
 sus_final_average4_class <- cutree(sus_final_average, k = 4)
@@ -496,67 +496,67 @@ sus_final_average6_class <- cutree(sus_final_average, k = 6)
 ls()[grep("^df_ans_inicio_kmeans", ls())]
 ans_inicio_kmeans_index <- data.frame(
   metodo = unlist(lapply(2:6, function(i) paste0("kmeans", i))),
-  db_index_cent = unlist(lapply(2:6, function(i) index.DB(df_ans_inicio_var, get(paste0("df_ans_inicio_kmeans", i))$cluster)$DB)),
-  db_index_med = unlist(lapply(2:6, function(i) index.DB(df_ans_inicio_var, get(paste0("df_ans_inicio_kmeans", i))$cluster, d = df_ans_inicio_dist, centrotypes = "medoids")$DB)),
-  dunn_index = unlist(lapply(2:6, function(i) dunn(distance = df_ans_inicio_dist, get(paste0("df_ans_inicio_kmeans", i))$cluster))),
-  silh_index = unlist(lapply(2:6, function(i) index.S(df_ans_inicio_dist, get(paste0("df_ans_inicio_kmeans", i))$cluster))),
-  ch_index_cent = unlist(lapply(2:6, function(i) index.G1(df_ans_inicio_var[[1]], get(paste0("df_ans_inicio_kmeans", i))$cluster))),  
-  ch_index_med = unlist(lapply(2:6, function(i) index.G1(df_ans_inicio_var, get(paste0("df_ans_inicio_kmeans", i))$cluster, d = df_ans_inicio_dist, centrotypes = "medoids")))
+  db_index_cent = unlist(lapply(2:6, function(i) round(index.DB(df_ans_inicio_var, get(paste0("df_ans_inicio_kmeans", i))$cluster)$DB, 4))),
+  db_index_med = unlist(lapply(2:6, function(i) round(index.DB(df_ans_inicio_var, get(paste0("df_ans_inicio_kmeans", i))$cluster, d = df_ans_inicio_dist, centrotypes = "medoids")$DB, 4))),
+  dunn_index = unlist(lapply(2:6, function(i) round(dunn(distance = df_ans_inicio_dist, get(paste0("df_ans_inicio_kmeans", i))$cluster), 4))),
+  silh_index = unlist(lapply(2:6, function(i) round(index.S(df_ans_inicio_dist, get(paste0("df_ans_inicio_kmeans", i))$cluster), 4))),
+  ch_index_cent = unlist(lapply(2:6, function(i) round(index.G1(df_ans_inicio_var[[1]], get(paste0("df_ans_inicio_kmeans", i))$cluster), 4))),  
+  ch_index_med = unlist(lapply(2:6, function(i) round(index.G1(df_ans_inicio_var, get(paste0("df_ans_inicio_kmeans", i))$cluster, d = df_ans_inicio_dist, centrotypes = "medoids"), 4)))
 )
 
 ls()[grep("^df_ans_inicio_kmedoids", ls())]
 ans_inicio_kmedoids_index <- data.frame(
   metodo = unlist(lapply(2:6, function(i) paste0("kmedoids", i))),
-  db_index_cent = unlist(lapply(2:6, function(i) index.DB(df_ans_inicio_var, get(paste0("df_ans_inicio_kmedoids", i))$cluster)$DB)),
-  db_index_med = unlist(lapply(2:6, function(i) index.DB(df_ans_inicio_var, get(paste0("df_ans_inicio_kmedoids", i))$cluster, d = df_ans_inicio_dist, centrotypes = "medoids")$DB)),
-  dunn_index = unlist(lapply(2:6, function(i) dunn(distance = df_ans_inicio_dist, get(paste0("df_ans_inicio_kmedoids", i))$cluster))),
-  silh_index = unlist(lapply(2:6, function(i) index.S(df_ans_inicio_dist, get(paste0("df_ans_inicio_kmedoids", i))$cluster))),
-  ch_index_cent = unlist(lapply(2:6, function(i) index.G1(df_ans_inicio_var[[1]], get(paste0("df_ans_inicio_kmedoids", i))$cluster))),
-  ch_index_med = unlist(lapply(2:6, function(i) index.G1(df_ans_inicio_var, get(paste0("df_ans_inicio_kmedoids", i))$cluster, d = df_ans_inicio_dist, centrotypes = "medoids")))
+  db_index_cent = unlist(lapply(2:6, function(i) round(index.DB(df_ans_inicio_var, get(paste0("df_ans_inicio_kmedoids", i))$cluster)$DB, 4))),
+  db_index_med = unlist(lapply(2:6, function(i) round(index.DB(df_ans_inicio_var, get(paste0("df_ans_inicio_kmedoids", i))$cluster, d = df_ans_inicio_dist, centrotypes = "medoids")$DB, 4))),
+  dunn_index = unlist(lapply(2:6, function(i) round(dunn(distance = df_ans_inicio_dist, get(paste0("df_ans_inicio_kmedoids", i))$cluster), 4))),
+  silh_index = unlist(lapply(2:6, function(i) round(index.S(df_ans_inicio_dist, get(paste0("df_ans_inicio_kmedoids", i))$cluster), 4))),
+  ch_index_cent = unlist(lapply(2:6, function(i) round(index.G1(df_ans_inicio_var[[1]], get(paste0("df_ans_inicio_kmedoids", i))$cluster), 4))),
+  ch_index_med = unlist(lapply(2:6, function(i) round(index.G1(df_ans_inicio_var, get(paste0("df_ans_inicio_kmedoids", i))$cluster, d = df_ans_inicio_dist, centrotypes = "medoids"), 4)))
 )
 
 ls()[grep("^ans_inicio_ward", ls())]
 ans_inicio_ward_index <- data.frame(
   metodo = unlist(lapply(2:6, function(i) paste0("ward", i))),
-  db_index_cent = unlist(lapply(2:6, function(i) index.DB(df_ans_inicio_var, get(paste0("ans_inicio_ward", i, "_class")))$DB)),
-  db_index_med = unlist(lapply(2:6, function(i) index.DB(df_ans_inicio_var, get(paste0("ans_inicio_ward", i, "_class")), d = df_ans_inicio_dist, centrotypes = "medoids")$DB)),
-  dunn_index = unlist(lapply(2:6, function(i) dunn(distance = df_ans_inicio_dist, get(paste0("ans_inicio_ward", i, "_class"))))),
-  silh_index = unlist(lapply(2:6, function(i) index.S(df_ans_inicio_dist, get(paste0("ans_inicio_ward", i, "_class"))))),
-  ch_index_cent = unlist(lapply(2:6, function(i) index.G1(df_ans_inicio_var[[1]], get(paste0("ans_inicio_ward", i, "_class"))))),
-  ch_index_med = unlist(lapply(2:6, function(i) index.G1(df_ans_inicio_var, get(paste0("ans_inicio_ward", i, "_class")), d = df_ans_inicio_dist, centrotypes = "medoids")))
+  db_index_cent = unlist(lapply(2:6, function(i) round(index.DB(df_ans_inicio_var, get(paste0("ans_inicio_ward", i, "_class")))$DB, 4))),
+  db_index_med = unlist(lapply(2:6, function(i) round(index.DB(df_ans_inicio_var, get(paste0("ans_inicio_ward", i, "_class")), d = df_ans_inicio_dist, centrotypes = "medoids")$DB, 4))),
+  dunn_index = unlist(lapply(2:6, function(i) round(dunn(distance = df_ans_inicio_dist, get(paste0("ans_inicio_ward", i, "_class"))), 4))),
+  silh_index = unlist(lapply(2:6, function(i) round(index.S(df_ans_inicio_dist, get(paste0("ans_inicio_ward", i, "_class"))), 4))),
+  ch_index_cent = unlist(lapply(2:6, function(i) round(index.G1(df_ans_inicio_var[[1]], get(paste0("ans_inicio_ward", i, "_class"))), 4))),
+  ch_index_med = unlist(lapply(2:6, function(i) round(index.G1(df_ans_inicio_var, get(paste0("ans_inicio_ward", i, "_class")), d = df_ans_inicio_dist, centrotypes = "medoids"), 4)))
 )
 
 ls()[grep("^ans_inicio_single", ls())]
 ans_inicio_single_index <- data.frame(
   metodo = unlist(lapply(2:6, function(i) paste0("single", i))),
-  db_index_cent = unlist(lapply(2:6, function(i) index.DB(df_ans_inicio_var, get(paste0("ans_inicio_single", i, "_class")))$DB)),
-  db_index_med = unlist(lapply(2:6, function(i) index.DB(df_ans_inicio_var, get(paste0("ans_inicio_single", i, "_class")), d = df_ans_inicio_dist, centrotypes = "medoids")$DB)),
-  dunn_index = unlist(lapply(2:6, function(i) dunn(distance = df_ans_inicio_dist, get(paste0("ans_inicio_single", i, "_class"))))),
-  silh_index = unlist(lapply(2:6, function(i) index.S(df_ans_inicio_dist, get(paste0("ans_inicio_single", i, "_class"))))),
-  ch_index_cent = unlist(lapply(2:6, function(i) index.G1(df_ans_inicio_var[[1]], get(paste0("ans_inicio_single", i, "_class"))))),
-  ch_index_med = unlist(lapply(2:6, function(i) index.G1(df_ans_inicio_var, get(paste0("ans_inicio_single", i, "_class")), d = df_ans_inicio_dist, centrotypes = "medoids")))
+  db_index_cent = unlist(lapply(2:6, function(i) round(index.DB(df_ans_inicio_var, get(paste0("ans_inicio_single", i, "_class")))$DB, 4))),
+  db_index_med = unlist(lapply(2:6, function(i) round(index.DB(df_ans_inicio_var, get(paste0("ans_inicio_single", i, "_class")), d = df_ans_inicio_dist, centrotypes = "medoids")$DB, 4))),
+  dunn_index = unlist(lapply(2:6, function(i) round(dunn(distance = df_ans_inicio_dist, get(paste0("ans_inicio_single", i, "_class"))), 4))),
+  silh_index = unlist(lapply(2:6, function(i) round(index.S(df_ans_inicio_dist, get(paste0("ans_inicio_single", i, "_class"))), 4))),
+  ch_index_cent = unlist(lapply(2:6, function(i) round(index.G1(df_ans_inicio_var[[1]], get(paste0("ans_inicio_single", i, "_class"))), 4))),
+  ch_index_med = unlist(lapply(2:6, function(i) round(index.G1(df_ans_inicio_var, get(paste0("ans_inicio_single", i, "_class")), d = df_ans_inicio_dist, centrotypes = "medoids"), 4)))
 )
 
 ls()[grep("^ans_inicio_complete", ls())]
 ans_inicio_complete_index <- data.frame(
   metodo = unlist(lapply(2:6, function(i) paste0("complete", i))),
-  db_index_cent = unlist(lapply(2:6, function(i) index.DB(df_ans_inicio_var, get(paste0("ans_inicio_complete", i, "_class")))$DB)),
-  db_index_med = unlist(lapply(2:6, function(i) index.DB(df_ans_inicio_var, get(paste0("ans_inicio_complete", i, "_class")), d = df_ans_inicio_dist, centrotypes = "medoids")$DB)),
-  dunn_index = unlist(lapply(2:6, function(i) dunn(distance = df_ans_inicio_dist, get(paste0("ans_inicio_complete", i, "_class"))))),
-  silh_index = unlist(lapply(2:6, function(i) index.S(df_ans_inicio_dist, get(paste0("ans_inicio_complete", i, "_class"))))),
-  ch_index_cent = unlist(lapply(2:6, function(i) index.G1(df_ans_inicio_var[[1]], get(paste0("ans_inicio_complete", i, "_class"))))),
-  ch_index_med = unlist(lapply(2:6, function(i) index.G1(df_ans_inicio_var, get(paste0("ans_inicio_complete", i, "_class")), d = df_ans_inicio_dist, centrotypes = "medoids")))
+  db_index_cent = unlist(lapply(2:6, function(i) round(index.DB(df_ans_inicio_var, get(paste0("ans_inicio_complete", i, "_class")))$DB, 4))),
+  db_index_med = unlist(lapply(2:6, function(i) round(index.DB(df_ans_inicio_var, get(paste0("ans_inicio_complete", i, "_class")), d = df_ans_inicio_dist, centrotypes = "medoids")$DB, 4))),
+  dunn_index = unlist(lapply(2:6, function(i) round(dunn(distance = df_ans_inicio_dist, get(paste0("ans_inicio_complete", i, "_class"))), 4))),
+  silh_index = unlist(lapply(2:6, function(i) round(index.S(df_ans_inicio_dist, get(paste0("ans_inicio_complete", i, "_class"))), 4))),
+  ch_index_cent = unlist(lapply(2:6, function(i) round(index.G1(df_ans_inicio_var[[1]], get(paste0("ans_inicio_complete", i, "_class"))), 4))),
+  ch_index_med = unlist(lapply(2:6, function(i) round(index.G1(df_ans_inicio_var, get(paste0("ans_inicio_complete", i, "_class")), d = df_ans_inicio_dist, centrotypes = "medoids"), 4)))
 )
 
 ls()[grep("^ans_inicio_average", ls())]
 ans_inicio_average_index <- data.frame(
   metodo = unlist(lapply(2:6, function(i) paste0("average", i))),
-  db_index_cent = unlist(lapply(2:6, function(i) index.DB(df_ans_inicio_var, get(paste0("ans_inicio_average", i, "_class")))$DB)),
-  db_index_med = unlist(lapply(2:6, function(i) index.DB(df_ans_inicio_var, get(paste0("ans_inicio_average", i, "_class")), d = df_ans_inicio_dist, centrotypes = "medoids")$DB)),
-  dunn_index = unlist(lapply(2:6, function(i) dunn(distance = df_ans_inicio_dist, get(paste0("ans_inicio_average", i, "_class"))))),
-  silh_index = unlist(lapply(2:6, function(i) index.S(df_ans_inicio_dist, get(paste0("ans_inicio_average", i, "_class"))))),
-  ch_index_cent = unlist(lapply(2:6, function(i) index.G1(df_ans_inicio_var[[1]], get(paste0("ans_inicio_average", i, "_class"))))),
-  ch_index_med = unlist(lapply(2:6, function(i) index.G1(df_ans_inicio_var, get(paste0("ans_inicio_average", i, "_class")), d = df_ans_inicio_dist, centrotypes = "medoids")))
+  db_index_cent = unlist(lapply(2:6, function(i) round(index.DB(df_ans_inicio_var, get(paste0("ans_inicio_average", i, "_class")))$DB, 4))),
+  db_index_med = unlist(lapply(2:6, function(i) round(index.DB(df_ans_inicio_var, get(paste0("ans_inicio_average", i, "_class")), d = df_ans_inicio_dist, centrotypes = "medoids")$DB, 4))),
+  dunn_index = unlist(lapply(2:6, function(i) round(dunn(distance = df_ans_inicio_dist, get(paste0("ans_inicio_average", i, "_class"))), 4))),
+  silh_index = unlist(lapply(2:6, function(i) round(index.S(df_ans_inicio_dist, get(paste0("ans_inicio_average", i, "_class"))), 4))),
+  ch_index_cent = unlist(lapply(2:6, function(i) round(index.G1(df_ans_inicio_var[[1]], get(paste0("ans_inicio_average", i, "_class"))), 4))),
+  ch_index_med = unlist(lapply(2:6, function(i) round(index.G1(df_ans_inicio_var, get(paste0("ans_inicio_average", i, "_class")), d = df_ans_inicio_dist, centrotypes = "medoids"), 4)))
 )
 
 
@@ -574,67 +574,67 @@ ans_inicio_avaliacao <- rbind(
 ls()[grep("^df_ans_final_kmeans", ls())]
 ans_final_kmeans_index <- data.frame(
   metodo = unlist(lapply(2:6, function(i) paste0("kmeans", i))),
-  db_index_cent = unlist(lapply(2:6, function(i) index.DB(df_ans_final_var, get(paste0("df_ans_final_kmeans", i))$cluster)$DB)),
-  db_index_med = unlist(lapply(2:6, function(i) index.DB(df_ans_final_var, get(paste0("df_ans_final_kmeans", i))$cluster, d = df_ans_final_dist, centrotypes = "medoids")$DB)),
-  dunn_index = unlist(lapply(2:6, function(i) dunn(distance = df_ans_final_dist, get(paste0("df_ans_final_kmeans", i))$cluster))),
-  silh_index = unlist(lapply(2:6, function(i) index.S(df_ans_final_dist, get(paste0("df_ans_final_kmeans", i))$cluster))),
-  ch_index_cent = unlist(lapply(2:6, function(i) index.G1(df_ans_final_var[[1]], get(paste0("df_ans_final_kmeans", i))$cluster))),
-  ch_index_med = unlist(lapply(2:6, function(i) index.G1(df_ans_final_var, get(paste0("df_ans_final_kmeans", i))$cluster, d = df_ans_final_dist, centrotypes = "medoids")))
+  db_index_cent = unlist(lapply(2:6, function(i) round(index.DB(df_ans_final_var, get(paste0("df_ans_final_kmeans", i))$cluster)$DB, 4) )),
+  db_index_med = unlist(lapply(2:6, function(i) round(index.DB(df_ans_final_var, get(paste0("df_ans_final_kmeans", i))$cluster, d = df_ans_final_dist, centrotypes = "medoids")$DB, 4))),
+  dunn_index = unlist(lapply(2:6, function(i) round(dunn(distance = df_ans_final_dist, get(paste0("df_ans_final_kmeans", i))$cluster), 4))),
+  silh_index = unlist(lapply(2:6, function(i) round(index.S(df_ans_final_dist, get(paste0("df_ans_final_kmeans", i))$cluster), 4))),
+  ch_index_cent = unlist(lapply(2:6, function(i) round(index.G1(df_ans_final_var[[1]], get(paste0("df_ans_final_kmeans", i))$cluster), 4))),
+  ch_index_med = unlist(lapply(2:6, function(i) round(index.G1(df_ans_final_var, get(paste0("df_ans_final_kmeans", i))$cluster, d = df_ans_final_dist, centrotypes = "medoids"), 4)))
 )
 
 ls()[grep("^df_ans_final_kmedoids", ls())]
 ans_final_kmedoids_index <- data.frame(
   metodo = unlist(lapply(2:6, function(i) paste0("kmedoids", i))),
-  db_index_cent = unlist(lapply(2:6, function(i) index.DB(df_ans_final_var, get(paste0("df_ans_final_kmedoids", i))$cluster)$DB)),
-  db_index_med = unlist(lapply(2:6, function(i) index.DB(df_ans_final_var, get(paste0("df_ans_final_kmedoids", i))$cluster, d = df_ans_final_dist, centrotypes = "medoids")$DB)),
-  dunn_index = unlist(lapply(2:6, function(i) dunn(distance = df_ans_final_dist, get(paste0("df_ans_final_kmedoids", i))$cluster))),
-  silh_index = unlist(lapply(2:6, function(i) index.S(df_ans_final_dist, get(paste0("df_ans_final_kmedoids", i))$cluster))),
-  ch_index_cent = unlist(lapply(2:6, function(i) index.G1(df_ans_final_var[[1]], get(paste0("df_ans_final_kmedoids", i))$cluster))),
-  ch_index_med = unlist(lapply(2:6, function(i) index.G1(df_ans_final_var, get(paste0("df_ans_final_kmedoids", i))$cluster, d = df_ans_final_dist, centrotypes = "medoids")))
+  db_index_cent = unlist(lapply(2:6, function(i) round(index.DB(df_ans_final_var, get(paste0("df_ans_final_kmedoids", i))$cluster)$DB, 4))),
+  db_index_med = unlist(lapply(2:6, function(i) round(index.DB(df_ans_final_var, get(paste0("df_ans_final_kmedoids", i))$cluster, d = df_ans_final_dist, centrotypes = "medoids")$DB, 4))),
+  dunn_index = unlist(lapply(2:6, function(i) round(dunn(distance = df_ans_final_dist, get(paste0("df_ans_final_kmedoids", i))$cluster), 4))),
+  silh_index = unlist(lapply(2:6, function(i) round(index.S(df_ans_final_dist, get(paste0("df_ans_final_kmedoids", i))$cluster), 4))),
+  ch_index_cent = unlist(lapply(2:6, function(i) round(index.G1(df_ans_final_var[[1]], get(paste0("df_ans_final_kmedoids", i))$cluster), 4))),
+  ch_index_med = unlist(lapply(2:6, function(i) round(index.G1(df_ans_final_var, get(paste0("df_ans_final_kmedoids", i))$cluster, d = df_ans_final_dist, centrotypes = "medoids"), 4)))
 )
 
 ls()[grep("^ans_final_ward", ls())]
 ans_final_ward_index <- data.frame(
   metodo = unlist(lapply(2:6, function(i) paste0("ward", i))),
-  db_index_cent = unlist(lapply(2:6, function(i) index.DB(df_ans_final_var, get(paste0("ans_final_ward", i, "_class")))$DB)),
-  db_index_med = unlist(lapply(2:6, function(i) index.DB(df_ans_final_var, get(paste0("ans_final_ward", i, "_class")), d = df_ans_final_dist, centrotypes = "medoids")$DB)),
-  dunn_index = unlist(lapply(2:6, function(i) dunn(distance = df_ans_final_dist, get(paste0("ans_final_ward", i, "_class"))))),
-  silh_index = unlist(lapply(2:6, function(i) index.S(df_ans_final_dist, get(paste0("ans_final_ward", i, "_class"))))),
-  ch_index_cent = unlist(lapply(2:6, function(i) index.G1(df_ans_final_var[[1]], get(paste0("ans_final_ward", i, "_class"))))),
-  ch_index_med = unlist(lapply(2:6, function(i) index.G1(df_ans_final_var, get(paste0("ans_final_ward", i, "_class")), d = df_ans_final_dist, centrotypes = "medoids")))
+  db_index_cent = unlist(lapply(2:6, function(i) round(index.DB(df_ans_final_var, get(paste0("ans_final_ward", i, "_class")))$DB, 4))),
+  db_index_med = unlist(lapply(2:6, function(i) round(index.DB(df_ans_final_var, get(paste0("ans_final_ward", i, "_class")), d = df_ans_final_dist, centrotypes = "medoids")$DB, 4))),
+  dunn_index = unlist(lapply(2:6, function(i) round(dunn(distance = df_ans_final_dist, get(paste0("ans_final_ward", i, "_class"))), 4))),
+  silh_index = unlist(lapply(2:6, function(i) round(index.S(df_ans_final_dist, get(paste0("ans_final_ward", i, "_class"))), 4))),
+  ch_index_cent = unlist(lapply(2:6, function(i) round(index.G1(df_ans_final_var[[1]], get(paste0("ans_final_ward", i, "_class"))), 4))),
+  ch_index_med = unlist(lapply(2:6, function(i) round(index.G1(df_ans_final_var, get(paste0("ans_final_ward", i, "_class")), d = df_ans_final_dist, centrotypes = "medoids"), 4)))
 )
 
 ls()[grep("^ans_final_single", ls())]
 ans_final_single_index <- data.frame(
   metodo = unlist(lapply(2:6, function(i) paste0("single", i))),
-  db_index_cent = unlist(lapply(2:6, function(i) index.DB(df_ans_final_var, get(paste0("ans_final_single", i, "_class")))$DB)),
-  db_index_med = unlist(lapply(2:6, function(i) index.DB(df_ans_final_var, get(paste0("ans_final_single", i, "_class")), d = df_ans_final_dist, centrotypes = "medoids")$DB)),
-  dunn_index = unlist(lapply(2:6, function(i) dunn(distance = df_ans_final_dist, get(paste0("ans_final_single", i, "_class"))))),
-  silh_index = unlist(lapply(2:6, function(i) index.S(df_ans_final_dist, get(paste0("ans_final_single", i, "_class"))))),
-  ch_index_cent = unlist(lapply(2:6, function(i) index.G1(df_ans_final_var[[1]], get(paste0("ans_final_single", i, "_class"))))),
-  ch_index_med = unlist(lapply(2:6, function(i) index.G1(df_ans_final_var, get(paste0("ans_final_single", i, "_class")), d = df_ans_final_dist, centrotypes = "medoids")))
+  db_index_cent = unlist(lapply(2:6, function(i) round(index.DB(df_ans_final_var, get(paste0("ans_final_single", i, "_class")))$DB, 4))),
+  db_index_med = unlist(lapply(2:6, function(i) round(index.DB(df_ans_final_var, get(paste0("ans_final_single", i, "_class")), d = df_ans_final_dist, centrotypes = "medoids")$DB, 4))),
+  dunn_index = unlist(lapply(2:6, function(i) round(dunn(distance = df_ans_final_dist, get(paste0("ans_final_single", i, "_class"))), 4))),
+  silh_index = unlist(lapply(2:6, function(i) round(index.S(df_ans_final_dist, get(paste0("ans_final_single", i, "_class"))), 4))),
+  ch_index_cent = unlist(lapply(2:6, function(i) round(index.G1(df_ans_final_var[[1]], get(paste0("ans_final_single", i, "_class"))), 4))),
+  ch_index_med = unlist(lapply(2:6, function(i) round(index.G1(df_ans_final_var, get(paste0("ans_final_single", i, "_class")), d = df_ans_final_dist, centrotypes = "medoids"), 4)))
 )
 
 ls()[grep("^ans_final_complete", ls())]
 ans_final_complete_index <- data.frame(
   metodo = unlist(lapply(2:6, function(i) paste0("complete", i))),
-  db_index_cent = unlist(lapply(2:6, function(i) index.DB(df_ans_final_var, get(paste0("ans_final_complete", i, "_class")))$DB)),
-  db_index_med = unlist(lapply(2:6, function(i) index.DB(df_ans_final_var, get(paste0("ans_final_complete", i, "_class")), d = df_ans_final_dist, centrotypes = "medoids")$DB)),
-  dunn_index = unlist(lapply(2:6, function(i) dunn(distance = df_ans_final_dist, get(paste0("ans_final_complete", i, "_class"))))),
-  silh_index = unlist(lapply(2:6, function(i) index.S(df_ans_final_dist, get(paste0("ans_final_complete", i, "_class"))))),
-  ch_index_cent = unlist(lapply(2:6, function(i) index.G1(df_ans_final_var[[1]], get(paste0("ans_final_complete", i, "_class"))))),
-  ch_index_med = unlist(lapply(2:6, function(i) index.G1(df_ans_final_var, get(paste0("ans_final_complete", i, "_class")), d = df_ans_final_dist, centrotypes = "medoids")))
+  db_index_cent = unlist(lapply(2:6, function(i) round(index.DB(df_ans_final_var, get(paste0("ans_final_complete", i, "_class")))$DB, 4))),
+  db_index_med = unlist(lapply(2:6, function(i) round(index.DB(df_ans_final_var, get(paste0("ans_final_complete", i, "_class")), d = df_ans_final_dist, centrotypes = "medoids")$DB, 4))),
+  dunn_index = unlist(lapply(2:6, function(i) round(dunn(distance = df_ans_final_dist, get(paste0("ans_final_complete", i, "_class"))), 4))),
+  silh_index = unlist(lapply(2:6, function(i) round(index.S(df_ans_final_dist, get(paste0("ans_final_complete", i, "_class"))), 4))),
+  ch_index_cent = unlist(lapply(2:6, function(i) round(index.G1(df_ans_final_var[[1]], get(paste0("ans_final_complete", i, "_class"))), 4))),
+  ch_index_med = unlist(lapply(2:6, function(i) round(index.G1(df_ans_final_var, get(paste0("ans_final_complete", i, "_class")), d = df_ans_final_dist, centrotypes = "medoids"), 4)))
 )
 
 ls()[grep("^ans_final_average", ls())]
 ans_final_average_index <- data.frame(
   metodo = unlist(lapply(2:6, function(i) paste0("average", i))),
-  db_index_cent = unlist(lapply(2:6, function(i) index.DB(df_ans_final_var, get(paste0("ans_final_average", i, "_class")))$DB)),
-  db_index_med = unlist(lapply(2:6, function(i) index.DB(df_ans_final_var, get(paste0("ans_final_average", i, "_class")), d = df_ans_final_dist, centrotypes = "medoids")$DB)),
-  dunn_index = unlist(lapply(2:6, function(i) dunn(distance = df_ans_final_dist, get(paste0("ans_final_average", i, "_class"))))),
-  silh_index = unlist(lapply(2:6, function(i) index.S(df_ans_final_dist, get(paste0("ans_final_average", i, "_class"))))),
-  ch_index_cent = unlist(lapply(2:6, function(i) index.G1(df_ans_final_var[[1]], get(paste0("ans_final_average", i, "_class"))))),
-  ch_index_med = unlist(lapply(2:6, function(i) index.G1(df_ans_final_var, get(paste0("ans_final_average", i, "_class")), d = df_ans_final_dist, centrotypes = "medoids")))
+  db_index_cent = unlist(lapply(2:6, function(i) round(index.DB(df_ans_final_var, get(paste0("ans_final_average", i, "_class")))$DB, 4))),
+  db_index_med = unlist(lapply(2:6, function(i) round(index.DB(df_ans_final_var, get(paste0("ans_final_average", i, "_class")), d = df_ans_final_dist, centrotypes = "medoids")$DB, 4))),
+  dunn_index = unlist(lapply(2:6, function(i) round(dunn(distance = df_ans_final_dist, get(paste0("ans_final_average", i, "_class"))), 4))),
+  silh_index = unlist(lapply(2:6, function(i) round(index.S(df_ans_final_dist, get(paste0("ans_final_average", i, "_class"))), 4))),
+  ch_index_cent = unlist(lapply(2:6, function(i) round(index.G1(df_ans_final_var[[1]], get(paste0("ans_final_average", i, "_class"))), 4))),
+  ch_index_med = unlist(lapply(2:6, function(i) round(index.G1(df_ans_final_var, get(paste0("ans_final_average", i, "_class")), d = df_ans_final_dist, centrotypes = "medoids"), 4)))
 )
 
 ans_final_avaliacao <- rbind(
@@ -650,67 +650,67 @@ ans_final_avaliacao <- rbind(
 ls()[grep("^df_sus_inicio_kmeans", ls())]
 sus_inicio_kmeans_index <- data.frame(
   metodo = unlist(lapply(2:6, function(i) paste0("kmeans", i))),
-  db_index_cent = unlist(lapply(2:6, function(i) index.DB(df_sus_inicio_var, get(paste0("df_sus_inicio_kmeans", i))$cluster)$DB)),
-  db_index_med = unlist(lapply(2:6, function(i) index.DB(df_sus_inicio_var, get(paste0("df_sus_inicio_kmeans", i))$cluster, d = df_sus_inicio_dist, centrotypes = "medoids")$DB)),
-  dunn_index = unlist(lapply(2:6, function(i) dunn(distance = df_sus_inicio_dist, get(paste0("df_sus_inicio_kmeans", i))$cluster))),
-  silh_index = unlist(lapply(2:6, function(i) index.S(df_sus_inicio_dist, get(paste0("df_sus_inicio_kmeans", i))$cluster))),
-  ch_index_cent = unlist(lapply(2:6, function(i) index.G1(df_sus_inicio_var[[1]], get(paste0("df_sus_inicio_kmeans", i))$cluster))),
-  ch_index_med = unlist(lapply(2:6, function(i) index.G1(df_sus_inicio_var, get(paste0("df_sus_inicio_kmeans", i))$cluster, d = df_sus_inicio_dist, centrotypes = "medoids")))
+  db_index_cent = unlist(lapply(2:6, function(i) round(index.DB(df_sus_inicio_var, get(paste0("df_sus_inicio_kmeans", i))$cluster)$DB, 4))),
+  db_index_med = unlist(lapply(2:6, function(i) round(index.DB(df_sus_inicio_var, get(paste0("df_sus_inicio_kmeans", i))$cluster, d = df_sus_inicio_dist, centrotypes = "medoids")$DB, 4))),
+  dunn_index = unlist(lapply(2:6, function(i) round(dunn(distance = df_sus_inicio_dist, get(paste0("df_sus_inicio_kmeans", i))$cluster), 4))),
+  silh_index = unlist(lapply(2:6, function(i) round(index.S(df_sus_inicio_dist, get(paste0("df_sus_inicio_kmeans", i))$cluster), 4))),
+  ch_index_cent = unlist(lapply(2:6, function(i) round(index.G1(df_sus_inicio_var[[1]], get(paste0("df_sus_inicio_kmeans", i))$cluster), 4))),
+  ch_index_med = unlist(lapply(2:6, function(i) round(index.G1(df_sus_inicio_var, get(paste0("df_sus_inicio_kmeans", i))$cluster, d = df_sus_inicio_dist, centrotypes = "medoids"), 4)))
 )
 
 ls()[grep("^df_sus_inicio_kmedoids", ls())]
 sus_inicio_kmedoids_index <- data.frame(
   metodo = unlist(lapply(2:6, function(i) paste0("kmedoids", i))),
-  db_index_cent = unlist(lapply(2:6, function(i) index.DB(df_sus_inicio_var, get(paste0("df_sus_inicio_kmedoids", i))$cluster)$DB)),
-  db_index_med = unlist(lapply(2:6, function(i) index.DB(df_sus_inicio_var, get(paste0("df_sus_inicio_kmedoids", i))$cluster, d = df_sus_inicio_dist, centrotypes = "medoids")$DB)),
-  dunn_index = unlist(lapply(2:6, function(i) dunn(distance = df_sus_inicio_dist, get(paste0("df_sus_inicio_kmedoids", i))$cluster))),
-  silh_index = unlist(lapply(2:6, function(i) index.S(df_sus_inicio_dist, get(paste0("df_sus_inicio_kmedoids", i))$cluster))),
-  ch_index_cent = unlist(lapply(2:6, function(i) index.G1(df_sus_inicio_var[[1]], get(paste0("df_sus_inicio_kmedoids", i))$cluster))),
-  ch_index_med = unlist(lapply(2:6, function(i) index.G1(df_sus_inicio_var, get(paste0("df_sus_inicio_kmedoids", i))$cluster, d = df_sus_inicio_dist, centrotypes = "medoids")))
+  db_index_cent = unlist(lapply(2:6, function(i) round(index.DB(df_sus_inicio_var, get(paste0("df_sus_inicio_kmedoids", i))$cluster)$DB, 4))),
+  db_index_med = unlist(lapply(2:6, function(i) round(index.DB(df_sus_inicio_var, get(paste0("df_sus_inicio_kmedoids", i))$cluster, d = df_sus_inicio_dist, centrotypes = "medoids")$DB, 4))),
+  dunn_index = unlist(lapply(2:6, function(i) round(dunn(distance = df_sus_inicio_dist, get(paste0("df_sus_inicio_kmedoids", i))$cluster), 4))),
+  silh_index = unlist(lapply(2:6, function(i) round(index.S(df_sus_inicio_dist, get(paste0("df_sus_inicio_kmedoids", i))$cluster), 4))),
+  ch_index_cent = unlist(lapply(2:6, function(i) round(index.G1(df_sus_inicio_var[[1]], get(paste0("df_sus_inicio_kmedoids", i))$cluster), 4))),
+  ch_index_med = unlist(lapply(2:6, function(i) round(index.G1(df_sus_inicio_var, get(paste0("df_sus_inicio_kmedoids", i))$cluster, d = df_sus_inicio_dist, centrotypes = "medoids"), 4)))
 )
 
 ls()[grep("^sus_inicio_ward", ls())]
 sus_inicio_ward_index <- data.frame(
   metodo = unlist(lapply(2:6, function(i) paste0("ward", i))),
-  db_index_cent = unlist(lapply(2:6, function(i) index.DB(df_sus_inicio_var, get(paste0("sus_inicio_ward", i, "_class")))$DB)),
-  db_index_med = unlist(lapply(2:6, function(i) index.DB(df_sus_inicio_var, get(paste0("sus_inicio_ward", i, "_class")), d = df_sus_inicio_dist, centrotypes = "medoids")$DB)),
-  dunn_index = unlist(lapply(2:6, function(i) dunn(distance = df_sus_inicio_dist, get(paste0("sus_inicio_ward", i, "_class"))))),
-  silh_index = unlist(lapply(2:6, function(i) index.S(df_sus_inicio_dist, get(paste0("sus_inicio_ward", i, "_class"))))),
-  ch_index_cent = unlist(lapply(2:6, function(i) index.G1(df_sus_inicio_var[[1]], get(paste0("sus_inicio_ward", i, "_class"))))),
-  ch_index_med = unlist(lapply(2:6, function(i) index.G1(df_sus_inicio_var, get(paste0("sus_inicio_ward", i, "_class")), d = df_sus_inicio_dist, centrotypes = "medoids")))
+  db_index_cent = unlist(lapply(2:6, function(i) round(index.DB(df_sus_inicio_var, get(paste0("sus_inicio_ward", i, "_class")))$DB, 4))),
+  db_index_med = unlist(lapply(2:6, function(i) round(index.DB(df_sus_inicio_var, get(paste0("sus_inicio_ward", i, "_class")), d = df_sus_inicio_dist, centrotypes = "medoids")$DB, 4))),
+  dunn_index = unlist(lapply(2:6, function(i) round(dunn(distance = df_sus_inicio_dist, get(paste0("sus_inicio_ward", i, "_class"))), 4))),
+  silh_index = unlist(lapply(2:6, function(i) round(index.S(df_sus_inicio_dist, get(paste0("sus_inicio_ward", i, "_class"))), 4))),
+  ch_index_cent = unlist(lapply(2:6, function(i) round(index.G1(df_sus_inicio_var[[1]], get(paste0("sus_inicio_ward", i, "_class"))), 4))),
+  ch_index_med = unlist(lapply(2:6, function(i) round(index.G1(df_sus_inicio_var, get(paste0("sus_inicio_ward", i, "_class")), d = df_sus_inicio_dist, centrotypes = "medoids"), 4)))
 )
 
 ls()[grep("^sus_inicio_single", ls())]
 sus_inicio_single_index <- data.frame(
   metodo = unlist(lapply(2:6, function(i) paste0("single", i))),
-  db_index_cent = unlist(lapply(2:6, function(i) index.DB(df_sus_inicio_var, get(paste0("sus_inicio_single", i, "_class")))$DB)),
-  db_index_med = unlist(lapply(2:6, function(i) index.DB(df_sus_inicio_var, get(paste0("sus_inicio_single", i, "_class")), d = df_sus_inicio_dist, centrotypes = "medoids")$DB)),
-  dunn_index = unlist(lapply(2:6, function(i) dunn(distance = df_sus_inicio_dist, get(paste0("sus_inicio_single", i, "_class"))))),
-  silh_index = unlist(lapply(2:6, function(i) index.S(df_sus_inicio_dist, get(paste0("sus_inicio_single", i, "_class"))))),
-  ch_index_cent = unlist(lapply(2:6, function(i) index.G1(df_sus_inicio_var[[1]], get(paste0("sus_inicio_single", i, "_class"))))),
-  ch_index_med = unlist(lapply(2:6, function(i) index.G1(df_sus_inicio_var, get(paste0("sus_inicio_single", i, "_class")), d = df_sus_inicio_dist, centrotypes = "medoids")))
+  db_index_cent = unlist(lapply(2:6, function(i) round(index.DB(df_sus_inicio_var, get(paste0("sus_inicio_single", i, "_class")))$DB, 4))),
+  db_index_med = unlist(lapply(2:6, function(i) round(index.DB(df_sus_inicio_var, get(paste0("sus_inicio_single", i, "_class")), d = df_sus_inicio_dist, centrotypes = "medoids")$DB, 4))),
+  dunn_index = unlist(lapply(2:6, function(i) round(dunn(distance = df_sus_inicio_dist, get(paste0("sus_inicio_single", i, "_class"))), 4))),
+  silh_index = unlist(lapply(2:6, function(i) round(index.S(df_sus_inicio_dist, get(paste0("sus_inicio_single", i, "_class"))), 4))),
+  ch_index_cent = unlist(lapply(2:6, function(i) round(index.G1(df_sus_inicio_var[[1]], get(paste0("sus_inicio_single", i, "_class"))), 4))),
+  ch_index_med = unlist(lapply(2:6, function(i) round(index.G1(df_sus_inicio_var, get(paste0("sus_inicio_single", i, "_class")), d = df_sus_inicio_dist, centrotypes = "medoids"), 4)))
 )
 
 ls()[grep("^sus_inicio_average", ls())]
 sus_inicio_average_index <- data.frame(
   metodo = unlist(lapply(2:6, function(i) paste0("average", i))),
-  db_index_cent = unlist(lapply(2:6, function(i) index.DB(df_sus_inicio_var, get(paste0("sus_inicio_average", i, "_class")))$DB)),
-  db_index_med = unlist(lapply(2:6, function(i) index.DB(df_sus_inicio_var, get(paste0("sus_inicio_average", i, "_class")), d = df_sus_inicio_dist, centrotypes = "medoids")$DB)),
-  dunn_index = unlist(lapply(2:6, function(i) dunn(distance = df_sus_inicio_dist, get(paste0("sus_inicio_average", i, "_class"))))),
-  silh_index = unlist(lapply(2:6, function(i) index.S(df_sus_inicio_dist, get(paste0("sus_inicio_average", i, "_class"))))),
-  ch_index_cent = unlist(lapply(2:6, function(i) index.G1(df_sus_inicio_var[[1]], get(paste0("sus_inicio_average", i, "_class"))))),
-  ch_index_med = unlist(lapply(2:6, function(i) index.G1(df_sus_inicio_var, get(paste0("sus_inicio_average", i, "_class")), d = df_sus_inicio_dist, centrotypes = "medoids")))
+  db_index_cent = unlist(lapply(2:6, function(i) round(index.DB(df_sus_inicio_var, get(paste0("sus_inicio_average", i, "_class")))$DB, 4))),
+  db_index_med = unlist(lapply(2:6, function(i) round(index.DB(df_sus_inicio_var, get(paste0("sus_inicio_average", i, "_class")), d = df_sus_inicio_dist, centrotypes = "medoids")$DB, 4))),
+  dunn_index = unlist(lapply(2:6, function(i) round(dunn(distance = df_sus_inicio_dist, get(paste0("sus_inicio_average", i, "_class"))), 4))),
+  silh_index = unlist(lapply(2:6, function(i) round(index.S(df_sus_inicio_dist, get(paste0("sus_inicio_average", i, "_class"))), 4))),
+  ch_index_cent = unlist(lapply(2:6, function(i) round(index.G1(df_sus_inicio_var[[1]], get(paste0("sus_inicio_average", i, "_class"))), 4))),
+  ch_index_med = unlist(lapply(2:6, function(i) round(index.G1(df_sus_inicio_var, get(paste0("sus_inicio_average", i, "_class")), d = df_sus_inicio_dist, centrotypes = "medoids"), 4)))
 )
 
 ls()[grep("^sus_inicio_complete", ls())]
 sus_inicio_complete_index <- data.frame(
   metodo = unlist(lapply(2:6, function(i) paste0("complete", i))),
-  db_index_cent = unlist(lapply(2:6, function(i) index.DB(df_sus_inicio_var, get(paste0("sus_inicio_complete", i, "_class")))$DB)),
-  db_index_med = unlist(lapply(2:6, function(i) index.DB(df_sus_inicio_var, get(paste0("sus_inicio_complete", i, "_class")), d = df_sus_inicio_dist, centrotypes = "medoids")$DB)),
-  dunn_index = unlist(lapply(2:6, function(i) dunn(distance = df_sus_inicio_dist, get(paste0("sus_inicio_complete", i, "_class"))))),
-  silh_index = unlist(lapply(2:6, function(i) index.S(df_sus_inicio_dist, get(paste0("sus_inicio_complete", i, "_class"))))),
-  ch_index_cent = unlist(lapply(2:6, function(i) index.G1(df_sus_inicio_var[[1]], get(paste0("sus_inicio_complete", i, "_class"))))),
-  ch_index_med = unlist(lapply(2:6, function(i) index.G1(df_sus_inicio_var, get(paste0("sus_inicio_complete", i, "_class")), d = df_sus_inicio_dist, centrotypes = "medoids")))
+  db_index_cent = unlist(lapply(2:6, function(i) round(index.DB(df_sus_inicio_var, get(paste0("sus_inicio_complete", i, "_class")))$DB, 4))),
+  db_index_med = unlist(lapply(2:6, function(i) round(index.DB(df_sus_inicio_var, get(paste0("sus_inicio_complete", i, "_class")), d = df_sus_inicio_dist, centrotypes = "medoids")$DB, 4))),
+  dunn_index = unlist(lapply(2:6, function(i) round(dunn(distance = df_sus_inicio_dist, get(paste0("sus_inicio_complete", i, "_class"))), 4))),
+  silh_index = unlist(lapply(2:6, function(i) round(index.S(df_sus_inicio_dist, get(paste0("sus_inicio_complete", i, "_class"))), 4))),
+  ch_index_cent = unlist(lapply(2:6, function(i) round(index.G1(df_sus_inicio_var[[1]], get(paste0("sus_inicio_complete", i, "_class"))), 4))),
+  ch_index_med = unlist(lapply(2:6, function(i) round(index.G1(df_sus_inicio_var, get(paste0("sus_inicio_complete", i, "_class")), d = df_sus_inicio_dist, centrotypes = "medoids"), 4)))
 )
 
 
@@ -727,67 +727,67 @@ sus_inicio_avaliacao <- rbind(
 ls()[grep("^df_sus_final_kmeans", ls())]
 sus_final_kmeans_index <- data.frame(
   metodo = unlist(lapply(2:6, function(i) paste0("kmeans", i))),
-  db_index_cent = unlist(lapply(2:6, function(i) index.DB(df_sus_final_var, get(paste0("df_sus_final_kmeans", i))$cluster)$DB)),
-  db_index_med = unlist(lapply(2:6, function(i) index.DB(df_sus_final_var, get(paste0("df_sus_final_kmeans", i))$cluster, d = df_sus_final_dist, centrotypes = "medoids")$DB)),
-  dunn_index = unlist(lapply(2:6, function(i) dunn(distance = df_sus_final_dist, get(paste0("df_sus_final_kmeans", i))$cluster))),
-  silh_index = unlist(lapply(2:6, function(i) index.S(df_sus_final_dist, get(paste0("df_sus_final_kmeans", i))$cluster))),
-  ch_index_cent = unlist(lapply(2:6, function(i) index.G1(df_sus_final_var[[1]], get(paste0("df_sus_final_kmeans", i))$cluster))),
-  ch_index_med = unlist(lapply(2:6, function(i) index.G1(df_sus_final_var, get(paste0("df_sus_final_kmeans", i))$cluster, d = df_sus_final_dist, centrotypes = "medoids")))
+  db_index_cent = unlist(lapply(2:6, function(i) round(index.DB(df_sus_final_var, get(paste0("df_sus_final_kmeans", i))$cluster)$DB, 4))),
+  db_index_med = unlist(lapply(2:6, function(i) round(index.DB(df_sus_final_var, get(paste0("df_sus_final_kmeans", i))$cluster, d = df_sus_final_dist, centrotypes = "medoids")$DB, 4))),
+  dunn_index = unlist(lapply(2:6, function(i) round(dunn(distance = df_sus_final_dist, get(paste0("df_sus_final_kmeans", i))$cluster), 4))),
+  silh_index = unlist(lapply(2:6, function(i) round(index.S(df_sus_final_dist, get(paste0("df_sus_final_kmeans", i))$cluster), 4))),
+  ch_index_cent = unlist(lapply(2:6, function(i) round(index.G1(df_sus_final_var[[1]], get(paste0("df_sus_final_kmeans", i))$cluster), 4))),
+  ch_index_med = unlist(lapply(2:6, function(i) round(index.G1(df_sus_final_var, get(paste0("df_sus_final_kmeans", i))$cluster, d = df_sus_final_dist, centrotypes = "medoids"), 4)))
 )
 
 ls()[grep("^df_sus_final_kmedoids", ls())]
 sus_final_kmedoids_index <- data.frame(
   metodo = unlist(lapply(2:6, function(i) paste0("kmedoids", i))),
-  db_index_cent = unlist(lapply(2:6, function(i) index.DB(df_sus_final_var, get(paste0("df_sus_final_kmedoids", i))$cluster)$DB)),
-  db_index_med = unlist(lapply(2:6, function(i) index.DB(df_sus_final_var, get(paste0("df_sus_final_kmedoids", i))$cluster, d = df_sus_final_dist, centrotypes = "medoids")$DB)),
-  dunn_index = unlist(lapply(2:6, function(i) dunn(distance = df_sus_final_dist, get(paste0("df_sus_final_kmedoids", i))$cluster))),
-  silh_index = unlist(lapply(2:6, function(i) index.S(df_sus_final_dist, get(paste0("df_sus_final_kmedoids", i))$cluster))),
-  ch_index_cent = unlist(lapply(2:6, function(i) index.G1(df_sus_final_var[[1]], get(paste0("df_sus_final_kmedoids", i))$cluster))),
-  ch_index_med = unlist(lapply(2:6, function(i) index.G1(df_sus_final_var, get(paste0("df_sus_final_kmedoids", i))$cluster, d = df_sus_final_dist, centrotypes = "medoids")))
+  db_index_cent = unlist(lapply(2:6, function(i) round(index.DB(df_sus_final_var, get(paste0("df_sus_final_kmedoids", i))$cluster)$DB, 4))),
+  db_index_med = unlist(lapply(2:6, function(i) round(index.DB(df_sus_final_var, get(paste0("df_sus_final_kmedoids", i))$cluster, d = df_sus_final_dist, centrotypes = "medoids")$DB, 4))),
+  dunn_index = unlist(lapply(2:6, function(i) round(dunn(distance = df_sus_final_dist, get(paste0("df_sus_final_kmedoids", i))$cluster), 4))),
+  silh_index = unlist(lapply(2:6, function(i) round(index.S(df_sus_final_dist, get(paste0("df_sus_final_kmedoids", i))$cluster), 4))),
+  ch_index_cent = unlist(lapply(2:6, function(i) round(index.G1(df_sus_final_var[[1]], get(paste0("df_sus_final_kmedoids", i))$cluster), 4))),
+  ch_index_med = unlist(lapply(2:6, function(i) round(index.G1(df_sus_final_var, get(paste0("df_sus_final_kmedoids", i))$cluster, d = df_sus_final_dist, centrotypes = "medoids"), 4)))
 )
 
 ls()[grep("^sus_final_ward", ls())]
 sus_final_ward_index <- data.frame(
   metodo = unlist(lapply(2:6, function(i) paste0("ward", i))),
-  db_index_cent = unlist(lapply(2:6, function(i) index.DB(df_sus_final_var, get(paste0("sus_final_ward", i, "_class")))$DB)),
-  db_index_med = unlist(lapply(2:6, function(i) index.DB(df_sus_final_var, get(paste0("sus_final_ward", i, "_class")), d = df_sus_final_dist, centrotypes = "medoids")$DB)),
-  dunn_index = unlist(lapply(2:6, function(i) dunn(distance = df_sus_final_dist, get(paste0("sus_final_ward", i, "_class"))))),
-  silh_index = unlist(lapply(2:6, function(i) index.S(df_sus_final_dist, get(paste0("sus_final_ward", i, "_class"))))),
-  ch_index_cent = unlist(lapply(2:6, function(i) index.G1(df_sus_final_var[[1]], get(paste0("sus_final_ward", i, "_class"))))),
-  ch_index_med = unlist(lapply(2:6, function(i) index.G1(df_sus_final_var, get(paste0("sus_final_ward", i, "_class")), d = df_sus_final_dist, centrotypes = "medoids")))
+  db_index_cent = unlist(lapply(2:6, function(i) round(index.DB(df_sus_final_var, get(paste0("sus_final_ward", i, "_class")))$DB, 4))),
+  db_index_med = unlist(lapply(2:6, function(i) round(index.DB(df_sus_final_var, get(paste0("sus_final_ward", i, "_class")), d = df_sus_final_dist, centrotypes = "medoids")$DB, 4))),
+  dunn_index = unlist(lapply(2:6, function(i) round(dunn(distance = df_sus_final_dist, get(paste0("sus_final_ward", i, "_class"))), 4))),
+  silh_index = unlist(lapply(2:6, function(i) round(index.S(df_sus_final_dist, get(paste0("sus_final_ward", i, "_class"))), 4))),
+  ch_index_cent = unlist(lapply(2:6, function(i) round(index.G1(df_sus_final_var[[1]], get(paste0("sus_final_ward", i, "_class"))), 4))),
+  ch_index_med = unlist(lapply(2:6, function(i) round(index.G1(df_sus_final_var, get(paste0("sus_final_ward", i, "_class")), d = df_sus_final_dist, centrotypes = "medoids"), 4)))
 )
 
 ls()[grep("^sus_final_single", ls())]
 sus_final_single_index <- data.frame(
   metodo = unlist(lapply(2:6, function(i) paste0("single", i))),
-  db_index_cent = unlist(lapply(2:6, function(i) index.DB(df_sus_final_var, get(paste0("sus_final_single", i, "_class")))$DB)),
-  db_index_med = unlist(lapply(2:6, function(i) index.DB(df_sus_final_var, get(paste0("sus_final_single", i, "_class")), d = df_sus_final_dist, centrotypes = "medoids")$DB)),
-  dunn_index = unlist(lapply(2:6, function(i) dunn(distance = df_sus_final_dist, get(paste0("sus_final_single", i, "_class"))))),
-  silh_index = unlist(lapply(2:6, function(i) index.S(df_sus_final_dist, get(paste0("sus_final_single", i, "_class"))))),
-  ch_index_cent = unlist(lapply(2:6, function(i) index.G1(df_sus_final_var[[1]], get(paste0("sus_final_single", i, "_class"))))),
-  ch_index_med = unlist(lapply(2:6, function(i) index.G1(df_sus_final_var, get(paste0("sus_final_single", i, "_class")), d = df_sus_final_dist, centrotypes = "medoids")))
+  db_index_cent = unlist(lapply(2:6, function(i) round(index.DB(df_sus_final_var, get(paste0("sus_final_single", i, "_class")))$DB, 4))),
+  db_index_med = unlist(lapply(2:6, function(i) round(index.DB(df_sus_final_var, get(paste0("sus_final_single", i, "_class")), d = df_sus_final_dist, centrotypes = "medoids")$DB, 4))),
+  dunn_index = unlist(lapply(2:6, function(i) round(dunn(distance = df_sus_final_dist, get(paste0("sus_final_single", i, "_class"))), 4))),
+  silh_index = unlist(lapply(2:6, function(i) round(index.S(df_sus_final_dist, get(paste0("sus_final_single", i, "_class"))), 4))),
+  ch_index_cent = unlist(lapply(2:6, function(i) round(index.G1(df_sus_final_var[[1]], get(paste0("sus_final_single", i, "_class"))), 4))),
+  ch_index_med = unlist(lapply(2:6, function(i) round(index.G1(df_sus_final_var, get(paste0("sus_final_single", i, "_class")), d = df_sus_final_dist, centrotypes = "medoids"), 4)))
 )
 
 ls()[grep("^sus_final_average", ls())]
 sus_final_average_index <- data.frame(
   metodo = unlist(lapply(2:6, function(i) paste0("average", i))),
-  db_index_cent = unlist(lapply(2:6, function(i) index.DB(df_sus_final_var, get(paste0("sus_final_average", i, "_class")))$DB)),
-  db_index_med = unlist(lapply(2:6, function(i) index.DB(df_sus_final_var, get(paste0("sus_final_average", i, "_class")), d = df_sus_final_dist, centrotypes = "medoids")$DB)),
-  dunn_index = unlist(lapply(2:6, function(i) dunn(distance = df_sus_final_dist, get(paste0("sus_final_average", i, "_class"))))),
-  silh_index = unlist(lapply(2:6, function(i) index.S(df_sus_final_dist, get(paste0("sus_final_average", i, "_class"))))),
-  ch_index_cent = unlist(lapply(2:6, function(i) index.G1(df_sus_final_var[[1]], get(paste0("sus_final_average", i, "_class"))))),
-  ch_index_med = unlist(lapply(2:6, function(i) index.G1(df_sus_final_var, get(paste0("sus_final_average", i, "_class")), d = df_sus_final_dist, centrotypes = "medoids")))
+  db_index_cent = unlist(lapply(2:6, function(i) round(index.DB(df_sus_final_var, get(paste0("sus_final_average", i, "_class")))$DB, 4))),
+  db_index_med = unlist(lapply(2:6, function(i) round(index.DB(df_sus_final_var, get(paste0("sus_final_average", i, "_class")), d = df_sus_final_dist, centrotypes = "medoids")$DB, 4))),
+  dunn_index = unlist(lapply(2:6, function(i) round(dunn(distance = df_sus_final_dist, get(paste0("sus_final_average", i, "_class"))), 4))),
+  silh_index = unlist(lapply(2:6, function(i) round(index.S(df_sus_final_dist, get(paste0("sus_final_average", i, "_class"))), 4))),
+  ch_index_cent = unlist(lapply(2:6, function(i) round(index.G1(df_sus_final_var[[1]], get(paste0("sus_final_average", i, "_class"))), 4))),
+  ch_index_med = unlist(lapply(2:6, function(i) round(index.G1(df_sus_final_var, get(paste0("sus_final_average", i, "_class")), d = df_sus_final_dist, centrotypes = "medoids"), 4)))
 )
 
 ls()[grep("^sus_final_complete", ls())]
 sus_final_complete_index <- data.frame(
   metodo = unlist(lapply(2:6, function(i) paste0("complete", i))),
-  db_index_cent = unlist(lapply(2:6, function(i) index.DB(df_sus_final_var, get(paste0("sus_final_complete", i, "_class")))$DB)),
-  db_index_med = unlist(lapply(2:6, function(i) index.DB(df_sus_final_var, get(paste0("sus_final_complete", i, "_class")), d = df_sus_final_dist, centrotypes = "medoids")$DB)),
-  dunn_index = unlist(lapply(2:6, function(i) dunn(distance = df_sus_final_dist, get(paste0("sus_final_complete", i, "_class"))))),
-  silh_index = unlist(lapply(2:6, function(i) index.S(df_sus_final_dist, get(paste0("sus_final_complete", i, "_class"))))),
-  ch_index_cent = unlist(lapply(2:6, function(i) index.G1(df_sus_final_var[[1]], get(paste0("sus_final_complete", i, "_class"))))),
-  ch_index_med = unlist(lapply(2:6, function(i) index.G1(df_sus_final_var, get(paste0("sus_final_complete", i, "_class")), d = df_sus_final_dist, centrotypes = "medoids")))
+  db_index_cent = unlist(lapply(2:6, function(i) round(index.DB(df_sus_final_var, get(paste0("sus_final_complete", i, "_class")))$DB, 4))),
+  db_index_med = unlist(lapply(2:6, function(i) round(index.DB(df_sus_final_var, get(paste0("sus_final_complete", i, "_class")), d = df_sus_final_dist, centrotypes = "medoids")$DB, 4))),
+  dunn_index = unlist(lapply(2:6, function(i) round(dunn(distance = df_sus_final_dist, get(paste0("sus_final_complete", i, "_class"))), 4))),
+  silh_index = unlist(lapply(2:6, function(i) round(index.S(df_sus_final_dist, get(paste0("sus_final_complete", i, "_class"))), 4))),
+  ch_index_cent = unlist(lapply(2:6, function(i) round(index.G1(df_sus_final_var[[1]], get(paste0("sus_final_complete", i, "_class"))), 4))),
+  ch_index_med = unlist(lapply(2:6, function(i) round(index.G1(df_sus_final_var, get(paste0("sus_final_complete", i, "_class")), d = df_sus_final_dist, centrotypes = "medoids"), 4)))
 )
 
 sus_final_avaliacao <- rbind(
@@ -944,7 +944,7 @@ cria_tabelas <- function(variaveis, df, var_grupos, atendimento, salvar_excel = 
   return(invisible(lista_dfs))
 }
 
-cria_boxplots <- function(variaveis, df, var_grupos, labels_y, titulo_geral, nome_arquivo = "boxplots_final.png") {
+cria_boxplots <- function(variaveis, df, var_grupos, labels_y, titulo_geral, nome_arquivo = "boxplots_final.png", ylim=NULL) {
   
     variavel <- variaveis[1]
     label_atual <- labels_y[1] # Pega o label correspondente à variável
@@ -958,9 +958,12 @@ cria_boxplots <- function(variaveis, df, var_grupos, labels_y, titulo_geral, nom
         legend.position = "right",
         legend.direction = "vertical"
       )
+    
+    if (!is.null(ylim)) {
+      boxplots <- boxplots +
+        coord_cartesian(ylim = ylim)
+    }
   
-  # Combinando os gráficos com patchwork
-  # wrap_plots transforma a lista em um layout; ncol define as colunas
   grafico_final <- boxplots
   
   # Exibe o gráfico no RStudio
@@ -972,6 +975,116 @@ cria_boxplots <- function(variaveis, df, var_grupos, labels_y, titulo_geral, nom
   message(paste("Gráfico salvo como:", nome_arquivo))
   
   return(invisible(grafico_final))
+}
+
+cria_tabelas_testes <- function(
+    variaveis,
+    df,
+    var_grupos,
+    atendimento,
+    salvar_excel = FALSE,
+    nome_arquivo = "testes_post_hoc.xlsx"
+) {
+  
+  library(dplyr)
+  library(glue)
+  library(rstatix)
+  library(knitr)
+  library(kableExtra)
+  library(writexl)
+  
+  lista_para_excel <- list()
+  
+  for (variavel in variaveis) {
+    
+    formula <- as.formula(glue("{variavel} ~ {var_grupos}"))
+    
+    resultados_dunn <- dunn_test(
+      data = df,
+      formula = formula,
+      p.adjust.method = "bonferroni"
+    )
+    
+    efeito_d <- cohens_d(
+      data = df,
+      formula = formula
+    )
+    
+    df_excel <- resultados_dunn %>%
+      left_join(
+        efeito_d %>% select(group1, group2, effsize),
+        by = c("group1", "group2")
+      ) %>%
+      mutate(variavel = variavel) %>%
+      select(variavel, group1, group2, statistic, p.adj, p.adj.signif, effsize)
+    
+    lista_para_excel[[variavel]] <- df_excel
+    
+    monta_linhas <- function(num_grupo) {
+      idx <- which(resultados_dunn$group1 == unique(resultados_dunn$group1)[num_grupo])
+      
+      p_formatado <- ifelse(
+        round(resultados_dunn$p.adj[idx], 3) < 0.05,
+        ifelse(
+          round(resultados_dunn$p.adj[idx], 3) == 0,
+          "< 0.001*",
+          paste0(round(resultados_dunn$p.adj[idx], 3), "*")
+        ),
+        round(resultados_dunn$p.adj[idx], 3)
+      )
+      
+      paste0(
+        -1 * round(resultados_dunn$statistic[idx], 3), " (Z)<br>",
+        p_formatado, " (valor-p)<br>",
+        round(efeito_d$effsize[idx], 3), " (D de Cohen)"
+      )
+    }
+    
+    grupos_coluna <- unique(resultados_dunn$group1)
+    grupos_linha  <- unique(resultados_dunn$group2)
+    
+    n_colunas <- length(grupos_coluna)
+    n_linhas  <- length(grupos_linha)
+    
+    lista_colunas <- vector("list", n_colunas)
+    
+    for (i in seq_len(n_colunas)) {
+      conteudo <- monta_linhas(i)
+      lista_colunas[[i]] <- c(rep("", i - 1), conteudo)
+    }
+    
+    df_teste <- as.data.frame(lista_colunas, stringsAsFactors = FALSE)
+    rownames(df_teste) <- grupos_linha
+    colnames(df_teste) <- grupos_coluna
+    
+    tabela <- kable(
+      df_teste,
+      escape = FALSE,
+      align = paste(rep("c", n_colunas), collapse = ""),
+      caption = HTML(
+        ifelse(
+          variavel == variaveis[1],
+          paste0(
+            glue(
+              "Resultados dos testes de Dunn (com correção de Bonferroni) para as comparações múltiplas entre os pares de grupos de municípios ({atendimento}). <br><br>"
+            ),
+            variavel
+          ),
+          variavel
+        )
+      )
+    )
+    
+    print(tabela)
+  }
+  
+  if (salvar_excel) {
+    df_final_excel <- bind_rows(lista_para_excel)
+    write_xlsx(df_final_excel, nome_arquivo)
+    message(paste("Arquivo de testes salvo:", nome_arquivo))
+  }
+  
+  return(invisible(lista_para_excel))
 }
 
 ## -- Análises para os melhores métodos de cada categoria de atendimento + período
@@ -1007,31 +1120,84 @@ df_resumo_clusters_sus_final <- cria_tabelas(variaveis = c("sus_tx_abortos_mil_m
                                               nome_arquivo = "databases/tabela_resumo_clusters_sus_final_kmeans3.xlsx")
 
 
-cria_boxplots(variaveis = c("ans_tx_abortos_mil_mulheres_valor_medio"),
+b1 <- cria_boxplots(variaveis = c("ans_tx_abortos_mil_mulheres_valor_medio"),
               df = df_ans_inicio, var_grupos = "cluster_kmeans3_num",
               labels_y = c("Unsafe abortion rate per \n 1000 women in reproductive age"),
-              titulo_geral = " ",
-              nome_arquivo = "figuras/clustering/boxplot_clusters_ans_inicio_kmeans3.png")
+              titulo_geral = "2017-2019",
+              nome_arquivo = "figuras/clustering/boxplot_clusters_ans_inicio_kmeans3.png",
+              ylim = c(0, 70))
 
-cria_boxplots(variaveis = c("ans_tx_abortos_mil_mulheres_valor_medio"),
+
+b2 <- cria_boxplots(variaveis = c("ans_tx_abortos_mil_mulheres_valor_medio"),
               df = df_ans_final, var_grupos = "cluster_kmeans3_num",
               labels_y = c("Unsafe abortion rate per \n 1000 women in reproductive age"),
-              titulo_geral = " ",
-              nome_arquivo = "figuras/clustering/boxplot_clusters_ans_final_kmeans3.png")
+              titulo_geral = "2022-2024",
+              nome_arquivo = "figuras/clustering/boxplot_clusters_ans_final_kmeans3.png",
+              ylim = c(0, 70))
+
+painel_bp_ans <- (b1 + b2) +
+  plot_layout(guides = "collect") &
+  theme(legend.position = "bottom")
+painel_bp_ans
+ggsave("figuras/clustering/painel_boxplot_ans_kmeans3.png", painel_bp_ans,  width = 10, height = 6)
 
 
-cria_boxplots(variaveis = c("sus_tx_abortos_mil_mulheres_valor_medio"),
+b3 <- cria_boxplots(variaveis = c("sus_tx_abortos_mil_mulheres_valor_medio"),
               df = df_sus_inicio, var_grupos = "cluster_kmeans3_num",
               labels_y = c("Unsafe abortion rate per \n 1000 women in reproductive age"),
-              titulo_geral = " ",
-              nome_arquivo = "figuras/clustering/boxplot_clusters_sus_inicio_kmeans3.png")
+              titulo_geral = "2017-2019",
+              nome_arquivo = "figuras/clustering/boxplot_clusters_sus_inicio_kmeans3.png",
+              ylim = c(0, 50))
 
 
-cria_boxplots(variaveis = c("sus_tx_abortos_mil_mulheres_valor_medio"),
+b4 <- cria_boxplots(variaveis = c("sus_tx_abortos_mil_mulheres_valor_medio"),
               df = df_sus_final, var_grupos = "cluster_kmeans3_num",
               labels_y = c("Unsafe abortion rate per \n 1000 women in reproductive age"),
-              titulo_geral = " ",
-              nome_arquivo = "figuras/clustering/boxplot_clusters_sus_final_kmeans3.png")
+              titulo_geral = "2022-2024",
+              nome_arquivo = "figuras/clustering/boxplot_clusters_sus_final_kmeans3.png",
+              ylim = c(0, 50))
+
+painel_bp_sus <- (b3 + b4) +
+  plot_layout(guides = "collect") &
+  theme(legend.position = "bottom")
+painel_bp_sus
+ggsave("figuras/clustering/painel_boxplot_sus_kmeans3.png", painel_bp_sus,  width = 10, height = 6)
+
+cria_tabelas_testes(
+  variaveis = c("ans_tx_abortos_mil_mulheres_valor_medio"),
+  df = df_ans_inicio,
+  var_grupos = "cluster_kmeans3",
+  atendimento = " ",
+  salvar_excel = TRUE,
+  nome_arquivo = "databases/teste_dunn_clusters_ans_inicio_kmeans3.xlsx"
+)
+
+cria_tabelas_testes(
+  variaveis = c("ans_tx_abortos_mil_mulheres_valor_medio"),
+  df = df_ans_final,
+  var_grupos = "cluster_kmeans3",
+  atendimento = " ",
+  salvar_excel = TRUE,
+  nome_arquivo = "databases/teste_dunn_clusters_ans_final_kmeans3.xlsx"
+)
+
+cria_tabelas_testes(
+  variaveis = c("sus_tx_abortos_mil_mulheres_valor_medio"),
+  df = df_sus_inicio,
+  var_grupos = "cluster_kmeans3",
+  atendimento = " ",
+  salvar_excel = TRUE,
+  nome_arquivo = "databases/teste_dunn_clusters_sus_inicio_kmeans3.xlsx"
+)
+
+cria_tabelas_testes(
+  variaveis = c("sus_tx_abortos_mil_mulheres_valor_medio"),
+  df = df_sus_final,
+  var_grupos = "cluster_kmeans3",
+  atendimento = " ",
+  salvar_excel = TRUE,
+  nome_arquivo = "databases/teste_dunn_clusters_sus_final_kmeans3.xlsx"
+)
 
 # Mapas do Brasil dos clusters --------------------------------------------
 ## Baixando os dados de geometria
@@ -1049,7 +1215,7 @@ df_mapa_ans_inicio <- left_join(df_ans_inicio, df_muni_sf) |>
 ## Criando os mapas
 mp1 <- ggplot() +
   geom_sf(data = df_mapa_ans_inicio, aes(fill = cluster_kmeans3), color = NA) +
-  labs(title = " ") +
+  labs(title = "2017-2019") +
   scale_fill_viridis_d(name = "Groups", end = 0.8, alpha = 0.6) +
   geom_sf(data = df_ufs_sf, fill = NA, linewidth = 0.08, color = "black") +
   theme_bw() +
@@ -1070,7 +1236,7 @@ df_mapa_ans_final <- left_join(df_ans_final, df_muni_sf) |>
 ## Criando os mapas
 mp2 <- ggplot() +
   geom_sf(data = df_mapa_ans_final, aes(fill = cluster_kmeans3), color = NA) +
-  labs(title = " ") +
+  labs(title = "2022-2024") +
   scale_fill_viridis_d(name = "Groups", end = 0.8, alpha = 0.6) +
   geom_sf(data = df_ufs_sf, fill = NA, linewidth = 0.08, color = "black") +
   theme_bw() +
@@ -1083,6 +1249,13 @@ mp2 <- ggplot() +
 mp2
 ggsave("figuras/clustering/mapa_cluster_ans_final_kmeans3.png", mp2,  width = 10, height = 6)
 
+painel_mapas_ans <- (mp1 + mp2) +
+  plot_layout(guides = "collect") &
+  theme(legend.position = "bottom")
+painel_mapas_ans
+ggsave("figuras/clustering/painel_mapa_ans_kmeans3.png", painel_mapas_ans,  width = 10, height = 6)
+
+
 
 ## Juntando os dois dataframes
 df_mapa_sus_inicio <- left_join(df_sus_inicio, df_muni_sf) |>
@@ -1091,7 +1264,7 @@ df_mapa_sus_inicio <- left_join(df_sus_inicio, df_muni_sf) |>
 ## Criando os mapas
 mp3 <- ggplot() +
   geom_sf(data = df_mapa_sus_inicio, aes(fill = cluster_kmeans3), color = NA) +
-  labs(title = " ") +
+  labs(title = "2017-2019") +
   scale_fill_viridis_d(name = "Groups", end = 0.8, alpha = 0.6) +
   geom_sf(data = df_ufs_sf, fill = NA, linewidth = 0.08, color = "black") +
   theme_bw() +
@@ -1112,7 +1285,7 @@ df_mapa_sus_final <- left_join(df_sus_final, df_muni_sf) |>
 ## Criando os mapas
 mp4 <- ggplot() +
   geom_sf(data = df_mapa_sus_final, aes(fill = cluster_kmeans3), color = NA) +
-  labs(title = " ") +
+  labs(title = "2022-2024") +
   scale_fill_viridis_d(name = "Groups", end = 0.8, alpha = 0.6) +
   geom_sf(data = df_ufs_sf, fill = NA, linewidth = 0.08, color = "black") +
   theme_bw() +
@@ -1124,3 +1297,9 @@ mp4 <- ggplot() +
   )
 mp4
 ggsave("figuras/clustering/mapa_cluster_sus_final_kmeans3.png", mp4,  width = 10, height = 6)
+
+painel_mapas_sus <- (mp3 + mp4) +
+  plot_layout(guides = "collect") &
+  theme(legend.position = "bottom")
+painel_mapas_sus
+ggsave("figuras/clustering/painel_mapa_sus_kmeans3.png", painel_mapas_sus,  width = 10, height = 6)
