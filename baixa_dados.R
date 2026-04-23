@@ -135,100 +135,47 @@ df_bloco2_sinasc[is.na(df_bloco2_sinasc)] <- 0
 rm(df_sinasc)
 
 # Para as variáveis provenientes do Tabnet -----------------------------------
-## Estimativas populacionais de mulheres de 10 a 14 anos ---------------------
-### Baixando os dados de 2012 a 2024
-df_est_pop_fem_10_14 <- est_pop_tabnet(
-  periodo = 23:24,
-  idade_min = 10,
-  idade_max = 14
-) |>
-  mutate(ano = as.numeric(ano)) |>
-  right_join(df_aux_municipios)
+# Para as variáveis provenientes do Tabnet -----------------------------------
+## Criando função auxiliar para baixar as estimativas populacionais em diferentes faixas
+baixar_pop <- function(idade_min, idade_max, df_aux){
+  
+  est_pop_tabnet(
+    periodo = 12:25,
+    idade_min = idade_min,
+    idade_max = idade_max
+  ) |>
+    mutate(ano = as.numeric(ano)) |>
+    right_join(df_aux, by = c("codmunres","ano")) |>
+    mutate(across(where(is.numeric), ~replace_na(.x,0)))
+  
+}
 
-head(df_est_pop_fem_10_14)
+## Estimativas populacionais de mulheres de 10 a 14 anos
+df_est_pop_fem_10_14 <- baixar_pop(10,14,df_aux_municipios)
 
-### Substituindo todos os NAs, gerados após o right_join, por 0
-df_est_pop_fem_10_14[is.na(df_est_pop_fem_10_14)] <- 0
+## Estimativas populacionais de mulheres de 15 a 19 anos
+df_est_pop_fem_15_19 <- baixar_pop(15,19,df_aux_municipios)
 
+## Estimativas populacionais de mulheres de 20 a 29 anos
+df_est_pop_fem_20_29 <- baixar_pop(20,29,df_aux_municipios)
 
-## Estimativas populacionais de mulheres de 15 a 19 anos ---------------------
-### Baixando os dados de 2012 a 2024
-df_est_pop_fem_15_19 <- est_pop_tabnet(
-  periodo = 23:24,
-  idade_min = 15,
-  idade_max = 19
-) |>
-  mutate(ano = as.numeric(ano)) |>
-  right_join(df_aux_municipios)
+## Estimativas populacionais de mulheres de 30 a 39 anos
+df_est_pop_fem_30_39 <- baixar_pop(30,39,df_aux_municipios)
 
-head(df_est_pop_fem_15_19)
+## Estimativas populacionais de mulheres de 40 a 49 anos
+df_est_pop_fem_40_49 <- baixar_pop(40,49,df_aux_municipios)
 
-### Substituindo todos os NAs, gerados após o right_join, por 0
-df_est_pop_fem_15_19[is.na(df_est_pop_fem_15_19)] <- 0
+## Estimativas populacionais de mulheres de 10 a 49 anos
+df_est_pop_fem_10_49 <- baixar_pop(10,49,df_aux_municipios)
 
-
-## Estimativas populacionais de mulheres de 20 a 29 anos ---------------------
-### Baixando os dados de 2012 a 2024
-df_est_pop_fem_20_29 <- est_pop_tabnet(
-  periodo = 23:24,
-  idade_min = 20,
-  idade_max = 29
-) |>
-  mutate(ano = as.numeric(ano)) |>
-  right_join(df_aux_municipios)
-
-head(df_est_pop_fem_20_29)
-
-### Substituindo todos os NAs, gerados após o right_join, por 0
-df_est_pop_fem_20_29[is.na(df_est_pop_fem_20_29)] <- 0
-
-
-## Estimativas populacionais de mulheres de 30 a 39 anos ---------------------
-### Baixando os dados de 2012 a 2024
-df_est_pop_fem_30_39 <- est_pop_tabnet(
-  periodo = 23:24,
-  idade_min = 30,
-  idade_max = 39
-) |>
-  mutate(ano = as.numeric(ano)) |>
-  right_join(df_aux_municipios)
-
-head(df_est_pop_fem_30_39)
-
-### Substituindo todos os NAs, gerados após o right_join, por 0
-df_est_pop_fem_30_39[is.na(df_est_pop_fem_30_39)] <- 0
-
-
-## Estimativas populacionais de mulheres de 40 a 49 anos ---------------------
-### Baixando os dados de 2012 a 2024
-df_est_pop_fem_40_49 <- est_pop_tabnet(
-  periodo = 23:24,
-  idade_min = 40,
-  idade_max = 49
-) |>
-  mutate(ano = as.numeric(ano)) |>
-  right_join(df_aux_municipios)
-
-head(df_est_pop_fem_40_49)
-
-### Substituindo todos os NAs, gerados após o right_join, por 0
-df_est_pop_fem_40_49[is.na(df_est_pop_fem_40_49)] <- 0
-
-
-## Estimativas populacionais de mulheres de 10 a 49 anos ---------------------
-### Baixando os dados de 2012 a 2024
-df_est_pop_fem_10_49 <- est_pop_tabnet(
-  periodo = 23:24,
-  idade_min = 10,
-  idade_max = 49
-) |>
-  mutate(ano = as.numeric(ano)) |>
-  right_join(df_aux_municipios)
-
-head(df_est_pop_fem_10_49)
-
-### Substituindo todos os NAs, gerados após o right_join, por 0
-df_est_pop_fem_10_49[is.na(df_est_pop_fem_10_49)] <- 0
+## Juntando todos os dados --------------------------------------------------
+df_bloco2_tabnet <- df_est_pop_fem_10_14 |>
+  full_join(df_est_pop_fem_15_19) |>
+  full_join(df_est_pop_fem_20_29) |>
+  full_join(df_est_pop_fem_30_39) |>
+  full_join(df_est_pop_fem_40_49) |>
+  full_join(df_est_pop_fem_10_49) |>
+  arrange(codmunres, ano)
 
 
 ## Juntando todos os dados --------------------------------------------------
@@ -968,7 +915,7 @@ df_bloco2 <- full_join(
 #unlink("ANS/", recursive = TRUE)
 
 # Juntando com dados de 2015 a 2022
-df_bloco2_antigo <- read_csv("databases_auxiliares/indicadores_bloco2_planejamento_reprodutivo_SUS_ANS_2012_2024.csv") |>
+df_bloco2_antigo <- read_csv("databases_auxiliares/indicadores_bloco2_planejamento_reprodutivo_SUS_ANS_2012_2025.csv") |>
   filter(ano >= 2015 & ano <= 2022)
 
 df_bloco2_novo <- rbind(df_bloco2_antigo, df_bloco2)

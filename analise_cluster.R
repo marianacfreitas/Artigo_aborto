@@ -829,32 +829,32 @@ df_sus_final$cluster_kmeans3 <- as.factor(df_sus_final_kmeans3$cluster)
 df_ans_inicio <- df_ans_inicio |>
   mutate(
     cluster_kmeans3 = case_when(
-      cluster_kmeans3 == 2 ~ "1: lowest unsafe abortion rates",
-      cluster_kmeans3 == 3 ~ "2: intermediary unsafe abortion rates",
-      cluster_kmeans3 == 1 ~ "3: highest unsafe abortion rates"
+      cluster_kmeans3 == 2 ~ "1: lowest induced abortion rates",
+      cluster_kmeans3 == 3 ~ "2: intermediary induced abortion rates",
+      cluster_kmeans3 == 1 ~ "3: highest induced abortion rates"
     )
   ) |>
   mutate(
     cluster_kmeans3_num = case_when(
-      cluster_kmeans3 == "1: lowest unsafe abortion rates" ~ "Lowest rates",
-      cluster_kmeans3 == "2: intermediary unsafe abortion rates" ~ "Intermediary rates",
-      cluster_kmeans3 == "3: highest unsafe abortion rates" ~ "Highest rates"
+      cluster_kmeans3 == "1: lowest induced abortion rates" ~ "Lowest rates",
+      cluster_kmeans3 == "2: intermediary induced abortion rates" ~ "Intermediary rates",
+      cluster_kmeans3 == "3: highest induced abortion rates" ~ "Highest rates"
     )
   )
 
 df_ans_final <- df_ans_final |>
   mutate(
     cluster_kmeans3 = case_when(
-      cluster_kmeans3 == 1 ~ "1: lowest unsafe abortion rates",
-      cluster_kmeans3 == 2 ~ "2: intermediary unsafe abortion rates",
-      cluster_kmeans3 == 3 ~ "3: highest unsafe abortion rates"
+      cluster_kmeans3 == 1 ~ "1: lowest induced abortion rates",
+      cluster_kmeans3 == 2 ~ "2: intermediary induced abortion rates",
+      cluster_kmeans3 == 3 ~ "3: highest induced abortion rates"
     )
   ) |>
   mutate(
     cluster_kmeans3_num = case_when(
-      cluster_kmeans3 == "1: lowest unsafe abortion rates" ~ "Lowest rates",
-      cluster_kmeans3 == "2: intermediary unsafe abortion rates" ~ "Intermediary rates",
-      cluster_kmeans3 == "3: highest unsafe abortion rates" ~ "Highest rates"
+      cluster_kmeans3 == "1: lowest induced abortion rates" ~ "Lowest rates",
+      cluster_kmeans3 == "2: intermediary induced abortion rates" ~ "Intermediary rates",
+      cluster_kmeans3 == "3: highest induced abortion rates" ~ "Highest rates"
     )  
     )
 
@@ -862,32 +862,32 @@ df_ans_final <- df_ans_final |>
 df_sus_inicio <- df_sus_inicio |>
   mutate(
     cluster_kmeans3 = case_when(
-      cluster_kmeans3 == 1 ~ "1: lowest unsafe abortion rates",
-      cluster_kmeans3 == 2 ~ "2: intermediary unsafe abortion rates",
-      cluster_kmeans3 == 3 ~ "3: highest unsafe abortion rates"
+      cluster_kmeans3 == 1 ~ "1: lowest induced abortion rates",
+      cluster_kmeans3 == 2 ~ "2: intermediary induced abortion rates",
+      cluster_kmeans3 == 3 ~ "3: highest induced abortion rates"
     )
   ) |>
   mutate(
     cluster_kmeans3_num = case_when(
-      cluster_kmeans3 == "1: lowest unsafe abortion rates" ~ "Lowest rates",
-      cluster_kmeans3 == "2: intermediary unsafe abortion rates" ~ "Intermediary rates",
-      cluster_kmeans3 == "3: highest unsafe abortion rates" ~ "Highest rates"
+      cluster_kmeans3 == "1: lowest induced abortion rates" ~ "Lowest rates",
+      cluster_kmeans3 == "2: intermediary induced abortion rates" ~ "Intermediary rates",
+      cluster_kmeans3 == "3: highest induced abortion rates" ~ "Highest rates"
     )
   )
 
 df_sus_final <- df_sus_final |>
   mutate(
     cluster_kmeans3 = case_when(
-      cluster_kmeans3 == 2 ~ "1: lowest unsafe abortion rates",
-      cluster_kmeans3 == 1 ~ "2: intermediary unsafe abortion rates",
-      cluster_kmeans3 == 3 ~ "3: highest unsafe abortion rates"
+      cluster_kmeans3 == 2 ~ "1: lowest induced abortion rates",
+      cluster_kmeans3 == 1 ~ "2: intermediary induced abortion rates",
+      cluster_kmeans3 == 3 ~ "3: highest induced abortion rates"
     )
   ) |>
   mutate(
     cluster_kmeans3_num = case_when(
-      cluster_kmeans3 == "1: lowest unsafe abortion rates" ~ "Lowest rates",
-      cluster_kmeans3 == "2: intermediary unsafe abortion rates" ~ "Intermediary rates",
-      cluster_kmeans3 == "3: highest unsafe abortion rates" ~ "Highest rates"
+      cluster_kmeans3 == "1: lowest induced abortion rates" ~ "Lowest rates",
+      cluster_kmeans3 == "2: intermediary induced abortion rates" ~ "Intermediary rates",
+      cluster_kmeans3 == "3: highest induced abortion rates" ~ "Highest rates"
     )
   )
 
@@ -1122,7 +1122,7 @@ df_resumo_clusters_sus_final <- cria_tabelas(variaveis = c("sus_tx_abortos_mil_m
 
 b1 <- cria_boxplots(variaveis = c("ans_tx_abortos_mil_mulheres_valor_medio"),
               df = df_ans_inicio, var_grupos = "cluster_kmeans3_num",
-              labels_y = c("Unsafe abortion rate per \n 1000 women in reproductive age"),
+              labels_y = c("Induced abortion rate per \n 1000 women in reproductive age"),
               titulo_geral = "2017-2019",
               nome_arquivo = "figuras/clustering/boxplot_clusters_ans_inicio_kmeans3.png",
               ylim = c(0, 70))
@@ -1130,7 +1130,7 @@ b1 <- cria_boxplots(variaveis = c("ans_tx_abortos_mil_mulheres_valor_medio"),
 
 b2 <- cria_boxplots(variaveis = c("ans_tx_abortos_mil_mulheres_valor_medio"),
               df = df_ans_final, var_grupos = "cluster_kmeans3_num",
-              labels_y = c("Unsafe abortion rate per \n 1000 women in reproductive age"),
+              labels_y = c("Induced abortion rate per \n 1000 women in reproductive age"),
               titulo_geral = "2022-2024",
               nome_arquivo = "figuras/clustering/boxplot_clusters_ans_final_kmeans3.png",
               ylim = c(0, 70))
@@ -1144,7 +1144,7 @@ ggsave("figuras/clustering/painel_boxplot_ans_kmeans3.png", painel_bp_ans,  widt
 
 b3 <- cria_boxplots(variaveis = c("sus_tx_abortos_mil_mulheres_valor_medio"),
               df = df_sus_inicio, var_grupos = "cluster_kmeans3_num",
-              labels_y = c("Unsafe abortion rate per \n 1000 women in reproductive age"),
+              labels_y = c("Induced abortion rate per \n 1000 women in reproductive age"),
               titulo_geral = "2017-2019",
               nome_arquivo = "figuras/clustering/boxplot_clusters_sus_inicio_kmeans3.png",
               ylim = c(0, 50))
@@ -1152,7 +1152,7 @@ b3 <- cria_boxplots(variaveis = c("sus_tx_abortos_mil_mulheres_valor_medio"),
 
 b4 <- cria_boxplots(variaveis = c("sus_tx_abortos_mil_mulheres_valor_medio"),
               df = df_sus_final, var_grupos = "cluster_kmeans3_num",
-              labels_y = c("Unsafe abortion rate per \n 1000 women in reproductive age"),
+              labels_y = c("Induced abortion rate per \n 1000 women in reproductive age"),
               titulo_geral = "2022-2024",
               nome_arquivo = "figuras/clustering/boxplot_clusters_sus_final_kmeans3.png",
               ylim = c(0, 50))
@@ -1303,3 +1303,187 @@ painel_mapas_sus <- (mp3 + mp4) +
   theme(legend.position = "bottom")
 painel_mapas_sus
 ggsave("figuras/clustering/painel_mapa_sus_kmeans3.png", painel_mapas_sus,  width = 10, height = 6)
+
+### -------- Tabelas de contingência ------------- #########
+library(DescTools)
+
+# Preparando dataframes para junção
+df_ans_inicio_cont <- df_ans_inicio |>
+  select(codmunres,
+         cluster_ans_inicio = cluster_kmeans3_num)
+
+df_ans_final_cont <- df_ans_final |>
+  select(codmunres,
+         cluster_ans_final = cluster_kmeans3_num)
+
+df_sus_inicio_cont <- df_sus_inicio |>
+  select(codmunres,
+         cluster_sus_inicio = cluster_kmeans3_num)
+
+df_sus_final_cont <- df_sus_final |>
+  select(codmunres,
+         cluster_sus_final = cluster_kmeans3_num)
+
+# Saúde suplementar: período inicial vs final
+df_ans_contingencia <- left_join(df_ans_inicio_cont, df_ans_final_cont, by = c("codmunres")) |>
+  mutate(
+    groups = paste0(cluster_ans_inicio, " to ", cluster_ans_final)
+  )
+tc_ans <- table(`Years 2017 to 2019` = df_ans_contingencia$cluster_ans_inicio, `Years 2022 to 2024` = df_ans_contingencia$cluster_ans_final)
+tc_ans
+sm_ans <- StuartMaxwellTest(tc_ans)
+df_tc_ans <- as.data.frame.matrix(tc_ans)
+df_tc_ans <- cbind(Row = rownames(df_tc_ans), df_tc_ans)
+write_xlsx(df_tc_ans, "databases/tabela_contingencia_ans.xlsx")
+
+# SUS: período inicial vs final
+df_sus_contingencia <- left_join(df_sus_inicio_cont, df_sus_final_cont, by = c("codmunres")) |>
+  mutate(
+    groups = paste0(cluster_sus_inicio, " to ", cluster_sus_final)
+  )
+tc_sus <-  table(`Years 2017 to 2019` = df_sus_contingencia$cluster_sus_inicio, `Years 2022 to 2024` = df_sus_contingencia$cluster_sus_final)
+tc_sus
+sm_sus <- StuartMaxwellTest(tc_sus)
+df_tc_sus <- as.data.frame.matrix(tc_sus)
+df_tc_sus <- cbind(Row = rownames(df_tc_sus), df_tc_sus)
+write_xlsx(df_tc_sus, "databases/tabela_contingencia_sus.xlsx")
+
+# Período inicial: SUS vs Saúde Suplementar
+df_inicio_contingencia <- left_join(df_sus_inicio_cont, df_ans_inicio_cont, by = c("codmunres")) |>
+  mutate(
+    groups = paste0(cluster_sus_inicio, " on SUS and ", cluster_ans_inicio, " on private healthcare and insurance")
+  )
+tc_inicio <- table(`Brazilian Unified Health System (SUS)` = df_inicio_contingencia$cluster_sus_inicio, `Private healthcare and insurance` = df_inicio_contingencia$cluster_ans_inicio)
+tc_inicio
+sm_inicio <- StuartMaxwellTest(tc_inicio)
+df_tc_inicio <- as.data.frame.matrix(tc_inicio)
+df_tc_inicio <- cbind(Row = rownames(df_tc_inicio), df_tc_inicio)
+write_xlsx(df_tc_inicio, "databases/tabela_contingencia_inicio.xlsx")
+
+# Período final: SUS vs Saúde Suplementar
+df_final_contingencia <- left_join(df_sus_final_cont, df_ans_final_cont, by = c("codmunres"))|>
+  mutate(
+    groups = paste0(cluster_sus_final, " on SUS and ", cluster_ans_final, " on private healthcare and insurance")
+  )
+tc_final <- table(`Brazilian Unified Health System (SUS)` = df_final_contingencia$cluster_sus_final, `Private healthcare and insurance` = df_final_contingencia$cluster_ans_final)
+tc_final
+sm_final <- StuartMaxwellTest(tc_final)
+df_tc_final <- as.data.frame.matrix(tc_final)
+df_tc_final <- cbind(Row = rownames(df_tc_final), df_tc_final)
+write_xlsx(df_tc_final, "databases/tabela_contingencia_final.xlsx")
+
+# Salvando resultados dos testes de Stuart-Maxwell
+subtitles <- c("Private healthcare and insurance, years 2017 to 2019 vs. years 2022 to 2024",
+          "Brazilian Unified Health System (SUS), years 2017 to 2019 vs. years 2022 to 2024",
+          "Years 2017 to 2019, private healthcare and insurance vs. Brazilian Unified Health System (SUS)",
+          "Years 2022 to 2024, private healthcare and insurance vs. Brazilian Unified Health System (SUS)")
+
+test_statistic <- c(sm_ans$statistic[1,1], sm_sus$statistic[1,1], sm_inicio$statistic[1,1], sm_final$statistic[1,1])
+test_pvalue <- c(sm_ans$p.value[1,1], sm_sus$p.value[1,1], sm_inicio$p.value[1,1], sm_final$p.value[1,1])
+
+df_stuart_maxwell <- data.frame(
+  `Compared groups` = subtitles,
+  test_statistic,
+  test_pvalue
+) |>
+  mutate(
+    `P-value` = ifelse(test_pvalue < 0.0001, "< 0.0001", as.character(round(test_pvalue, 4))),
+    `Chi-squared statistic` = round(test_statistic, 4)
+  ) |>
+  select(-c(test_pvalue, test_statistic))
+
+write_xlsx(df_stuart_maxwell, "databases/teste_stuart_maxwell.xlsx")
+
+
+# Mapas de grupos de clusters combinados
+## Baixando os dados de geometria
+df_muni_sf <- read_municipality(year = 2020, showProgress = FALSE) |>
+  mutate(codmunres = as.numeric(substr(code_muni, 1, 6)))
+
+df_ufs_sf <- read_state(year = 2020, showProgress = FALSE)
+
+get_dupes(df_muni_sf, codmunres)
+
+## Juntando os dois dataframes
+df_mapa_ans_inicio_cont <- left_join(df_ans_contingencia, df_muni_sf) |>
+  st_as_sf()
+
+## Criando os mapas
+mp5 <- ggplot() +
+  geom_sf(data = df_mapa_ans_inicio_cont, aes(fill = groups), color = NA) +
+  labs(title = "Private healthcare and insurance") +
+  scale_fill_viridis_d(name = "Groups", end = 0.8, alpha = 0.6) +
+  geom_sf(data = df_ufs_sf, fill = NA, linewidth = 0.08, color = "black") +
+  theme_bw() +
+  theme(
+    legend.position = "bottom",
+    legend.direction = "horizontal",
+    legend.title = element_text(size = 10),
+    legend.text = element_text(size = 9)
+  )
+mp5
+ggsave("figuras/clustering/mapa_cluster_ans_grupos_combinados.png", mp5,  width = 10, height = 6)
+
+
+## Juntando os dois dataframes
+df_mapa_sus_cont <- left_join(df_sus_contingencia, df_muni_sf) |>
+  st_as_sf()
+
+## Criando os mapas
+mp6 <- ggplot() +
+  geom_sf(data = df_mapa_sus_cont, aes(fill = groups), color = NA) +
+  labs(title = "Brazilian Unified Health System (SUS)") +
+  scale_fill_viridis_d(name = "Groups", end = 0.8, alpha = 0.6) +
+  geom_sf(data = df_ufs_sf, fill = NA, linewidth = 0.08, color = "black") +
+  theme_bw() +
+  theme(
+    legend.position = "bottom",
+    legend.direction = "horizontal",
+    legend.title = element_text(size = 10),
+    legend.text = element_text(size = 9)
+  )
+mp6
+ggsave("figuras/clustering/mapa_cluster_sus_grupos_combinados.png", mp6,  width = 10, height = 6)
+
+
+
+## Juntando os dois dataframes
+df_mapa_inicio_cont <- left_join(df_inicio_contingencia, df_muni_sf) |>
+  st_as_sf()
+
+## Criando os mapas
+mp7 <- ggplot() +
+  geom_sf(data = df_mapa_inicio_cont, aes(fill = groups), color = NA) +
+  labs(title = "Years 2017 to 2019") +
+  scale_fill_viridis_d(name = "Groups", end = 0.8, alpha = 0.6) +
+  geom_sf(data = df_ufs_sf, fill = NA, linewidth = 0.08, color = "black") +
+  theme_bw() +
+  theme(
+    legend.position = "bottom",
+    legend.direction = "horizontal",
+    legend.title = element_text(size = 10),
+    legend.text = element_text(size = 9)
+  )
+mp7
+ggsave("figuras/clustering/mapa_cluster_inicio_grupos_combinados.png", mp7,  width = 10, height = 6)
+
+
+## Juntando os dois dataframes
+df_mapa_final_cont <- left_join(df_final_contingencia, df_muni_sf) |>
+  st_as_sf()
+
+## Criando os mapas
+mp8 <- ggplot() +
+  geom_sf(data = df_mapa_final_cont, aes(fill = groups), color = NA) +
+  labs(title = "Years 2022 to 2024") +
+  scale_fill_viridis_d(name = "Groups", end = 0.8, alpha = 0.6) +
+  geom_sf(data = df_ufs_sf, fill = NA, linewidth = 0.08, color = "black") +
+  theme_bw() +
+  theme(
+    legend.position = "bottom",
+    legend.direction = "horizontal",
+    legend.title = element_text(size = 10),
+    legend.text = element_text(size = 9)
+  )
+mp8
+ggsave("figuras/clustering/mapa_cluster_final_grupos_combinados.png", mp8,  width = 10, height = 6)

@@ -77,7 +77,7 @@ serie_temporal_br_plot_1000_mulheres <- ggplot(data = df_brasil_1000_mulheres, m
   labs(
     title = " ",
     x = "Year",
-    y = "Unsafe abortios rate per \n 1000 women in reproductive age",
+    y = "Induced abortion rates per \n 1000 women in reproductive age",
     color = "Category",
     shape = "Category",
   ) +
