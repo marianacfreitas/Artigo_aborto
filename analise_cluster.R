@@ -1329,11 +1329,25 @@ df_ans_contingencia <- left_join(df_ans_inicio_cont, df_ans_final_cont, by = c("
   mutate(
     groups = paste0(cluster_ans_inicio, " to ", cluster_ans_final)
   )
-tc_ans <- table(`Years 2017 to 2019` = df_ans_contingencia$cluster_ans_inicio, `Years 2022 to 2024` = df_ans_contingencia$cluster_ans_final)
-tc_ans
+
+tc_ans <- table(
+  `Years 2017 to 2019` = df_ans_contingencia$cluster_ans_inicio,
+  `Years 2022 to 2024` = df_ans_contingencia$cluster_ans_final
+)
+
+prop_total <- prop.table(tc_ans) * 100
+
+tc_ans_n_pct <- matrix(
+  paste0(tc_ans, " (", round(prop_total, 1), "%)"),
+  nrow = nrow(tc_ans),
+  dimnames = dimnames(tc_ans)
+)
+
 sm_ans <- StuartMaxwellTest(tc_ans)
-df_tc_ans <- as.data.frame.matrix(tc_ans)
+
+df_tc_ans <- as.data.frame.matrix(tc_ans_n_pct)
 df_tc_ans <- cbind(Row = rownames(df_tc_ans), df_tc_ans)
+
 write_xlsx(df_tc_ans, "databases/tabela_contingencia_ans.xlsx")
 
 # SUS: período inicial vs final
@@ -1341,11 +1355,25 @@ df_sus_contingencia <- left_join(df_sus_inicio_cont, df_sus_final_cont, by = c("
   mutate(
     groups = paste0(cluster_sus_inicio, " to ", cluster_sus_final)
   )
-tc_sus <-  table(`Years 2017 to 2019` = df_sus_contingencia$cluster_sus_inicio, `Years 2022 to 2024` = df_sus_contingencia$cluster_sus_final)
-tc_sus
+
+tc_sus <- table(
+  `Years 2017 to 2019` = df_sus_contingencia$cluster_sus_inicio,
+  `Years 2022 to 2024` = df_sus_contingencia$cluster_sus_final
+)
+
+prop_total <- prop.table(tc_sus) * 100
+
+tc_sus_n_pct <- matrix(
+  paste0(tc_sus, " (", round(prop_total, 1), "%)"),
+  nrow = nrow(tc_sus),
+  dimnames = dimnames(tc_sus)
+)
+
 sm_sus <- StuartMaxwellTest(tc_sus)
-df_tc_sus <- as.data.frame.matrix(tc_sus)
+
+df_tc_sus <- as.data.frame.matrix(tc_sus_n_pct)
 df_tc_sus <- cbind(Row = rownames(df_tc_sus), df_tc_sus)
+
 write_xlsx(df_tc_sus, "databases/tabela_contingencia_sus.xlsx")
 
 # Período inicial: SUS vs Saúde Suplementar
@@ -1353,23 +1381,51 @@ df_inicio_contingencia <- left_join(df_sus_inicio_cont, df_ans_inicio_cont, by =
   mutate(
     groups = paste0(cluster_sus_inicio, " on SUS and ", cluster_ans_inicio, " on private healthcare and insurance")
   )
-tc_inicio <- table(`Brazilian Unified Health System (SUS)` = df_inicio_contingencia$cluster_sus_inicio, `Private healthcare and insurance` = df_inicio_contingencia$cluster_ans_inicio)
-tc_inicio
+
+tc_inicio <- table(
+  `Brazilian Unified Health System (SUS)` = df_inicio_contingencia$cluster_sus_inicio,
+  `Private healthcare and insurance` = df_inicio_contingencia$cluster_ans_inicio
+)
+
+prop_total <- prop.table(tc_inicio) * 100
+
+tc_inicio_n_pct <- matrix(
+  paste0(tc_inicio, " (", round(prop_total, 1), "%)"),
+  nrow = nrow(tc_inicio),
+  dimnames = dimnames(tc_inicio)
+)
+
 sm_inicio <- StuartMaxwellTest(tc_inicio)
-df_tc_inicio <- as.data.frame.matrix(tc_inicio)
+
+df_tc_inicio <- as.data.frame.matrix(tc_inicio_n_pct)
 df_tc_inicio <- cbind(Row = rownames(df_tc_inicio), df_tc_inicio)
+
 write_xlsx(df_tc_inicio, "databases/tabela_contingencia_inicio.xlsx")
 
 # Período final: SUS vs Saúde Suplementar
-df_final_contingencia <- left_join(df_sus_final_cont, df_ans_final_cont, by = c("codmunres"))|>
+df_final_contingencia <- left_join(df_sus_final_cont, df_ans_final_cont, by = c("codmunres")) |>
   mutate(
     groups = paste0(cluster_sus_final, " on SUS and ", cluster_ans_final, " on private healthcare and insurance")
   )
-tc_final <- table(`Brazilian Unified Health System (SUS)` = df_final_contingencia$cluster_sus_final, `Private healthcare and insurance` = df_final_contingencia$cluster_ans_final)
-tc_final
+
+tc_final <- table(
+  `Brazilian Unified Health System (SUS)` = df_final_contingencia$cluster_sus_final,
+  `Private healthcare and insurance` = df_final_contingencia$cluster_ans_final
+)
+
+prop_total <- prop.table(tc_final) * 100
+
+tc_final_n_pct <- matrix(
+  paste0(tc_final, " (", round(prop_total, 1), "%)"),
+  nrow = nrow(tc_final),
+  dimnames = dimnames(tc_final)
+)
+
 sm_final <- StuartMaxwellTest(tc_final)
-df_tc_final <- as.data.frame.matrix(tc_final)
+
+df_tc_final <- as.data.frame.matrix(tc_final_n_pct)
 df_tc_final <- cbind(Row = rownames(df_tc_final), df_tc_final)
+
 write_xlsx(df_tc_final, "databases/tabela_contingencia_final.xlsx")
 
 # Salvando resultados dos testes de Stuart-Maxwell
