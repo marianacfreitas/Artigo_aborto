@@ -891,6 +891,17 @@ df_sus_final <- df_sus_final |>
     )
   )
 
+# Criando tabelas para armezenar o grupo de cada município em cada período e categoria de atendimento
+
+load("databases_auxiliares/tabela_aux_municipios.rda")
+
+todos_cluster_mun <- (tabela_aux_municipios |> select(codmunres, municipio, uf)) |>
+  left_join((df_ans_inicio |> select(codmunres, grupo_SS_17_19 = cluster_kmeans3_num, tx_SS_17_19 = ans_tx_abortos_mil_mulheres_valor_medio))) |>
+  full_join((df_ans_final |> select(codmunres, grupo_SS_22_24 = cluster_kmeans3_num, tx_SS_22_24 = ans_tx_abortos_mil_mulheres_valor_medio)), by=c("codmunres")) |>
+  full_join((df_sus_inicio |> select(codmunres, grupo_SUS_17_19 = cluster_kmeans3_num, tx_SUS_17_19 = sus_tx_abortos_mil_mulheres_valor_medio)), by=c("codmunres")) |>
+  full_join((df_sus_final |> select(codmunres, grupo_SUS_22_24 = cluster_kmeans3_num, tx_SUS_22_24 = sus_tx_abortos_mil_mulheres_valor_medio)), by=c("codmunres"))
+
+write_xlsx(todos_cluster_mun, "databases/clusters_por_mun.xlsx")
 
 # ----- Criando as funções que serão utilizadas para a construção das tabelas e boxplots ------
 
