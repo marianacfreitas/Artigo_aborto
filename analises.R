@@ -20,14 +20,24 @@ df_brasil <- planilha_indicadores_aborto |>
   group_by(ano) |>
   summarise(
     sus_tx_abortos_mil_mulheres_valor_medio =  round((((sum(abortos_sus_menor_30 ) * 0.9) + (sum(abortos_sus_30_a_39 ) * 0.85) + (sum(abortos_sus_40_a_49 ) * 0.75)) * 4) / sum(pop_fem_sus_10_49 ) * 1000, 1) ,
-    ans_tx_abortos_mil_mulheres_valor_medio =  round((((sum(abortos_ans_menor_30, na.rm = T) * 0.9) + (sum(abortos_ans_30_a_39 , na.rm = T) * 0.85) + (sum(abortos_ans_40_a_49 , na.rm = T) * 0.75)) * 5) / sum(pop_fem_ans_10_49 , na.rm = T) * 1000, 1) #,
+    sus_tx_abortos_mil_mulheres_lim_inf = round((((sum(abortos_sus_menor_30[ano >= 2015 & ano <= 2024]) * 0.9) + (sum(abortos_sus_30_a_39[ano >= 2015 & ano <= 2024]) * 0.85) + (sum(abortos_sus_40_a_49[ano >= 2015 & ano <= 2024]) * 0.75)) * 3) / sum(pop_fem_sus_10_49[ano >= 2015 & ano <= 2024]) * 1000, 1),
+    sus_tx_abortos_mil_mulheres_lim_sup = round((((sum(abortos_sus_menor_30[ano >= 2015 & ano <= 2024]) * 0.9) + (sum(abortos_sus_30_a_39[ano >= 2015 & ano <= 2024]) * 0.85) + (sum(abortos_sus_40_a_49[ano >= 2015 & ano <= 2024]) * 0.75)) * 5) / sum(pop_fem_sus_10_49[ano >= 2015 & ano <= 2024]) * 1000, 1),
+
+    ans_tx_abortos_mil_mulheres_valor_medio =  round((((sum(abortos_ans_menor_30, na.rm = T) * 0.9) + (sum(abortos_ans_30_a_39 , na.rm = T) * 0.85) + (sum(abortos_ans_40_a_49 , na.rm = T) * 0.75)) * 5) / sum(pop_fem_ans_10_49 , na.rm = T) * 1000, 1),
+    ans_tx_abortos_mil_mulheres_lim_inf = round((((sum(abortos_ans_menor_30[ano >= 2015 & ano <= 2024]) * 0.9) + (sum(abortos_ans_30_a_39[ano >= 2015 & ano <= 2024]) * 0.85) + (sum(abortos_ans_40_a_49[ano >= 2015 & ano <= 2024]) * 0.75)) * 4) / sum(pop_fem_ans_10_49[ano >= 2015 & ano <= 2024]) * 1000, 1),
+    ans_tx_abortos_mil_mulheres_lim_sup = round((((sum(abortos_ans_menor_30[ano >= 2015 & ano <= 2024]) * 0.9) + (sum(abortos_ans_30_a_39[ano >= 2015 & ano <= 2024]) * 0.85) + (sum(abortos_ans_40_a_49[ano >= 2015 & ano <= 2024]) * 0.75)) * 6) / sum(pop_fem_ans_10_49[ano >= 2015 & ano <= 2024]) * 1000, 1)
    
     # sus_tx_abortos_cem_nascidos_vivos_valor_medio =  round((((sum(abortos_sus_menor_30 ) * 0.9) + (sum(abortos_sus_30_a_39 ) * 0.85) + (sum(abortos_sus_40_a_49 ) * 0.75)) * 4) / sum(total_de_nascidos_vivos_10_a_49_sus ) * 100, 1) ,
     # ans_tx_abortos_cem_nascidos_vivos_valor_medio =  round((((sum(abortos_ans_menor_30 , na.rm = T) * 0.9) + (sum(abortos_ans_30_a_39 , na.rm = T) * 0.85) + (sum(abortos_ans_40_a_49 , na.rm = T) * 0.75)) * 5) / sum(total_de_nascidos_vivos_10_a_49_ans , na.rm = T) * 100, 1) 
     ) |>
   rename(
     `Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS` = sus_tx_abortos_mil_mulheres_valor_medio,
-    `Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar` = ans_tx_abortos_mil_mulheres_valor_medio #,
+    `Limite superior da taxa de abortos inseguros por mil mulheres em idade fértil no SUS` = sus_tx_abortos_mil_mulheres_lim_sup,
+    `Limite inferior da taxa de abortos inseguros por mil mulheres em idade fértil no SUS` = sus_tx_abortos_mil_mulheres_lim_inf,
+    
+    `Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar` = ans_tx_abortos_mil_mulheres_valor_medio,
+    `Limite superior da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar` = ans_tx_abortos_mil_mulheres_lim_sup,
+    `Limite inferior da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar` = ans_tx_abortos_mil_mulheres_lim_inf
     #`Valor médio da razão de abortos inseguros por 100 nascidos vivos no SUS` = sus_tx_abortos_cem_nascidos_vivos_valor_medio,
     #`Valor médio da razão de abortos inseguros por 100 nascidos vivos na saúde suplementar` = ans_tx_abortos_cem_nascidos_vivos_valor_medio
     )
@@ -38,56 +48,132 @@ df_uf <- planilha_indicadores_aborto |>
   group_by(ano, uf) |>
   summarise(
     sus_tx_abortos_mil_mulheres_valor_medio =  round((((sum(abortos_sus_menor_30 ) * 0.9) + (sum(abortos_sus_30_a_39 ) * 0.85) + (sum(abortos_sus_40_a_49 ) * 0.75)) * 4) / sum(pop_fem_sus_10_49 ) * 1000, 1) ,
-    ans_tx_abortos_mil_mulheres_valor_medio =  round((((sum(abortos_ans_menor_30 , na.rm = T) * 0.9) + (sum(abortos_ans_30_a_39 , na.rm = T) * 0.85) + (sum(abortos_ans_40_a_49 , na.rm = T) * 0.75)) * 5) / sum(pop_fem_ans_10_49 , na.rm = T) * 1000, 1) #,
+    sus_tx_abortos_mil_mulheres_lim_inf = round((((sum(abortos_sus_menor_30[ano >= 2015 & ano <= 2024]) * 0.9) + (sum(abortos_sus_30_a_39[ano >= 2015 & ano <= 2024]) * 0.85) + (sum(abortos_sus_40_a_49[ano >= 2015 & ano <= 2024]) * 0.75)) * 3) / sum(pop_fem_sus_10_49[ano >= 2015 & ano <= 2024]) * 1000, 1),
+    sus_tx_abortos_mil_mulheres_lim_sup = round((((sum(abortos_sus_menor_30[ano >= 2015 & ano <= 2024]) * 0.9) + (sum(abortos_sus_30_a_39[ano >= 2015 & ano <= 2024]) * 0.85) + (sum(abortos_sus_40_a_49[ano >= 2015 & ano <= 2024]) * 0.75)) * 5) / sum(pop_fem_sus_10_49[ano >= 2015 & ano <= 2024]) * 1000, 1),
+    
+    ans_tx_abortos_mil_mulheres_valor_medio =  round((((sum(abortos_ans_menor_30, na.rm = T) * 0.9) + (sum(abortos_ans_30_a_39 , na.rm = T) * 0.85) + (sum(abortos_ans_40_a_49 , na.rm = T) * 0.75)) * 5) / sum(pop_fem_ans_10_49 , na.rm = T) * 1000, 1),
+    ans_tx_abortos_mil_mulheres_lim_inf = round((((sum(abortos_ans_menor_30[ano >= 2015 & ano <= 2024]) * 0.9) + (sum(abortos_ans_30_a_39[ano >= 2015 & ano <= 2024]) * 0.85) + (sum(abortos_ans_40_a_49[ano >= 2015 & ano <= 2024]) * 0.75)) * 4) / sum(pop_fem_ans_10_49[ano >= 2015 & ano <= 2024]) * 1000, 1),
+    ans_tx_abortos_mil_mulheres_lim_sup = round((((sum(abortos_ans_menor_30[ano >= 2015 & ano <= 2024]) * 0.9) + (sum(abortos_ans_30_a_39[ano >= 2015 & ano <= 2024]) * 0.85) + (sum(abortos_ans_40_a_49[ano >= 2015 & ano <= 2024]) * 0.75)) * 6) / sum(pop_fem_ans_10_49[ano >= 2015 & ano <= 2024]) * 1000, 1)
     
     #sus_tx_abortos_cem_nascidos_vivos_valor_medio =  round((((sum(abortos_sus_menor_30 , na.rm = T) * 0.9) + (sum(abortos_sus_30_a_39 , na.rm = T) * 0.85) + (sum(abortos_sus_40_a_49 , na.rm = T) * 0.75)) * 4) / sum(total_de_nascidos_vivos_10_a_49_sus , na.rm = T) * 100, 1) ,
     #ans_tx_abortos_cem_nascidos_vivos_valor_medio =  round((((sum(abortos_ans_menor_30 ) * 0.9) + (sum(abortos_ans_30_a_39 ) * 0.85) + (sum(abortos_ans_40_a_49 ) * 0.75)) * 5) / sum(total_de_nascidos_vivos_10_a_49_ans ) * 100, 1) ,
   ) |>
   rename(
     `Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS` = sus_tx_abortos_mil_mulheres_valor_medio,
-    `Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar` = ans_tx_abortos_mil_mulheres_valor_medio #,
+    `Limite superior da taxa de abortos inseguros por mil mulheres em idade fértil no SUS` = sus_tx_abortos_mil_mulheres_lim_sup,
+    `Limite inferior da taxa de abortos inseguros por mil mulheres em idade fértil no SUS` = sus_tx_abortos_mil_mulheres_lim_inf,
+    
+    `Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar` = ans_tx_abortos_mil_mulheres_valor_medio,
+    `Limite superior da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar` = ans_tx_abortos_mil_mulheres_lim_sup,
+    `Limite inferior da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar` = ans_tx_abortos_mil_mulheres_lim_inf
     
     #`Valor médio da razão de abortos inseguros por 100 nascidos vivos no SUS` = sus_tx_abortos_cem_nascidos_vivos_valor_medio,
     #`Valor médio da razão de abortos inseguros por 100 nascidos vivos na saúde suplementar` = ans_tx_abortos_cem_nascidos_vivos_valor_medio
     )
 
+brasil_aux <- df_brasil |>
+  filter(ano %in% c(2017, 2024))
+
+brasil_aux$uf <- "Brasil"
+
+tabela_uf <- df_uf |>
+  ungroup() |>
+  filter(ano %in% c(2017, 2024)) |>
+  rbind(brasil_aux) |>
+  pivot_longer(
+    cols = -c(ano, uf),
+    names_to = "variavel",
+    values_to = "valor"
+  ) |>
+  mutate(variavel = paste0(variavel, "_", ano)) |>
+  select(-c(ano)) |>
+  pivot_wider(
+    names_from = variavel,
+    values_from = valor
+  )
+  
+write_xlsx(
+  tabela_uf,
+  "databases/tabela_uf_taxa_por_1000_mulheres.xlsx"
+)
+
 # ------------- Séries temporais: Brasil - Plots ---------------
 
 # Série temporal para o Brasil para a taxa de aborto
 
-df_brasil_1000_mulheres <- df_brasil |>
-  select(ano, `Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS`, `Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar`) |>
+df_brasil_1000_mulheres_sus <- df_brasil |>
+  select(ano, `Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS`, `Limite inferior da taxa de abortos inseguros por mil mulheres em idade fértil no SUS`, `Limite superior da taxa de abortos inseguros por mil mulheres em idade fértil no SUS`) |>
   pivot_longer(
-    names_to = "Atendimento",
-    values_to = "Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil",
-    cols = c(`Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS`, `Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar`)
+    names_to = "Categoria",
+    values_to = "Taxa de abortos inseguros por mil mulheres em idade fértil",
+    cols = c(`Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS`, `Limite inferior da taxa de abortos inseguros por mil mulheres em idade fértil no SUS`, `Limite superior da taxa de abortos inseguros por mil mulheres em idade fértil no SUS`)
   ) |>
   mutate(
-    Atendimento = case_when(
-      Atendimento == "Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS" ~ "Brazilian Unified Health System (SUS)",
-      Atendimento == "Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar" ~ "Private healthcare \n and insurance"
+    Categoria = case_when(
+      Categoria == "Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil no SUS" ~ "Mean rate",
+      Categoria == "Limite inferior da taxa de abortos inseguros por mil mulheres em idade fértil no SUS" ~ "Lower bound",
+      Categoria == "Limite superior da taxa de abortos inseguros por mil mulheres em idade fértil no SUS" ~ "Upper bound"
     )
   )
+
+df_brasil_1000_mulheres_ans <- df_brasil |>
+  select(ano, `Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar`, `Limite inferior da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar`, `Limite superior da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar`) |>
+  pivot_longer(
+    names_to = "Categoria",
+    values_to = "Taxa de abortos inseguros por mil mulheres em idade fértil",
+    cols = c(`Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar`, `Limite inferior da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar`, `Limite superior da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar`)
+  ) |>
+  mutate(
+    Categoria = case_when(
+      Categoria == "Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar" ~ "Mean rate",
+      Categoria == "Limite inferior da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar" ~ "Lower bound",
+      Categoria == "Limite superior da taxa de abortos inseguros por mil mulheres em idade fértil na saúde suplementar" ~ "Upper bound"
+    )
+  )
+
   
-serie_temporal_br_plot_1000_mulheres <- ggplot(data = df_brasil_1000_mulheres, mapping = aes(x = ano, y = `Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil`, color = Atendimento)) +
+serie_temporal_br_plot_1000_mulheres_sus <- ggplot(data = df_brasil_1000_mulheres_sus, mapping = aes(x = ano, y = `Taxa de abortos inseguros por mil mulheres em idade fértil`, color = Categoria)) +
   geom_line(linewidth = 1) +
-  geom_point(aes(shape = Atendimento)) +
-  scale_x_continuous(breaks = unique(df_brasil_1000_mulheres$ano), guide = guide_axis(angle = 45)) +
+  geom_point(aes(shape = Categoria)) +
+  scale_x_continuous(breaks = unique(df_brasil_1000_mulheres_sus$ano), guide = guide_axis(angle = 45)) +
   theme_bw(base_size = 15) +
   labs(
     title = " ",
     x = "Year",
     y = "Induced abortion rates per \n 1000 women in reproductive age",
-    color = "Category",
-    shape = "Category",
+    color = " ",
+    shape = " ",
   ) +
-  geom_text(label = df_brasil_1000_mulheres$`Valor médio da taxa de abortos inseguros por mil mulheres em idade fértil`, nudge_y = 0.3, show.legend = FALSE) +
+  geom_text(label = df_brasil_1000_mulheres_sus$`Taxa de abortos inseguros por mil mulheres em idade fértil`, nudge_y = 0.3, show.legend = FALSE) +
   theme(legend.position = "bottom") +
-  scale_color_manual(values = c("Salmon", "DodgerBlue"))
-serie_temporal_br_plot_1000_mulheres
+  scale_color_manual(values = c("Salmon", "DodgerBlue", "DarkOrchid"))
+serie_temporal_br_plot_1000_mulheres_sus
 
 ggsave(
-  "figuras/br_taxa_aborto_por_1000_mulheres.png", serie_temporal_br_plot_1000_mulheres,
+  "figuras/br_taxa_aborto_por_1000_mulheres_sus.png", serie_temporal_br_plot_1000_mulheres_sus,
+  width = 7.5, height = 6, units = "in", 
+  dpi = 600
+)
+
+serie_temporal_br_plot_1000_mulheres_ans <- ggplot(data = df_brasil_1000_mulheres_ans, mapping = aes(x = ano, y = `Taxa de abortos inseguros por mil mulheres em idade fértil`, color = Categoria)) +
+  geom_line(linewidth = 1) +
+  geom_point(aes(shape = Categoria)) +
+  scale_x_continuous(breaks = unique(df_brasil_1000_mulheres_ans$ano), guide = guide_axis(angle = 45)) +
+  theme_bw(base_size = 15) +
+  labs(
+    title = " ",
+    x = "Year",
+    y = "Induced abortion rates per \n 1000 women in reproductive age",
+    color = " ",
+    shape = " ",
+  ) +
+  geom_text(label = df_brasil_1000_mulheres_ans$`Taxa de abortos inseguros por mil mulheres em idade fértil`, nudge_y = 0.3, show.legend = FALSE) +
+  theme(legend.position = "bottom") +
+  scale_color_manual(values = c("Salmon", "DodgerBlue", "DarkOrchid"))
+serie_temporal_br_plot_1000_mulheres_ans
+
+ggsave(
+  "figuras/br_taxa_aborto_por_1000_mulheres_ans.png", serie_temporal_br_plot_1000_mulheres_ans,
   width = 7.5, height = 6, units = "in", 
   dpi = 600
 )
